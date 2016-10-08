@@ -1,4 +1,4 @@
-﻿using BotDetect.Web.UI.Mvc;
+﻿//using BotDetect.Web.UI.Mvc;
 using GISCore.Business.Abstract;
 using GISModel.DTO.Conta;
 using GISModel.Entidades;
@@ -61,31 +61,31 @@ namespace GISWeb.Controllers
             }
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        [CaptchaValidation("CaptchaCode", "LoginCaptcha", "Código do CAPTCHA incorreto.")]
-        public ActionResult LoginComCaptcha(AutenticacaoModel usuario)
-        {
-            MvcCaptcha.ResetCaptcha("LoginCaptcha");
-            ViewBag.IncluirCaptcha = Convert.ToBoolean(ConfigurationManager.AppSettings["AD:IncluirCaptchaNoLogin"]);
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //[CaptchaValidation("CaptchaCode", "LoginCaptcha", "Código do CAPTCHA incorreto.")]
+        //public ActionResult LoginComCaptcha(AutenticacaoModel usuario)
+        //{
+        //    MvcCaptcha.ResetCaptcha("LoginCaptcha");
+        //    ViewBag.IncluirCaptcha = Convert.ToBoolean(ConfigurationManager.AppSettings["AD:IncluirCaptchaNoLogin"]);
 
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    AutorizacaoProvider.Logar(usuario);
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            AutorizacaoProvider.Logar(usuario);
 
-                    return Json(new { url = Url.Action(ConfigurationManager.AppSettings["Web:DefaultAction"], ConfigurationManager.AppSettings["Web:DefaultController"]) });
-                }
+        //            return Json(new { url = Url.Action(ConfigurationManager.AppSettings["Web:DefaultAction"], ConfigurationManager.AppSettings["Web:DefaultController"]) });
+        //        }
 
-                return View("Login", usuario);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { alerta = ex.Message, titulo = "Oops! Problema ao realizar login..." });
-            }
-        }
+        //        return View("Login", usuario);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { alerta = ex.Message, titulo = "Oops! Problema ao realizar login..." });
+        //    }
+        //}
 
         public ActionResult Logout()
         {

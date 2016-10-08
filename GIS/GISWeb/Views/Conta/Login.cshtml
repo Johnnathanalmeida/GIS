@@ -1,5 +1,4 @@
 ﻿@model GISModel.DTO.Conta.AutenticacaoModel
-@using BotDetect.Web.UI.Mvc
 
 @{
     Layout = null;
@@ -156,17 +155,9 @@
 
                                                 @if (ViewBag.IncluirCaptcha != null && ViewBag.IncluirCaptcha)
                                                 {
-                                                    MvcCaptcha loginCaptcha = GISWeb.Infraestrutura.Helpers.CaptchaHelper.GetLoginCaptcha();
+                                                 
 
-                                                    if (!loginCaptcha.IsSolved)
-                                                    {
-                                                        <div class="form-group">
-                                                            <center>
-                                                                @Html.Captcha(loginCaptcha)
-                                                                @Html.TextBox("CaptchaCode", null, new { @class = "form-control captchaVal" })
-                                                            </center>
-                                                        </div>
-                                                    }
+                                                   
                                                 }
 
                                                 <div class="clearfix">
