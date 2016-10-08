@@ -1,0 +1,95 @@
+﻿@model GISModel.Entidades.Menu
+
+@{
+    ViewBag.Title = "Cadastro de Menu";
+}
+
+<div id="formCadMenu">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 widget-container-col ui-sortable">
+            <div class="page-header">
+                <h1>
+                    Cadastro de Menu
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    @using (Ajax.BeginForm("Cadastrar", "Menu", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginCadastrarMenu", OnSuccess = "OnSuccessCadastrarMenu", }, new { @id = "formCadastroMenu", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Nome, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EditorFor(d => d.Nome, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtCNPJ" } })
+                        @Html.ValidationMessageFor(d => d.Nome, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Controller, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EditorFor(d => d.Controller, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        @*@Html.ValidationMessageFor(d => d.Controller, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Action, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EditorFor(d => d.Action, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Ordem, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EditorFor(d => d.Ordem, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        @Html.ValidationMessageFor(d => d.Ordem, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.IDMenuSuperior, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.DropDownListFor(d => d.IDMenuSuperior, (SelectList)ViewBag.Menus, "Selecione um menu superior...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlMenuSuperior", @autocomplete = "on" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3 align-center">
+                <button class="btn btn-info" id="btnSalvar" type="submit">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    Salvar
+                </button>
+                &nbsp;
+                <button class="btn btn-warning" type="reset">
+                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                    Limpar
+                </button>
+                &nbsp;
+                <a class="btn" href="javascript:history.back()">
+                    <i class="ace-icon fa fa-arrow-left"></i>
+                    Voltar
+                </a>
+            </div>
+        </div>
+    }
+
+</div> <!-- Fim FormQuery -->
+
+@section Scripts {
+    <script src="~/Scripts/Custom/Menu/Novo.js"></script>
+}
