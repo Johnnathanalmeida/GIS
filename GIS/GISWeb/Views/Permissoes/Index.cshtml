@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Gerenciador de Permissões";
+}
+
+<div id="formCadPermissoes" class="form-horizontal">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 widget-container-col ui-sortable">
+            <div class="page-header">
+                <h1>
+                    Gerenciador de Permissões
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                @*@Html.LabelFor(d => d.IDEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })*@
+                <label class="form-field-select-3 col-xs-12 col-sm-6 no-padding-right">Empresas</label>
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DropDownList("ddlEmpresa", (SelectList)ViewBag.Empresas, "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label class="form-field-select-3 col-xs-12 col-sm-6 no-padding-right">Departamentos</label>
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DropDownList("ddlDepartamento", new SelectList("", "IDDepartamento", "Sigla"), "Selecione antes uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @autocomplete = "on", @id = "ddlDepartamento", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label class="form-field-select-3 col-xs-12 col-sm-6 no-padding-right">Usuário</label>
+                <div class="col-xs-12 col-sm-12">
+                    <input type="text" id="txtMatricula" class="col-xs-12 col-sm-12" />
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label class="form-field-select-3 col-xs-12 col-sm-6 no-padding-right">&nbsp;</label>
+                <div class="col-xs-12 col-sm-12">
+                    <input type="button" class="btn btn-minier btn-primary" style="padding: 5px;" onclick="BuscarUsuario();" value="Buscar Usuário" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3 align-center">
+            <div class="form-group">
+                <label class="form-field-select-3 col-xs-12 col-sm-6 no-padding-right">&nbsp;</label>
+                <div class="col-xs-12 col-sm-12">
+                    <input type="button" class="btn btn-minier btn-primary" style="padding: 5px 15px 5px 15px; " onclick="ListarUsuarios();" value="Pesquisar" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="conteudoAjax"></div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jQ_dataTable")
+    @Scripts.Render("~/bundles/jQ_tableTools")
+    <script src="~/Scripts/Custom/UsuarioPerfil/Admin.js"></script>
+}
