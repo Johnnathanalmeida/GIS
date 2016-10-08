@@ -5,6 +5,7 @@ function OnSuccessAtualizarMenu(data) {
     $('#btnSalvar').show();
     TratarResultadoJSON(data.resultado);
 }
+alert("a");
 
 function OnBeginAtualizarMenu() {
     $(".LoadingLayout").show();
