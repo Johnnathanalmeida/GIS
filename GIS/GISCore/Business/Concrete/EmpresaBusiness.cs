@@ -55,7 +55,7 @@ namespace GISCore.Business.Concrete
             Empresa tempEmpresa = Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(pEmpresa.IDEmpresa));
             if (tempEmpresa == null)
             {
-                throw new Exception("Não foi possível encontra a empresa através do ID.");
+                throw new Exception("Não foi possível encontrar a empresa através do ID.");
             }
             else
             {
