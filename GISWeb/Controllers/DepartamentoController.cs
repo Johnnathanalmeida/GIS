@@ -2,6 +2,7 @@
 using GISModel.DTO.Departamento;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
+using GISWeb.Infraestrutura.Filters;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+
+    [DadosUsuario]
+    [Autorizador]
     public class DepartamentoController : Controller
     {
 
@@ -24,13 +28,14 @@ namespace GISWeb.Controllers
 
         #endregion
 
+        [MenuAtivo(MenuAtivo = "Administração/Departamento")]
         public ActionResult Index()
         {
             ViewBag.Departamentos = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             return View();
         }
 
-
+        [MenuAtivo(MenuAtivo = "Administração/Departamento")]
         public ActionResult Novo()
         {
             ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.ToList(), "IDEmpresa", "NomeFantasia");
@@ -75,6 +80,7 @@ namespace GISWeb.Controllers
             }
         }
 
+        [MenuAtivo(MenuAtivo = "Administração/Departamento")]
         public ActionResult Edicao(string id)
         {
             return View(DepartamentoBusiness.Consulta.FirstOrDefault(p => p.IDDepartamento.Equals(id)));

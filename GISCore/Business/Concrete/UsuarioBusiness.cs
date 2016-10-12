@@ -1,6 +1,8 @@
 ﻿using GISCore.Business.Abstract;
 using GISModel.DTO.Conta;
+using GISModel.DTO.Usuario;
 using GISModel.Entidades;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,7 +19,24 @@ namespace GISCore.Business.Concrete
     public class UsuarioBusiness : BaseBusiness<Usuario>, IUsuarioBusiness
     {
 
-        public Usuario ValidarCredenciais(AutenticacaoModel autenticacaoModel)
+        #region Inject 
+
+            [Inject]
+            public IUsuarioPerfilBusiness UsuarioPerfilBusiness { get; set; }
+
+            [Inject]
+            public IPerfilBusiness PerfilBusiness { get; set; }
+
+            [Inject]
+            public IPerfilMenuBusiness PerfilMenuBusiness { get; set; }
+
+            [Inject]
+            public MenuBusiness MenuBusiness { get; set; }
+
+        #endregion
+
+        
+        public UsuarioPerfisMenusViewModel ValidarCredenciais(AutenticacaoModel autenticacaoModel)
         {
             autenticacaoModel.Login = autenticacaoModel.Login.Trim();
 
@@ -56,10 +75,41 @@ namespace GISCore.Business.Concrete
                 else { 
                     //Login, validando a senha interna do GIS
                     string IDUsuario = lUsuarios[0].IDUsuario;
+
                     Usuario oUsuario = Consulta.FirstOrDefault(p => p.IDUsuario.Equals(IDUsuario) && p.Senha.Equals(autenticacaoModel.Senha));
+
                     if (oUsuario != null)
                     {
-                        return oUsuario;
+                        UsuarioPerfisMenusViewModel oUPMViewModel = new UsuarioPerfisMenusViewModel();
+                        oUPMViewModel.Usuario = oUsuario;
+
+                        var lPerfis = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                                      join perfil in PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usuarioperfil.IDPerfil equals perfil.IDPerfil
+                                      where usuarioperfil.IDUsuario.Equals(oUsuario.IDUsuario)
+                                      select new Perfil { Nome = perfil.Nome, IDPerfil = perfil.IDPerfil };
+
+                        oUPMViewModel.Perfis = lPerfis.ToList();
+
+                        List<Menu> lMenus = new List<Menu>();
+
+                        foreach (Perfil iPerfil in lPerfis.ToList()) {
+                            var listaMenus = from perfilmenu in PerfilMenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDPerfil.Equals(iPerfil.IDPerfil)).ToList()
+                                             join menu in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on perfilmenu.IDMenu equals menu.IDMenu
+                                             select new Menu { Nome = menu.Nome, 
+                                                               IDMenu = menu.IDMenu, 
+                                                               Ordem = menu.Ordem, 
+                                                               Controller = menu.Controller, 
+                                                               Action = menu.Action, 
+                                                               Icone = menu.Icone,
+                                                               MenuSuperior = string.IsNullOrEmpty(menu.IDMenuSuperior) ? null : new Menu { IDMenu = menu.IDMenuSuperior, Nome = MenuBusiness.Consulta.FirstOrDefault(i => i.IDMenu.Equals(menu.IDMenuSuperior)).Nome } };
+
+                            lMenus.AddRange(listaMenus.ToList());
+                        }
+
+                        lMenus = (from mci in lMenus select mci).Distinct().ToList();
+                        oUPMViewModel.Menus = lMenus;
+
+                        return oUPMViewModel;
                     }
                     else {
                         throw new Exception("Login ou senha incorretos.");

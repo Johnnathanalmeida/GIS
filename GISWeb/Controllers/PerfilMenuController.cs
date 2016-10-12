@@ -2,6 +2,7 @@
 using GISModel.DTO.Menu;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
+using GISWeb.Infraestrutura.Filters;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+
+    [DadosUsuario]
+    [Autorizador]
     public class PerfilMenuController : Controller
     {
 

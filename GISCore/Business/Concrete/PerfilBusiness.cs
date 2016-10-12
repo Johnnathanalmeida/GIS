@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace GISCore.Business.Concrete
 {
+
+    
     public class PerfilBusiness : BaseBusiness<Perfil>, IPerfilBusiness
     {
 

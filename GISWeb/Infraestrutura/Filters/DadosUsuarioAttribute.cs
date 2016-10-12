@@ -19,8 +19,9 @@ namespace GISWeb.Infraestrutura.Filters
 
             if (AutorizacaoProvider.UsuarioAutenticado != null)
             {
-                filterContext.Controller.ViewBag.NomeUsuario = AutorizacaoProvider.UsuarioAutenticado.Nome;
-                filterContext.Controller.ViewBag.MatriculaUsuario = AutorizacaoProvider.UsuarioAutenticado.Login;
+                filterContext.Controller.ViewBag.NomeUsuario = AutorizacaoProvider.UsuarioAutenticado.Usuario.Nome;
+                filterContext.Controller.ViewBag.MatriculaUsuario = AutorizacaoProvider.UsuarioAutenticado.Usuario.Login;
+                filterContext.Controller.ViewBag.MenusUsuario = AutorizacaoProvider.UsuarioAutenticado.Menus;
             }
         }
 

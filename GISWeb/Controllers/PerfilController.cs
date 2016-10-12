@@ -1,6 +1,7 @@
 ﻿using GISCore.Business.Abstract;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
+using GISWeb.Infraestrutura.Filters;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+
+    [DadosUsuario]
+    [Autorizador]
     public class PerfilController : Controller
     {
 
@@ -20,6 +24,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
+        [MenuAtivo(MenuAtivo = "Administração/Perfil")]
         public ActionResult Index()
         {
             ViewBag.Perfis = PerfilBusiness.Consulta.ToList();
@@ -27,6 +32,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
+        [MenuAtivo(MenuAtivo = "Administração/Perfil")]
         public ActionResult Novo()
         {
             return View();
@@ -65,6 +71,7 @@ namespace GISWeb.Controllers
             }
         }
 
+        [MenuAtivo(MenuAtivo = "Administração/Perfil")]
         public ActionResult Edicao(string id)
         {
             return View(PerfilBusiness.Consulta.FirstOrDefault(p => p.IDPerfil.Equals(id)));

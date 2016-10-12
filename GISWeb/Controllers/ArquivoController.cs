@@ -8,6 +8,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+
+    [DadosUsuario]
+    [Autorizador]
     public class ArquivoController : Controller
     {
 

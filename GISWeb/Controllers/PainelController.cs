@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+    [DadosUsuario]
     [Autorizador]
     public class PainelController : Controller
     {

@@ -1,4 +1,5 @@
 ﻿using GISModel.DTO.Conta;
+using GISModel.DTO.Usuario;
 using GISModel.Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace GISWeb.Infraestrutura.Provider.Abstract
     public interface ICustomAuthorizationProvider
     {
 
-        Usuario UsuarioAutenticado { get; }
+        UsuarioPerfisMenusViewModel UsuarioAutenticado { get; }
 
         bool EstaAutenticado { get; }
 

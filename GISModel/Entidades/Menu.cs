@@ -27,6 +27,9 @@ namespace GISModel.Entidades
         [Required(ErrorMessage = "Informe a posição deste menu")]
         public string Ordem { get; set; }
 
+        [Display(Name = "Ícone")]
+        public string Icone { get; set; }
+
         [Display(Name = "Menu Superior")]
         public string IDMenuSuperior { get; set; }
 

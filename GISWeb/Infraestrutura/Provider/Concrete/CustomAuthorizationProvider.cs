@@ -1,6 +1,7 @@
 ﻿using GISCore.Business.Abstract;
 using GISHelpers.Utils;
 using GISModel.DTO.Conta;
+using GISModel.DTO.Usuario;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
@@ -20,7 +21,7 @@ namespace GISWeb.Infraestrutura.Provider.Concrete
         [Inject]
         public IUsuarioBusiness UsuarioBusiness { get; set; }
 
-        private Usuario usuarioPersistido;
+        private UsuarioPerfisMenusViewModel usuarioPersistido;
         private string token;
 
         //############################################################################################
@@ -54,7 +55,7 @@ namespace GISWeb.Infraestrutura.Provider.Concrete
 
                                 if (cacheStore.Contains(token))
                                 {
-                                    usuarioPersistido = (Usuario)cacheStore.Get(token);
+                                    usuarioPersistido = (UsuarioPerfisMenusViewModel)cacheStore.Get(token);
 
                                     //########################################################################
                                     //Podemos implementar aqui ainda outros testes em cima do model armazenado 
@@ -73,7 +74,7 @@ namespace GISWeb.Infraestrutura.Provider.Concrete
             }
         }
 
-        public Usuario UsuarioAutenticado
+        public UsuarioPerfisMenusViewModel UsuarioAutenticado
         {
             get
             {
@@ -101,7 +102,7 @@ namespace GISWeb.Infraestrutura.Provider.Concrete
                 catch { expiracao = 120; }
 
                 token = SalvarEmCacheEGerarToken(usuarioPersistido, expiracao);
-                GerarTicketEArmazenarComoCookie(token, usuarioPersistido.Login);
+                GerarTicketEArmazenarComoCookie(token, usuarioPersistido.Usuario.Login);
             }
         }
 
@@ -122,7 +123,7 @@ namespace GISWeb.Infraestrutura.Provider.Concrete
             HttpContext.Current.Response.Cookies.Add(cookie1);
         }
 
-        private string SalvarEmCacheEGerarToken(Usuario autenticacaoModel, int expiracaoEmMinutos)
+        private string SalvarEmCacheEGerarToken(UsuarioPerfisMenusViewModel autenticacaoModel, int expiracaoEmMinutos)
         {
             var token = Guid.NewGuid().ToString();
 

@@ -1,6 +1,7 @@
 ﻿using GISCore.Business.Abstract;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
+using GISWeb.Infraestrutura.Filters;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+
+    [DadosUsuario]
+    [Autorizador]
     public class MenuController : Controller
     {
 
@@ -23,6 +27,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
+        [MenuAtivo(MenuAtivo = "Administração/Menu")]
         public ActionResult Index()
         {
             //ViewBag.Menus = MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
@@ -36,7 +41,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
-
+        [MenuAtivo(MenuAtivo = "Administração/Menu")]
         public ActionResult Novo()
         {
             ViewBag.Menus = new SelectList(MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDMenu", "Nome");
@@ -76,6 +81,7 @@ namespace GISWeb.Controllers
             }
         }
 
+        [MenuAtivo(MenuAtivo = "Administração/Menu")]
         public ActionResult Edicao(string id)
         {
 
@@ -100,7 +106,7 @@ namespace GISWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Atualizar(Menu Menu)
         {
-            if (ModelState.IsValid)
+           if (ModelState.IsValid)
             {
                 try
                 {

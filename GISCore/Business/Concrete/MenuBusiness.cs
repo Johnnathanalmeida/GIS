@@ -24,9 +24,7 @@ namespace GISCore.Business.Concrete
 
         public override void Alterar(Menu Menu)
         {
-            if (Consulta.Any(u => u.Nome.Equals(Menu.Nome) && !u.IDMenuSuperior.Equals(Menu.IDMenuSuperior)))
-                throw new InvalidOperationException("Não é possível atualizar esta empresa, pois o CNPJ já está sendo usado por outra empresa.");
-
+            
             Menu tempMenu = Consulta.FirstOrDefault(p => p.IDMenu.Equals(Menu.IDMenu));
             if (tempMenu == null)
             {
@@ -37,6 +35,9 @@ namespace GISCore.Business.Concrete
 
                 tempMenu.Nome = Menu.Nome;
                 tempMenu.Ordem = Menu.Ordem;
+                tempMenu.Controller = Menu.Controller;
+                tempMenu.Action = Menu.Action;
+                tempMenu.Icone = Menu.Icone;
                 tempMenu.IDMenuSuperior = Menu.IDMenuSuperior;
 
                 base.Alterar(tempMenu);

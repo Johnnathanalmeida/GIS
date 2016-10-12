@@ -2,6 +2,7 @@
 using GISModel.DTO.Permissoes;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
+using GISWeb.Infraestrutura.Filters;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+
+    [DadosUsuario]
+    [Autorizador]
     public class PermissoesController : Controller
     {
 
@@ -30,6 +34,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
+        [MenuAtivo(MenuAtivo = "Administração/Permissões")]
         public ActionResult Index()
         {
             ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.ToList(), "IDEmpresa", "NomeFantasia");

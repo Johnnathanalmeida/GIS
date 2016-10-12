@@ -12,6 +12,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
+
+    [DadosUsuario]
+    [Autorizador]
     public class EmpresaController : Controller
     {
 
@@ -22,6 +25,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
+        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
         public ActionResult Index()
         {
 
@@ -57,11 +61,13 @@ namespace GISWeb.Controllers
 
         }
 
+        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
         public ActionResult Novo() 
         {
             return View();
         }
 
+        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
         public ActionResult Edicao(string id)
         {
             return View(EmpresaBusiness.Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(id)));

@@ -1,4 +1,5 @@
 ﻿using GISModel.DTO.Conta;
+using GISModel.DTO.Usuario;
 using GISModel.Entidades;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace GISCore.Business.Abstract
     public interface IUsuarioBusiness : IBaseBusiness<Usuario>
     {
 
-        Usuario ValidarCredenciais(AutenticacaoModel autenticacaoModel);
+        UsuarioPerfisMenusViewModel ValidarCredenciais(AutenticacaoModel autenticacaoModel);
 
         byte[] RecuperarFotoPerfil(string login);
 
