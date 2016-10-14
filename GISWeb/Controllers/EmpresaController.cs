@@ -18,7 +18,7 @@ namespace GISWeb.Controllers
     public class EmpresaController : Controller
     {
 
-        #region
+        #region Inject
 
             [Inject]
             public IEmpresaBusiness EmpresaBusiness { get; set; }

@@ -39,54 +39,6 @@
             <div class="navbar-buttons navbar-header pull-right" role="navigation">
                 <ul class="nav ace-nav">
 
-                    @*<li class="green btnReqEmp" title="Requisição de Empréstimo" style="display: none;">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="ace-icon fa fa-file-text-o"></i>
-                            <span class="badge badge-success qtdItensReqEmp"></span>
-                        </a>
-
-                        <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-                            <li class="dropdown-header">
-                                <i class="ace-icon fa fa-download"></i>
-                                <span class="qtdItensReqEmpLabel"></span>
-                            </li>
-
-                            <li class="dropdown-content">
-                                <ul class="dropdown-menu dropdown-navbar ulReqEmp"></ul>
-                            </li>
-
-                            <li class="dropdown-footer">
-                                <a href="#" onclick="FinalizarReqEmp();">
-                                    Finalizar Requisição Empréstimo
-                                </a>
-                            </li>
-                        </ul>
-                    </li>*@
-
-                    @*<li class="green" style="display: none;">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="ace-icon fa fa-print"></i>
-                            <span class="badge badge-success qtdItensReqCopia"></span>
-                        </a>
-
-                        <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-                            <li class="dropdown-header">
-                                <i class="ace-icon fa fa-download"></i>
-                                <span class="qtdItensReqCopiaLabel"></span>
-                            </li>
-
-                            <li class="dropdown-content">
-                                <ul class="dropdown-menu dropdown-navbar ulReqCopia"></ul>
-                            </li>
-
-                            <li class="dropdown-footer">
-                                <a href="@Url.Action("Index", "FinalizarPedido")">
-                                    Finalizar Requisição de Cópia
-                                </a>
-                            </li>
-                        </ul>
-                    </li>*@
-
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             @if (string.IsNullOrWhiteSpace(ViewBag.NomeUsuario))
@@ -134,7 +86,7 @@
                             <li class="divider"></li>
 
                             <li>
-                                <a href="#" data-target="#modalLogoff" data-toggle="modal">
+                                <a href="@Url.Action("Logout", "Conta")">
                                     <i class="ace-icon fa fa-power-off" style="font-size: 18px"></i>
                                     Fazer logoff...
                                 </a>

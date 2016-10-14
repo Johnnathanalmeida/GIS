@@ -181,6 +181,7 @@
     <Content Include="Scripts\Ace\jQ\typeahead.jquery.js" />
     <Content Include="Scripts\Ace\moment.js" />
     <Content Include="Scripts\Ace\respond.js" />
+    <Content Include="Scripts\Custom\Contrato\Novo.js" />
     <Content Include="Scripts\Custom\custom-functions.js" />
     <Content Include="Scripts\Custom\Conta\custom-login.js" />
     <Content Include="Scripts\Custom\custom-master.js" />
@@ -197,6 +198,9 @@
     <Content Include="Scripts\Custom\Empresa\Edicao.js" />
     <Content Include="Scripts\Custom\Empresa\Listagem.js" />
     <Content Include="Scripts\Custom\Empresa\Novo.js" />
+    <Content Include="Scripts\Custom\Fornecedor\Edicao.js" />
+    <Content Include="Scripts\Custom\Fornecedor\Listagem.js" />
+    <Content Include="Scripts\Custom\Fornecedor\Novo.js" />
     <Content Include="Scripts\Custom\Menu\Edicao.js" />
     <Content Include="Scripts\Custom\Menu\Listagem.js" />
     <Content Include="Scripts\Custom\Menu\Novo.js" />
@@ -226,6 +230,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArquivoController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\DepartamentoController.cs" />
@@ -297,6 +302,10 @@
     <Content Include="Views\Menu\Edicao.cshtml" />
     <Content Include="Views\Permissoes\_UsuariosPerfis.cshtml" />
     <Content Include="Views\PerfilMenu\_PerfisPorMenu.cshtml" />
+    <Content Include="Views\Contrato\Novo.cshtml" />
+    <Content Include="Views\Contrato\Edicao.cshtml" />
+    <Content Include="Views\Fornecedor\Novo.cshtml" />
+    <Content Include="Views\Fornecedor\Edicao.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -309,11 +318,10 @@
     <Folder Include="Content\Custom\" />
     <Folder Include="Images\Empresas\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\Custom\Contrato\" />
-    <Folder Include="Scripts\Custom\Fornecedor\" />
     <Folder Include="Scripts\Custom\Obra\" />
     <Folder Include="Scripts\Custom\Painel\" />
     <Folder Include="Scripts\Custom\Proposito\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Obra\" />
     <Folder Include="Views\Proposito\" />
   </ItemGroup>

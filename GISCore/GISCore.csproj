@@ -55,49 +55,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
+    <Compile Include="Business\Abstract\IContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpresaBusiness.cs" />
+    <Compile Include="Business\Abstract\IFornecedorBusiness.cs" />
     <Compile Include="Business\Abstract\IMenuBusiness.cs" />
     <Compile Include="Business\Abstract\IPerfilBusiness.cs" />
     <Compile Include="Business\Abstract\IPerfilMenuBusiness.cs" />
     <Compile Include="Business\Abstract\IUsuarioBusiness.cs" />
     <Compile Include="Business\Abstract\IUsuarioPerfilBusiness.cs" />
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
+    <Compile Include="Business\Concrete\ContratoBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoBusiness.cs" />
     <Compile Include="Business\Concrete\EmpresaBusiness.cs" />
+    <Compile Include="Business\Concrete\FornecedorBusiness.cs" />
     <Compile Include="Business\Concrete\MenuBusiness.cs" />
     <Compile Include="Business\Concrete\PerfilBusiness.cs" />
     <Compile Include="Business\Concrete\PerfilMenuBusiness.cs" />
     <Compile Include="Business\Concrete\UsuarioBusiness.cs" />
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
-    <Compile Include="Migrations\201610031109142_Perfil.cs" />
-    <Compile Include="Migrations\201610031109142_Perfil.Designer.cs">
-      <DependentUpon>201610031109142_Perfil.cs</DependentUpon>
+    <Compile Include="Migrations\201610142153227_fornecedor.cs" />
+    <Compile Include="Migrations\201610142153227_fornecedor.Designer.cs">
+      <DependentUpon>201610142153227_fornecedor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610032246356_Usuario.cs" />
-    <Compile Include="Migrations\201610032246356_Usuario.Designer.cs">
-      <DependentUpon>201610032246356_Usuario.cs</DependentUpon>
+    <Compile Include="Migrations\201610142154034_forne.cs" />
+    <Compile Include="Migrations\201610142154034_forne.Designer.cs">
+      <DependentUpon>201610142154034_forne.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610032251278_Menu.cs" />
-    <Compile Include="Migrations\201610032251278_Menu.Designer.cs">
-      <DependentUpon>201610032251278_Menu.cs</DependentUpon>
+    <Compile Include="Migrations\201610142154476_forne1.cs" />
+    <Compile Include="Migrations\201610142154476_forne1.Designer.cs">
+      <DependentUpon>201610142154476_forne1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610032325371_Menu1.cs" />
-    <Compile Include="Migrations\201610032325371_Menu1.Designer.cs">
-      <DependentUpon>201610032325371_Menu1.cs</DependentUpon>
+    <Compile Include="Migrations\201610142155416_forne2.cs" />
+    <Compile Include="Migrations\201610142155416_forne2.Designer.cs">
+      <DependentUpon>201610142155416_forne2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610071122538_menuupdate.cs" />
-    <Compile Include="Migrations\201610071122538_menuupdate.Designer.cs">
-      <DependentUpon>201610071122538_menuupdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610071124566_menuupdate1.cs" />
-    <Compile Include="Migrations\201610071124566_menuupdate1.Designer.cs">
-      <DependentUpon>201610071124566_menuupdate1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610121401238_Menu2.cs" />
-    <Compile Include="Migrations\201610121401238_Menu2.Designer.cs">
-      <DependentUpon>201610121401238_Menu2.cs</DependentUpon>
+    <Compile Include="Migrations\201610142200219_forne3.cs" />
+    <Compile Include="Migrations\201610142200219_forne3.Designer.cs">
+      <DependentUpon>201610142200219_forne3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,26 +116,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610031109142_Perfil.resx">
-      <DependentUpon>201610031109142_Perfil.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610142153227_fornecedor.resx">
+      <DependentUpon>201610142153227_fornecedor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610032246356_Usuario.resx">
-      <DependentUpon>201610032246356_Usuario.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610142154034_forne.resx">
+      <DependentUpon>201610142154034_forne.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610032251278_Menu.resx">
-      <DependentUpon>201610032251278_Menu.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610142154476_forne1.resx">
+      <DependentUpon>201610142154476_forne1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610032325371_Menu1.resx">
-      <DependentUpon>201610032325371_Menu1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610142155416_forne2.resx">
+      <DependentUpon>201610142155416_forne2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610071122538_menuupdate.resx">
-      <DependentUpon>201610071122538_menuupdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610071124566_menuupdate1.resx">
-      <DependentUpon>201610071124566_menuupdate1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610121401238_Menu2.resx">
-      <DependentUpon>201610121401238_Menu2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610142200219_forne3.resx">
+      <DependentUpon>201610142200219_forne3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

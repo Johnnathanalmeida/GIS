@@ -29,6 +29,8 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<PerfilMenu> PerfilMenu { get; set; }
 
+        public DbSet<Fornecedor> Fornecedor { get; set; }
+
         public DbSet<Contrato> Contrato { get; set; }
 
     }

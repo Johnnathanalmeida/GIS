@@ -7,13 +7,13 @@ namespace GISCore.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class menuupdate1 : IMigrationMetadata
+    public sealed partial class forne1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(menuupdate1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(forne1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201610071124566_menuupdate1"; }
+            get { return "201610142154476_forne1"; }
         }
         
         string IMigrationMetadata.Source
