@@ -9,7 +9,7 @@ namespace GISWeb.Controllers
 {
     [DadosUsuario]
     [Autorizador]
-    public class PainelController : Controller
+    public class PainelController : BaseController
     {
         
         public ActionResult Index()

@@ -15,7 +15,7 @@ namespace GISWeb.Controllers
 
     [DadosUsuario]
     [Autorizador]
-    public class DepartamentoController : Controller
+    public class DepartamentoController : BaseController
     {
 
         #region Inject

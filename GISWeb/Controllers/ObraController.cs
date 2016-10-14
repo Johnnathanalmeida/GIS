@@ -10,7 +10,7 @@ namespace GISWeb.Controllers
 
     [DadosUsuario]
     [Autorizador]
-    public class ObraController : Controller
+    public class ObraController : BaseController
     {
         //
         // GET: /Obra/

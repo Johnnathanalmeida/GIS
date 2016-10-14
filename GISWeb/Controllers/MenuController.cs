@@ -14,7 +14,7 @@ namespace GISWeb.Controllers
 
     [DadosUsuario]
     [Autorizador]
-    public class MenuController : Controller
+    public class MenuController : BaseController
     {
 
         #region

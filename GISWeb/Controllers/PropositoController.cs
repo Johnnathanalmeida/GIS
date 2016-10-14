@@ -10,7 +10,7 @@ namespace GISWeb.Controllers
 
     [DadosUsuario]
     [Autorizador]
-    public class PropositoController : Controller
+    public class PropositoController : BaseController
     {
         
         public ActionResult Index()

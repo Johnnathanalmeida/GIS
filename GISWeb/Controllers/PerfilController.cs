@@ -14,7 +14,7 @@ namespace GISWeb.Controllers
 
     [DadosUsuario]
     [Autorizador]
-    public class PerfilController : Controller
+    public class PerfilController : BaseController
     {
 
         #region

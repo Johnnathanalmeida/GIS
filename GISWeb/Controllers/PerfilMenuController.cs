@@ -15,7 +15,7 @@ namespace GISWeb.Controllers
 
     [DadosUsuario]
     [Autorizador]
-    public class PerfilMenuController : Controller
+    public class PerfilMenuController : BaseController
     {
 
         #region Inject

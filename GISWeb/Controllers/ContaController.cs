@@ -15,7 +15,7 @@ using System.Web.UI;
 
 namespace GISWeb.Controllers
 {
-    public class ContaController : Controller
+    public class ContaController : BaseController
     {
 
         #region

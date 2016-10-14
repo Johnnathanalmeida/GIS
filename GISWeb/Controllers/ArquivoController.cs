@@ -11,7 +11,7 @@ namespace GISWeb.Controllers
 
     [DadosUsuario]
     [Autorizador]
-    public class ArquivoController : Controller
+    public class ArquivoController : BaseController
     {
 
         [RestritoAAjax]
