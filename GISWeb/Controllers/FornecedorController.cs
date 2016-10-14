@@ -46,7 +46,7 @@ namespace GISWeb.Controllers
 
                     TempData["MensagemSucesso"] = "O fornecedor '" + fornecedor.Nome + "' foi cadastrado com sucesso.";
 
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Contrato") } });
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Fornecedor") } });
                 }
                 catch (Exception ex)
                 {
@@ -84,7 +84,7 @@ namespace GISWeb.Controllers
 
                     TempData["MensagemSucesso"] = "O fornecedor '" + fornecedor.Nome + "' foi atualizado com sucesso.";
 
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Contrato") } });
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Fornecedor") } });
                 }
                 catch (Exception ex)
                 {

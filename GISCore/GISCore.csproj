@@ -75,26 +75,6 @@
     <Compile Include="Business\Concrete\UsuarioBusiness.cs" />
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
-    <Compile Include="Migrations\201610142153227_fornecedor.cs" />
-    <Compile Include="Migrations\201610142153227_fornecedor.Designer.cs">
-      <DependentUpon>201610142153227_fornecedor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610142154034_forne.cs" />
-    <Compile Include="Migrations\201610142154034_forne.Designer.cs">
-      <DependentUpon>201610142154034_forne.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610142154476_forne1.cs" />
-    <Compile Include="Migrations\201610142154476_forne1.Designer.cs">
-      <DependentUpon>201610142154476_forne1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610142155416_forne2.cs" />
-    <Compile Include="Migrations\201610142155416_forne2.Designer.cs">
-      <DependentUpon>201610142155416_forne2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610142200219_forne3.cs" />
-    <Compile Include="Migrations\201610142200219_forne3.Designer.cs">
-      <DependentUpon>201610142200219_forne3.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstract\IBaseRepository.cs" />
@@ -114,23 +94,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610142153227_fornecedor.resx">
-      <DependentUpon>201610142153227_fornecedor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610142154034_forne.resx">
-      <DependentUpon>201610142154034_forne.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610142154476_forne1.resx">
-      <DependentUpon>201610142154476_forne1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610142155416_forne2.resx">
-      <DependentUpon>201610142155416_forne2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610142200219_forne3.resx">
-      <DependentUpon>201610142200219_forne3.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
