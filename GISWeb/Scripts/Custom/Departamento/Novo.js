@@ -43,7 +43,7 @@
 });
 
 function OnSuccessCadastrarDepartamento(data) {
-    ExibirMsgGritter(data.resultado);
+    TratarResultadoJSON(data.resultado);
 }
 
 function OnBeginCadastrarEmpresa() {

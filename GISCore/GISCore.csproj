@@ -57,6 +57,7 @@
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
     <Compile Include="Business\Abstract\IContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoBusiness.cs" />
+    <Compile Include="Business\Abstract\IEmpregadoBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpresaBusiness.cs" />
     <Compile Include="Business\Abstract\IFornecedorBusiness.cs" />
     <Compile Include="Business\Abstract\IMenuBusiness.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
     <Compile Include="Business\Concrete\ContratoBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoBusiness.cs" />
+    <Compile Include="Business\Concrete\EmpregadoBusiness.cs" />
     <Compile Include="Business\Concrete\EmpresaBusiness.cs" />
     <Compile Include="Business\Concrete\FornecedorBusiness.cs" />
     <Compile Include="Business\Concrete\MenuBusiness.cs" />
@@ -75,6 +77,10 @@
     <Compile Include="Business\Concrete\UsuarioBusiness.cs" />
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
+    <Compile Include="Migrations\201610151228581_empregado.cs" />
+    <Compile Include="Migrations\201610151228581_empregado.Designer.cs">
+      <DependentUpon>201610151228581_empregado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstract\IBaseRepository.cs" />
@@ -94,6 +100,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201610151228581_empregado.resx">
+      <DependentUpon>201610151228581_empregado.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

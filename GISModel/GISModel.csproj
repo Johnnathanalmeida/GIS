@@ -58,6 +58,7 @@
     <Compile Include="DTO\Usuario\UsuarioPerfisMenusViewModel.cs" />
     <Compile Include="Entidades\Contrato.cs" />
     <Compile Include="Entidades\Departamento.cs" />
+    <Compile Include="Entidades\Empregado.cs" />
     <Compile Include="Entidades\Empresa.cs" />
     <Compile Include="Entidades\EntidadeBase.cs" />
     <Compile Include="Entidades\Fornecedor.cs" />

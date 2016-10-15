@@ -195,6 +195,9 @@
     <Content Include="Scripts\Custom\Departamento\Edicao.js" />
     <Content Include="Scripts\Custom\Departamento\Listagem.js" />
     <Content Include="Scripts\Custom\Departamento\Novo.js" />
+    <Content Include="Scripts\Custom\Empregado\Edicao.js" />
+    <Content Include="Scripts\Custom\Empregado\Listagem.js" />
+    <Content Include="Scripts\Custom\Empregado\Novo.js" />
     <Content Include="Scripts\Custom\Empresa\Edicao.js" />
     <Content Include="Scripts\Custom\Empresa\Listagem.js" />
     <Content Include="Scripts\Custom\Empresa\Novo.js" />
@@ -234,6 +237,7 @@
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\DepartamentoController.cs" />
+    <Compile Include="Controllers\EmpregadoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -306,6 +310,9 @@
     <Content Include="Views\Contrato\Edicao.cshtml" />
     <Content Include="Views\Fornecedor\Novo.cshtml" />
     <Content Include="Views\Fornecedor\Edicao.cshtml" />
+    <Content Include="Views\Empregado\Index.cshtml" />
+    <Content Include="Views\Empregado\Novo.cshtml" />
+    <Content Include="Views\Empregado\Edicao.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

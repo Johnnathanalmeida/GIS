@@ -33,5 +33,7 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<Contrato> Contrato { get; set; }
 
+        public DbSet<Empregado> Empregado { get; set; }
+
     }
 }
