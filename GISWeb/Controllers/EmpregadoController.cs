@@ -2,6 +2,7 @@
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
+using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,15 @@ namespace GISWeb.Controllers
             [Inject]
             public IEmpregadoBusiness EmpregadoBusiness { get; set; }
 
+            [Inject]
+            public IEmpresaBusiness EmpresaBusiness { get; set; }
+
+            [Inject]
+            public IFornecedorBusiness FornecedorBusiness { get; set; }
+
+            [Inject]
+            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
+
         #endregion
 
         public ActionResult Index()
@@ -29,9 +39,18 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
-        public ActionResult Novo()
+        [MenuAtivo(MenuAtivo = "Novo/Empregado/Próprios")]
+        public ActionResult NovoProprio()
         {
+            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
+            return View();
+        }
+
+        [MenuAtivo(MenuAtivo = "Novo/Empregado/Terceirizados")]
+        public ActionResult NovoTerceirizado()
+        {
+            ViewBag.Fornecedores = new SelectList(FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDFornecedor", "Nome");
+
             return View();
         }
 
@@ -49,12 +68,8 @@ namespace GISWeb.Controllers
             {
                 try
                 {
-
                     EmpregadoBusiness.Inserir(empregado);
-
-                    TempData["MensagemSucesso"] = "O empregado '" + empregado.Nome + "' foi cadastrado com sucesso.";
-
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empregado") } });
+                    return Json(new { resultado = new RetornoJSON() { Sucesso = "O empregado '" + empregado.Nome + "' foi cadastrado com sucesso." } });
                 }
                 catch (Exception ex)
                 {
@@ -83,6 +98,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    empregado.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     EmpregadoBusiness.Alterar(empregado);
 
                     TempData["MensagemSucesso"] = "O empregado '" + empregado.Nome + "' foi atualizado com sucesso.";

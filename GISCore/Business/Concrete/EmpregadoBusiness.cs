@@ -14,9 +14,15 @@ namespace GISCore.Business.Concrete
         public override void Inserir(Empregado empregado)
         {
 
-            if (Consulta.Any(u => u.CPF.Equals(empregado.CPF.Trim())))
-                throw new InvalidOperationException("Não é possível inserir este empregado, pois já existe um cadastrado com este CPF.");
-
+            if (!string.IsNullOrEmpty(empregado.IDEmpresa)) {
+                if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.CPF.Equals(empregado.CPF.Trim()) && u.IDEmpresa.Equals(empregado.IDEmpresa)))
+                    throw new InvalidOperationException("Não é possível inserir este empregado, pois já existe um cadastrado com este CPF e nesta empresa.");
+            }
+            else
+            {
+                if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.CPF.Equals(empregado.CPF.Trim()) && u.IDFornecedor.Equals(empregado.IDFornecedor)))
+                    throw new InvalidOperationException("Não é possível inserir este empregado, pois já existe um cadastrado com este CPF e neste fornecedor.");
+            }
 
             empregado.IDEmpregado = Guid.NewGuid().ToString();
 
@@ -34,15 +40,14 @@ namespace GISCore.Business.Concrete
             }
             else
             {
-                tempEmpregado.Nome = empregado.Nome;
-                tempEmpregado.Email = empregado.Email;
-                tempEmpregado.Telefone = empregado.Telefone;
-                tempEmpregado.Endereco = empregado.Endereco;
-                tempEmpregado.DataNascimento = empregado.DataNascimento;
+                tempEmpregado.DataExclusao = DateTime.Now;
                 tempEmpregado.UsuarioExclusao = empregado.UsuarioExclusao;
-                tempEmpregado.DataExclusao = empregado.DataExclusao;
-
                 base.Alterar(tempEmpregado);
+
+                empregado.IDEmpregado = Guid.NewGuid().ToString();
+                empregado.UsuarioExclusao = string.Empty;
+                base.Inserir(empregado);
+
             }
 
         }

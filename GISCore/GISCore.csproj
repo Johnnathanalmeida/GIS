@@ -77,9 +77,13 @@
     <Compile Include="Business\Concrete\UsuarioBusiness.cs" />
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
-    <Compile Include="Migrations\201610151228581_empregado.cs" />
-    <Compile Include="Migrations\201610151228581_empregado.Designer.cs">
-      <DependentUpon>201610151228581_empregado.cs</DependentUpon>
+    <Compile Include="Migrations\201610151401355_em.cs" />
+    <Compile Include="Migrations\201610151401355_em.Designer.cs">
+      <DependentUpon>201610151401355_em.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610151413362_a.cs" />
+    <Compile Include="Migrations\201610151413362_a.Designer.cs">
+      <DependentUpon>201610151413362_a.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,8 +106,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610151228581_empregado.resx">
-      <DependentUpon>201610151228581_empregado.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610151401355_em.resx">
+      <DependentUpon>201610151401355_em.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610151413362_a.resx">
+      <DependentUpon>201610151413362_a.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

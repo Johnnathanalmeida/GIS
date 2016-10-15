@@ -38,7 +38,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administração/Departamento")]
         public ActionResult Novo()
         {
-            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.ToList(), "IDEmpresa", "NomeFantasia");
+            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
             return View();
         }
 

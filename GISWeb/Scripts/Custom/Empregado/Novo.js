@@ -18,6 +18,10 @@ function OnSuccessCadastrarEmpregado(data) {
     $(".LoadingLayout").hide();
     $('#btnSalvar').show();
     TratarResultadoJSON(data.resultado);
+
+    if (data.resultado.Sucesso != null && data.resultado.Sucesso != "") {
+        $('#formCadastroEmpregado')[0].reset();
+    }
 }
 
 function OnBeginCadastrarEmpregado() {

@@ -36,5 +36,15 @@ namespace GISModel.Entidades
 
         public string Telefone { get; set; }
 
+        [Display(Name = "Empresa")]
+        public string IDEmpresa { get; set; }
+
+        public virtual Empresa Empresa { get; set; }
+
+        [Display(Name = "Fornecedor")]
+        public string IDFornecedor { get; set; }
+
+        public Fornecedor Fornecedor { get; set; }
+
     }
 }

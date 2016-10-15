@@ -1,36 +1,43 @@
 ﻿@model GISModel.Entidades.Empregado
 
 @{
-    ViewBag.Title = "Edição de Empregado";
+    ViewBag.Title = "Cadastro de Empregado";
 }
 
-<div id="formEditEmpregado">
+<div id="formCadEmpregado">
     <div class="row">
         <div class="col-xs-12 col-sm-12 widget-container-col ui-sortable">
             <div class="page-header">
                 <h1>
-                    Edição de Empregado
+                    Cadastro de Empregado Próprio
                 </h1>
             </div>
         </div>
     </div>
 
-    @using (Ajax.BeginForm("Atualizar", "Empregado", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginAtualizarEmpregado", OnSuccess = "OnSuccessAtualizarEmpregado", }, new { @id = "formEdicaoEmpregado", @class = "form-horizontal" }))
+    @using (Ajax.BeginForm("Cadastrar", "Empregado", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginCadastrarEmpregado", OnSuccess = "OnSuccessCadastrarEmpregado", }, new { @id = "formCadastroEmpregado", @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-4">
                 <div class="form-group">
-                    @Html.LabelFor(d => d.CPF, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    @Html.LabelFor(d => d.IDEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.CPF, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtCPF", @readonly = "readonly" } })
-                        @Html.ValidationMessageFor(d => d.CPF, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
-                        @Html.HiddenFor(d => d.IDEmpregado)
+                        @Html.DropDownListFor(d => d.IDEmpresa, (SelectList)ViewBag.Empresas, "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.CPF, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EditorFor(d => d.CPF, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtCPF" } })
+                        @Html.ValidationMessageFor(d => d.CPF, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
                 <div class="form-group">
                     @Html.LabelFor(d => d.Nome, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
@@ -105,5 +112,5 @@
 @section Scripts {
     <script src="~/Scripts/jQuery/inputmask.js"></script>
     <script src="~/Scripts/jQuery/jquery.inputmask.js"></script>
-    <script src="~/Scripts/Custom/Empregado/Edicao.js"></script>
+    <script src="~/Scripts/Custom/Empregado/Novo.js"></script>
 }

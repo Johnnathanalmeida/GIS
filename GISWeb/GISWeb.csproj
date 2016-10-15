@@ -311,8 +311,9 @@
     <Content Include="Views\Fornecedor\Novo.cshtml" />
     <Content Include="Views\Fornecedor\Edicao.cshtml" />
     <Content Include="Views\Empregado\Index.cshtml" />
-    <Content Include="Views\Empregado\Novo.cshtml" />
     <Content Include="Views\Empregado\Edicao.cshtml" />
+    <Content Include="Views\Empregado\NovoProprio.cshtml" />
+    <Content Include="Views\Empregado\NovoTerceirizado.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
