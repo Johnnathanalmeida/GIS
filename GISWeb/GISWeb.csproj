@@ -140,6 +140,7 @@
     <Content Include="Content\Ace\css\ui.jqgrid.css" />
     <Content Include="Content\Ace\FontAwesome\css\font-awesome.css" />
     <Content Include="Content\Ace\FontAwesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Ace\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Croppie\croppie.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Ace\ace-extra.js" />
@@ -190,6 +191,8 @@
     <Content Include="Content\Ace\FontAwesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\Ace\FontAwesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Ace\FontAwesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\Ace\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Ace\fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jQuery\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jQuery\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\Custom\Departamento\Edicao.js" />
