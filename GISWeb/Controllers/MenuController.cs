@@ -41,10 +41,29 @@ namespace GISWeb.Controllers
             return View();
         }
 
+        private string BuscarMenuSuperior(Menu pMenu, string NomeMenuCompleto)
+        {
+            if (!string.IsNullOrEmpty(pMenu.IDMenuSuperior)) {
+                Menu tMenu = MenuBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDMenu.Equals(pMenu.IDMenuSuperior));
+
+                if (tMenu != null) {
+                    NomeMenuCompleto = tMenu.Nome + "/" + NomeMenuCompleto;
+                    BuscarMenuSuperior(tMenu, NomeMenuCompleto);
+                }
+
+            }
+            return NomeMenuCompleto;
+        }
+
         [MenuAtivo(MenuAtivo = "Administração/Menu")]
         public ActionResult Novo()
         {
-            ViewBag.Menus = new SelectList(MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDMenu", "Nome");
+            List<Menu> listaMenus = MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+            foreach (Menu iMenu in listaMenus) {
+                iMenu.Nome = BuscarMenuSuperior(iMenu, iMenu.Nome);
+            }
+
+            ViewBag.Menus = new SelectList(listaMenus.OrderBy(p => p.Ordem), "IDMenu", "Nome");
             return View();
         }
 
