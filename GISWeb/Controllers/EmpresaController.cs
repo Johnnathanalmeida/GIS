@@ -25,7 +25,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empresa")]
         public ActionResult Index()
         {
 
@@ -61,13 +61,13 @@ namespace GISWeb.Controllers
 
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empresa")]
         public ActionResult Novo() 
         {
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empresa")]
         public ActionResult Edicao(string id)
         {
             return View(EmpresaBusiness.Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(id)));
@@ -279,45 +279,6 @@ namespace GISWeb.Controllers
             {
                 return Json(new { erro = ex.Message });
             }
-        }
-
-        private string RenderRazorViewToString(string viewName, object model = null)
-        {
-            ViewData.Model = model;
-            using (var sw = new System.IO.StringWriter())
-            {
-                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
-                                                                         viewName);
-                var viewContext = new ViewContext(ControllerContext, viewResult.View,
-                                             ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
-            }
-        }
-
-        public RetornoJSON TratarRetornoValidacaoToJSON()
-        {
-
-            string msgAlerta = string.Empty;
-            foreach (ModelState item in ModelState.Values)
-            {
-                if (item.Errors.Count > 0)
-                {
-                    foreach (System.Web.Mvc.ModelError i in item.Errors)
-                    {
-                        msgAlerta += i.ErrorMessage;
-                    }
-                }
-            }
-
-            return new RetornoJSON()
-            {
-                Alerta = msgAlerta,
-                Erro = string.Empty,
-                Sucesso = string.Empty
-            };
-
         }
 
     }

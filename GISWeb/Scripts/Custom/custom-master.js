@@ -4,7 +4,7 @@
 
     if (menuAtivo && menuAtivo != '') {
 
-
+        debugger;
         var menusASeremAtivados = menuAtivo.split('/');
         var sNameMenuAnterior = "";
         for (var i = 0; i < menusASeremAtivados.length; i++) {

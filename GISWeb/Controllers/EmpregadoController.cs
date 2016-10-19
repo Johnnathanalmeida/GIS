@@ -39,7 +39,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Novo/Empregado/Próprios")]
+        [MenuAtivo(MenuAtivo = "Novo/Empregado/Proprios")]
         public ActionResult NovoProprio()
         {
             ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
@@ -54,10 +54,28 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Empresa")]
         public ActionResult Edicao(string id)
         {
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
+        }
+
+        [MenuAtivo(MenuAtivo = "Pesquisa/Empregado/Proprios")]
+        public ActionResult PesquisaProprio() {
+            return View();
+        }
+
+        [MenuAtivo(MenuAtivo = "Pesquisa/Empregado/Terceirizados")]
+        public ActionResult PesquisaTerceirizado()
+        {
+
+            ViewBag.Fornecedores = new SelectList(FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(p => p.Nome).ToList(), "IDFornecedor", "Nome");
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CarregarContratosPorFornecedor() {
+            return Json(new { resultado = TratarRetornoValidacaoToJSON() });
         }
 
         [HttpPost]
@@ -123,8 +141,6 @@ namespace GISWeb.Controllers
                 return Json(new { resultado = TratarRetornoValidacaoToJSON() });
             }
         }
-
-
 
 	}
 }

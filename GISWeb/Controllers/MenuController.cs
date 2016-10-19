@@ -27,7 +27,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administração/Menu")]
+        [MenuAtivo(MenuAtivo = "Administracao/Menu")]
         public ActionResult Index()
         {
             //ViewBag.Menus = MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
@@ -55,7 +55,7 @@ namespace GISWeb.Controllers
             return NomeMenuCompleto;
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Menu")]
+        [MenuAtivo(MenuAtivo = "Administracao/Menu")]
         public ActionResult Novo()
         {
             List<Menu> listaMenus = MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
@@ -100,7 +100,7 @@ namespace GISWeb.Controllers
             }
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Menu")]
+        [MenuAtivo(MenuAtivo = "Administracao/Menu")]
         public ActionResult Edicao(string id)
         {
 
@@ -227,30 +227,6 @@ namespace GISWeb.Controllers
 
         }
 
-
-        public RetornoJSON TratarRetornoValidacaoToJSON()
-        {
-
-            string msgAlerta = string.Empty;
-            foreach (ModelState item in ModelState.Values)
-            {
-                if (item.Errors.Count > 0)
-                {
-                    foreach (System.Web.Mvc.ModelError i in item.Errors)
-                    {
-                        msgAlerta += i.ErrorMessage;
-                    }
-                }
-            }
-
-            return new RetornoJSON()
-            {
-                Alerta = msgAlerta,
-                Erro = string.Empty,
-                Sucesso = string.Empty
-            };
-
-        }
 
 	}
 }

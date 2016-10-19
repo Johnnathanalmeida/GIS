@@ -24,7 +24,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administração/Perfil")]
+        [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
         public ActionResult Index()
         {
             ViewBag.Perfis = PerfilBusiness.Consulta.ToList();
@@ -32,7 +32,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Perfil")]
+        [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
         public ActionResult Novo()
         {
             return View();
@@ -71,7 +71,7 @@ namespace GISWeb.Controllers
             }
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Perfil")]
+        [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
         public ActionResult Edicao(string id)
         {
             return View(PerfilBusiness.Consulta.FirstOrDefault(p => p.IDPerfil.Equals(id)));
@@ -108,30 +108,6 @@ namespace GISWeb.Controllers
             {
                 return Json(new { resultado = TratarRetornoValidacaoToJSON() });
             }
-        }
-
-        public RetornoJSON TratarRetornoValidacaoToJSON()
-        {
-
-            string msgAlerta = string.Empty;
-            foreach (ModelState item in ModelState.Values)
-            {
-                if (item.Errors.Count > 0)
-                {
-                    foreach (System.Web.Mvc.ModelError i in item.Errors)
-                    {
-                        msgAlerta += i.ErrorMessage;
-                    }
-                }
-            }
-
-            return new RetornoJSON()
-            {
-                Alerta = msgAlerta,
-                Erro = string.Empty,
-                Sucesso = string.Empty
-            };
-
         }
 
 	}

@@ -24,11 +24,13 @@ namespace GISWeb.Controllers
 
         #endregion
 
+        [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
         public ActionResult Novo()
         {
             return View();
@@ -67,6 +69,7 @@ namespace GISWeb.Controllers
             }
         }
 
+        [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
         public ActionResult Edicao(string id)
         {
             return View(FornecedorBusiness.Consulta.FirstOrDefault(p => p.IDFornecedor.Equals(id)));

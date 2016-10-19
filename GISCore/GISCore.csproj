@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Abstract\IAlocacaoBusiness.cs" />
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
     <Compile Include="Business\Abstract\IContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoBusiness.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Business\Abstract\IPerfilMenuBusiness.cs" />
     <Compile Include="Business\Abstract\IUsuarioBusiness.cs" />
     <Compile Include="Business\Abstract\IUsuarioPerfilBusiness.cs" />
+    <Compile Include="Business\Concrete\AlocacaoBusiness.cs" />
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
     <Compile Include="Business\Concrete\ContratoBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoBusiness.cs" />

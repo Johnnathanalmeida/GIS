@@ -28,14 +28,14 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administração/Departamento")]
+        [MenuAtivo(MenuAtivo = "Administracao/Departamento")]
         public ActionResult Index()
         {
             ViewBag.Departamentos = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Departamento")]
+        [MenuAtivo(MenuAtivo = "Administracao/Departamento")]
         public ActionResult Novo()
         {
             ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
@@ -80,7 +80,7 @@ namespace GISWeb.Controllers
             }
         }
 
-        [MenuAtivo(MenuAtivo = "Administração/Departamento")]
+        [MenuAtivo(MenuAtivo = "Administracao/Departamento")]
         public ActionResult Edicao(string id)
         {
             return View(DepartamentoBusiness.Consulta.FirstOrDefault(p => p.IDDepartamento.Equals(id)));
@@ -119,47 +119,6 @@ namespace GISWeb.Controllers
             }
         }
 
-        private string RenderRazorViewToString(string viewName, object model = null)
-        {
-            ViewData.Model = model;
-            using (var sw = new System.IO.StringWriter())
-            {
-                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
-                                                                         viewName);
-                var viewContext = new ViewContext(ControllerContext, viewResult.View,
-                                             ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
-            }
-        }
-
-        public RetornoJSON TratarRetornoValidacaoToJSON()
-        {
-
-            string msgAlerta = string.Empty;
-            foreach (ModelState item in ModelState.Values)
-            {
-                if (item.Errors.Count > 0)
-                {
-                    foreach (System.Web.Mvc.ModelError i in item.Errors)
-                    {
-                        if (!string.IsNullOrEmpty(i.ErrorMessage))
-                            msgAlerta += i.ErrorMessage;
-                        else
-                            msgAlerta += i.Exception.Message;
-                    }
-                }
-            }
-
-            return new RetornoJSON()
-            {
-                Alerta = msgAlerta,
-                Erro = string.Empty,
-                Sucesso = string.Empty
-            };
-
-        }
 
 	}
 }

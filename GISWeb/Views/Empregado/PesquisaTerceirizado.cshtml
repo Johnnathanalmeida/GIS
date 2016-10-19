@@ -1,0 +1,56 @@
+﻿@model GISModel.DTO.Empregado.PesquisaEmpregadoViewModel
+
+@{
+    ViewBag.Title = "PesquisaTerceirizado";
+}
+
+<h2>PesquisaTerceirizado</h2>
+
+@using (Ajax.BeginForm("Cadastrar", "Departamento", null, new AjaxOptions { HttpMethod = "POST", OnSuccess = "OnSuccessCadastrarDepartamento", }, new { @id = "formCadastroDepartamento", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-5">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Fornecedor, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DropDownListFor(d => d.Fornecedor, (SelectList)ViewBag.Fornecedores, "Selecione um Fornecedor...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlFornecedor", @autocomplete = "on" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-10 col-sm-5">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Contrato, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DropDownListFor(d => d.Contrato, new SelectList("", "IDContrato", "Nome"), "Selecione antes um Fornecedor...", new { @class = "chosen-select form-control tag-input-style", @disabled = "disabled", @id = "ddlContrato", @autocomplete = "on" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-2 col-sm-2" style="padding-top: 25px">
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="clearfix">
+                        <button class="btn btn-sm btn-block btn-success" type="submit">
+                            <i class="ace-icon fa fa-check bigger-120"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+
+
+<div class="conteudoAjax">
+
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Custom/Empregado/PesquisaTerceirizado.js"></script>
+}

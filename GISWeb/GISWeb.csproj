@@ -201,6 +201,7 @@
     <Content Include="Scripts\Custom\Empregado\Edicao.js" />
     <Content Include="Scripts\Custom\Empregado\Listagem.js" />
     <Content Include="Scripts\Custom\Empregado\Novo.js" />
+    <Content Include="Scripts\Custom\Empregado\PesquisaTerceirizado.js" />
     <Content Include="Scripts\Custom\Empresa\Edicao.js" />
     <Content Include="Scripts\Custom\Empresa\Listagem.js" />
     <Content Include="Scripts\Custom\Empresa\Novo.js" />
@@ -317,6 +318,8 @@
     <Content Include="Views\Empregado\Edicao.cshtml" />
     <Content Include="Views\Empregado\NovoProprio.cshtml" />
     <Content Include="Views\Empregado\NovoTerceirizado.cshtml" />
+    <Content Include="Views\Empregado\PesquisaProprio.cshtml" />
+    <Content Include="Views\Empregado\PesquisaTerceirizado.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

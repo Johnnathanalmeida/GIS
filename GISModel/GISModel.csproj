@@ -52,10 +52,12 @@
     <Compile Include="CustomAttributes\CustomValidationCPFAttribute.cs" />
     <Compile Include="DTO\Conta\AutenticacaoModel.cs" />
     <Compile Include="DTO\Departamento\CadastroViewModel.cs" />
+    <Compile Include="DTO\Empregado\PesquisaEmpregadoViewModel.cs" />
     <Compile Include="DTO\Menu\PerfilMenuViewModel.cs" />
     <Compile Include="DTO\Permissoes\UsuarioPerfilViewModel.cs" />
     <Compile Include="DTO\Shared\RetornoJSON.cs" />
     <Compile Include="DTO\Usuario\UsuarioPerfisMenusViewModel.cs" />
+    <Compile Include="Entidades\Alocacao.cs" />
     <Compile Include="Entidades\Contrato.cs" />
     <Compile Include="Entidades\Departamento.cs" />
     <Compile Include="Entidades\Empregado.cs" />

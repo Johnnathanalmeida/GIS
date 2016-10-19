@@ -37,5 +37,7 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<EmpresaFornecedor> EmpresaFornecedor { get; set; }
 
+        public DbSet<Alocacao> Alocacao { get; set; }
+
     }
 }
