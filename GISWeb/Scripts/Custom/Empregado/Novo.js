@@ -11,6 +11,8 @@ jQuery(function ($) {
 
     });
 
+    AplicaDatePicker();
+
 });
 
 function OnSuccessCadastrarEmpregado(data) {

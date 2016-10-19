@@ -4,7 +4,6 @@
 
     if (menuAtivo && menuAtivo != '') {
 
-        debugger;
         var menusASeremAtivados = menuAtivo.split('/');
         var sNameMenuAnterior = "";
         for (var i = 0; i < menusASeremAtivados.length; i++) {
@@ -20,16 +19,6 @@
 
         }
 
-        //if (menusASeremAtivados.length == 1) {
-        //    $('#ml' + menusASeremAtivados[0]).addClass('active');
-        //} else if (menusASeremAtivados.length == 2) {
-        //    $('#ml' + menusASeremAtivados[0]).addClass('active open');
-        //    $('#ml' + menusASeremAtivados[0] + menusASeremAtivados[1]).addClass('active');
-        //} else if (menusASeremAtivados.length == 3) {
-        //    $('#ml' + menusASeremAtivados[0]).addClass('active open');
-        //    $('#ml' + menusASeremAtivados[0] + menusASeremAtivados[1]).addClass('active open');
-        //    $('#ml' + menusASeremAtivados[0] + menusASeremAtivados[1] + menusASeremAtivados[2]).addClass('active');
-        //}
     }
 
 });

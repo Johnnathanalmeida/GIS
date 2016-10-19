@@ -1,12 +1,16 @@
 ﻿@model GISModel.DTO.Empregado.PesquisaEmpregadoViewModel
 
 @{
-    ViewBag.Title = "PesquisaTerceirizado";
+    ViewBag.Title = "Pesquisa de Empregados Terceirizados";
 }
 
-<h2>PesquisaTerceirizado</h2>
+<div class="page-header">
+    <h1 class="green">
+        Pesquisa de Empregados Terceirizados
+    </h1>
+</div>
 
-@using (Ajax.BeginForm("Cadastrar", "Departamento", null, new AjaxOptions { HttpMethod = "POST", OnSuccess = "OnSuccessCadastrarDepartamento", }, new { @id = "formCadastroDepartamento", @class = "form-horizontal" }))
+@using (Ajax.BeginForm("PesquisarTerceirizados", "Empregado", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginPesquisarEmpregado", OnSuccess = "OnSuccessPesquisarEmpregado", }, new { @id = "formPesquisaEmpregado", @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
 
@@ -52,5 +56,10 @@
 </div>
 
 @section Scripts {
+    <script src="~/Scripts/Ace/chosen.jquery.js"></script>
     <script src="~/Scripts/Custom/Empregado/PesquisaTerceirizado.js"></script>
+}
+
+@section Stylesheets {
+    <link href="~/Content/Ace/css/chosen.css" rel="stylesheet" />
 }

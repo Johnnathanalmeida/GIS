@@ -27,6 +27,8 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
         public ActionResult Index()
         {
+            ViewBag.Fornecedores = FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+
             return View();
         }
 
@@ -108,5 +110,70 @@ namespace GISWeb.Controllers
             }
         }
 
-	}
+        public ActionResult BuscarFornecedorPorID(string IDFornecedor)
+        {
+
+            try
+            {
+                Fornecedor oFornecedor = FornecedorBusiness.Consulta.FirstOrDefault(p => p.IDFornecedor.Equals(IDFornecedor));
+                if (oFornecedor == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Alerta = "Fornecedor com o ID '" + IDFornecedor + "' não encontrado." } });
+                }
+                else
+                {
+                    return Json(new { data = RenderRazorViewToString("_Detalhes", oFornecedor) });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Terminar(string IDFornecedor)
+        {
+
+            try
+            {
+                Fornecedor oFornecedor = FornecedorBusiness.Consulta.FirstOrDefault(p => p.IDFornecedor.Equals(IDFornecedor));
+                if (oFornecedor == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir a empresa, pois a mesma não foi localizada." } });
+                }
+                else
+                {
+
+                    oFornecedor.DataExclusao = DateTime.Now;
+                    oFornecedor.UsuarioExclusao = "LoginTeste";
+                    FornecedorBusiness.Alterar(oFornecedor);
+
+                    return Json(new { resultado = new RetornoJSON() { Sucesso = "O fornecedor '" + oFornecedor.Nome + "' foi excluído com sucesso." } });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
+
+        }
+
+    }
 }

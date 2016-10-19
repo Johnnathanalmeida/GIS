@@ -62,7 +62,7 @@
                 <div class="form-group">
                     @Html.LabelFor(d => d.DataNascimento, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.DataNascimento, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        @Html.EditorFor(d => d.DataNascimento, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "col-xs-12 col-sm-12 date-picker" } })
                         @Html.ValidationMessageFor(d => d.DataNascimento, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                     </div>
                 </div>
@@ -110,7 +110,15 @@
 
 </div> <!-- Fim Form -->
 @section Scripts {
+    <script src="~/Scripts/Ace/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/Ace/moment.js"></script>
+
     <script src="~/Scripts/jQuery/inputmask.js"></script>
     <script src="~/Scripts/jQuery/jquery.inputmask.js"></script>
     <script src="~/Scripts/Custom/Empregado/Novo.js"></script>
+}
+
+@section Stylesheets {
+    <link href="~/Content/Ace/css/chosen.css" rel="stylesheet" />
+    <link href="~/Content/Ace/css/datepicker.css" rel="stylesheet" />
 }

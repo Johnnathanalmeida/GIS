@@ -320,6 +320,8 @@
     <Content Include="Views\Empregado\NovoTerceirizado.cshtml" />
     <Content Include="Views\Empregado\PesquisaProprio.cshtml" />
     <Content Include="Views\Empregado\PesquisaTerceirizado.cshtml" />
+    <Content Include="Views\Empregado\_Terceirizados.cshtml" />
+    <Content Include="Views\Fornecedor\_Detalhes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

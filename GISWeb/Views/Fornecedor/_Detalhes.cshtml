@@ -1,0 +1,38 @@
+﻿@model GISModel.Entidades.Fornecedor
+
+@if (Model != null)
+{
+
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <td><strong>Nome</strong></td>
+            <td>@Model.Nome</td>
+        </tr>
+        <tr>
+            <td><strong>Número</strong></td>
+            <td>@Model.Numero</td>
+        </tr>
+        <tr>
+            <td><strong>CNPJ</strong></td>
+            <td>@Model.CNPJ</td>
+        </tr>
+        <tr>
+            <td><strong>Telefone</strong></td>
+            <td>@Model.Telefone</td>
+        </tr>
+        <tr>
+            <td><strong>E-mail</strong></td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td><strong>Endereço</strong></td>
+            <td>@Model.Endereco</td>
+        </tr>
+        <tr>
+            <td><strong>Descrição</strong></td>
+            <td>@Model.Descricao</td>
+        </tr>
+    </table>
+
+}
+
