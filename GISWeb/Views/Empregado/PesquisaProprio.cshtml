@@ -1,12 +1,64 @@
-﻿
+﻿@model GISModel.DTO.Empregado.PesquisaEmpregadoViewModel
+
 @{
-    ViewBag.Title = "PesquisaProprio";
+    ViewBag.Title = "Pesquisa de Empregados Próprios";
 }
 
-<h2>PesquisaProprio</h2>
+<div class="page-header">
+    <h1 class="blue">
+        Pesquisa de Empregados Próprios
+    </h1>
+</div>
+
+@using (Ajax.BeginForm("PesquisarProprios", "Empregado", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginPesquisarEmpregado", OnSuccess = "OnSuccessPesquisarEmpregado", }, new { @id = "formPesquisaEmpregado", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-5">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Empresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DropDownListFor(d => d.Empresa, (SelectList)ViewBag.Empresas, "Selecione uma empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-10 col-sm-5">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Contrato, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DropDownListFor(d => d.Contrato, new SelectList("", "IDContrato", "Nome"), "Selecione antes uma empresa...", new { @class = "chosen-select form-control tag-input-style", @disabled = "disabled", @id = "ddlContrato", @autocomplete = "on" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-2 col-sm-2" style="padding-top: 25px">
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="clearfix">
+                        <button class="btn btn-sm btn-block btn-success" type="submit">
+                            <i class="ace-icon fa fa-check bigger-120"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="conteudoAjax">
+</div>
 
 @section Scripts {
-    <script src="~/Scripts/jQuery/inputmask.js"></script>
-    <script src="~/Scripts/jQuery/jquery.inputmask.js"></script>
-    <script src="~/Scripts/Custom/Empregado/Novo.js"></script>
+    @Scripts.Render("~/bundles/jQ_dataTable")
+    <script src="~/Scripts/Ace/chosen.jquery.js"></script>
+    <script src="~/Scripts/Custom/Empregado/PesquisaProprio.js"></script>
+}
+
+@section Stylesheets {
+    <link href="~/Content/Ace/css/chosen.css" rel="stylesheet" />
 }

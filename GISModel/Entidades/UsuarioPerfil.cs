@@ -25,5 +25,7 @@ namespace GISModel.Entidades
 
         public virtual Perfil Perfil { get; set; }
 
+        public string IDArea { get; set; }
+
     }
 }

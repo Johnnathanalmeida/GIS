@@ -2,6 +2,7 @@
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
+using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,9 @@ namespace GISWeb.Controllers
 
             [Inject]
             public IFornecedorBusiness FornecedorBusiness { get; set; }
+
+            [Inject]
+            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
         #endregion
 
@@ -46,6 +50,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    fornecedor.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     FornecedorBusiness.Inserir(fornecedor);
 
                     TempData["MensagemSucesso"] = "O fornecedor '" + fornecedor.Nome + "' foi cadastrado com sucesso.";

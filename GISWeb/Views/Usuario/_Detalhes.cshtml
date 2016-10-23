@@ -1,0 +1,41 @@
+﻿@model GISModel.Entidades.Usuario
+
+@if (Model != null)
+{
+
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+            <td><strong>Nome</strong></td>
+            <td>@Model.Nome</td>
+        </tr>
+        <tr>
+            <td><strong>Login</strong></td>
+            <td>@Model.Login</td>
+        </tr>
+        <tr>
+            <td><strong>CPF</strong></td>
+            <td>@Model.CPF</td>
+        </tr>
+        <tr>
+            <td><strong>E-mail</strong></td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td><strong>Data de Cadastro</strong></td>
+            <td>@Model.DataInclusao</td>
+        </tr>
+        <tr>
+            <td><strong>Tipo de Acesso</strong></td>
+            <td>@Model.TipoDeAcesso</td>
+        </tr>
+        <tr>
+            <td><strong>Empresa</strong></td>
+            <td>@Model.Empresa.NomeFantasia</td>
+        </tr>
+        <tr>
+            <td><strong>Departamento</strong></td>
+            <td>@Model.Departamento.Sigla</td>
+        </tr>
+    </table>
+
+}

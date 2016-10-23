@@ -2,6 +2,7 @@
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
+using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,9 @@ namespace GISWeb.Controllers
 
             [Inject]
             public IPerfilMenuBusiness PerfilMenuBusiness { get; set; }
+
+            [Inject]
+            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
         #endregion
 
@@ -75,6 +79,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    Menu.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     MenuBusiness.Inserir(Menu);
 
                     TempData["MensagemSucesso"] = "O menu '" + Menu.Nome + "' foi cadastrado com sucesso.";

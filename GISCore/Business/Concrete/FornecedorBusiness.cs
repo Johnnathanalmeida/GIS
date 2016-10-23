@@ -41,7 +41,7 @@ namespace GISCore.Business.Concrete
                 tempFornecedor.Email = fornecedor.Email;
                 tempFornecedor.Endereco = fornecedor.Endereco;
                 tempFornecedor.UsuarioExclusao = fornecedor.UsuarioExclusao;
-                tempFornecedor.DataExclusao = fornecedor.DataExclusao;
+                //tempFornecedor.DataExclusao = fornecedor.DataExclusao;
 
                 base.Alterar(tempFornecedor);
 

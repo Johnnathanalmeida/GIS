@@ -3,6 +3,7 @@ using GISModel.DTO.Menu;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
+using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,9 @@ namespace GISWeb.Controllers
             [Inject]
             public IPerfilBusiness PerfilBusiness { get; set; }
 
+            [Inject]
+            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
+
         #endregion
 
         [HttpPost]
@@ -42,13 +46,13 @@ namespace GISWeb.Controllers
                         {
                             if (!string.IsNullOrEmpty(IDUsuario))
                             {
-                                PerfilMenuBusiness.Inserir(new PerfilMenu() { IDMenu = IDUsuario, IDPerfil = Perfil });
+                                PerfilMenuBusiness.Inserir(new PerfilMenu() { IDMenu = IDUsuario, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                             }
                         }
                     }
                     else
                     {
-                        PerfilMenuBusiness.Inserir(new PerfilMenu() { IDMenu = Menu, IDPerfil = Perfil });
+                        PerfilMenuBusiness.Inserir(new PerfilMenu() { IDMenu = Menu, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
                 else
@@ -60,13 +64,13 @@ namespace GISWeb.Controllers
                         {
                             if (!string.IsNullOrEmpty(IDUsuario))
                             {
-                                PerfilMenuBusiness.Alterar(new PerfilMenu() { IDMenu = IDUsuario, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = "LoginTeste" });
+                                PerfilMenuBusiness.Alterar(new PerfilMenu() { IDMenu = IDUsuario, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                             }
                         }
                     }
                     else
                     {
-                        PerfilMenuBusiness.Alterar(new PerfilMenu() { IDMenu = Menu, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = "LoginTeste" });
+                        PerfilMenuBusiness.Alterar(new PerfilMenu() { IDMenu = Menu, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
 

@@ -1,7 +1,117 @@
-﻿
+﻿@using GISModel.Entidades
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Listagem de Usuários";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">
+            Usuários
+            <a href="@Url.Action("Novo", "Usuario")" class="btn btn-white btn-info btn-bold" style="float: right; margin-top: -2px;">
+                <i class="ace-icon fa fa-plus bigger-120 blue"></i>
+                Novo Usuário
+            </a>
+        </h3>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-xs-12">
+
+        @{
+            Html.RenderPartial("_MensagensDeRetorno");
+        }
+
+        @if (ViewBag.Usuarios != null)
+        {
+            <div>
+                <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Login</th>
+                            <th>CPF</th>
+                            <th>E-mail</th>
+                            <th>Empresa</th>
+                            <th>Departamento</th>
+                            <th width="89px"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (Usuario iUsuario in ViewBag.Usuarios)
+                        {
+                            <tr id="linha-@iUsuario.IDUsuario">
+                                <td>@iUsuario.Nome</td>
+                                <td>@iUsuario.Login</td>
+                                <td>@iUsuario.CPF</td>
+                                <td>@iUsuario.Email</td>
+                                <td>@iUsuario.Empresa.NomeFantasia</td>
+                                <td>@iUsuario.Departamento.Sigla</td>
+                                <td>
+                                    <div class="hidden-sm hidden-xs action-buttons">
+                                        <a class="blue" href="#" onclick="BuscarDetalhesUsuario('@iUsuario.IDUsuario'); return false;">
+                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                        </a>
+
+                                        <a href='@Url.Action("Edicao", "Usuario", new { id = @iUsuario.IDUsuario })' class="green">
+                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                        </a>
+
+                                        <a class="red" href="#" onclick="DeletarEmpresa('@iUsuario.IDUsuario', '@iUsuario.Nome');">
+                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                            </button>
+
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesUsuario('@iUsuario.IDUsuario'); return false;" data-rel="tooltip" title="View">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href='@Url.Action("Edicao", "Usuario", new { id = @iUsuario.IDUsuario })' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" class="tooltip-error" onclick="DeletarUsuario('@iUsuario.IDUsuario', '@iUsuario.Nome');" data-rel="tooltip" title="Delete">
+                                                        <span class="red">
+                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jQ_dataTable")
+    <script src="~/Scripts/Custom/Usuario/Listagem.js"></script>
+}

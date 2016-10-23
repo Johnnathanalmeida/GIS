@@ -3,6 +3,7 @@ using GISModel.DTO.Permissoes;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
+using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,9 @@ namespace GISWeb.Controllers
             [Inject]
             public IEmpresaBusiness EmpresaBusiness { get; set; }
 
+            [Inject]
+            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
+
         #endregion
 
         [MenuAtivo(MenuAtivo = "Administracao/Permissões")]
@@ -51,13 +55,14 @@ namespace GISWeb.Controllers
                     if (UIDsUsuarios.Contains("|")) {
                         foreach (string IDUsuario in UIDsUsuarios.Split('|')) {
                             if (!string.IsNullOrEmpty(IDUsuario)) {
-                                UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDUsuario = IDUsuario, IDPerfil = Perfil });        
+                                UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDUsuario = IDUsuario, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });        
                             }
                         }
                     }
                     else
                     {
-                        UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDUsuario = UIDsUsuarios, IDPerfil = Perfil });
+
+                        UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDUsuario = UIDsUsuarios, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
                 else
@@ -69,13 +74,13 @@ namespace GISWeb.Controllers
                         {
                             if (!string.IsNullOrEmpty(IDUsuario))
                             {
-                                UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDUsuario = IDUsuario, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = "LoginTeste" });
+                                UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDUsuario = IDUsuario, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                             }
                         }
                     }
                     else
                     {
-                        UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDUsuario = UIDsUsuarios, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = "LoginTeste" });
+                        UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDUsuario = UIDsUsuarios, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
                 

@@ -9,6 +9,8 @@ namespace GISModel.DTO.Empregado
     public class PesquisaEmpregadoViewModel
     {
 
+        public string Empresa { get; set; }
+        
         public string Fornecedor { get; set; }
 
         public string Contrato { get; set; }

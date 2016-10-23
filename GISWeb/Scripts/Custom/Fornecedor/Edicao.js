@@ -1,12 +1,12 @@
 ﻿
-function OnSuccessAtualizarEmpresa(data) {
+function OnSuccessAtualizarFornecedor(data) {
     $('#formEdicaoFornecedor').removeAttr('style');
     $(".LoadingLayout").hide();
     $('#btnSalvar').show();
     TratarResultadoJSON(data.resultado);
 }
 
-function OnBeginAtualizarEmpresa() {
+function OnBeginAtualizarFornecedor() {
     $(".LoadingLayout").show();
     $('#btnSalvar').hide();
     $("#formEdicaoFornecedor").css({ opacity: "0.5" });

@@ -2,6 +2,7 @@
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
+using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,9 @@ namespace GISWeb.Controllers
 
             [Inject]
             public IEmpresaBusiness EmpresaBusiness { get; set; }
+
+            [Inject]
+            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
         #endregion
 
@@ -81,7 +85,8 @@ namespace GISWeb.Controllers
             {
                 try
                 {
-                    
+
+                    Empresa.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     EmpresaBusiness.Inserir(Empresa);
 
                     TempData["MensagemSucesso"] = "A empresa '" + Empresa.NomeFantasia + "' foi cadastrada com sucesso.";

@@ -5,7 +5,7 @@
 }
 
 <div class="page-header">
-    <h1 class="green">
+    <h1 class="blue">
         Pesquisa de Empregados Terceirizados
     </h1>
 </div>
@@ -50,12 +50,11 @@
     
 }
 
-
 <div class="conteudoAjax">
-
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jQ_dataTable")
     <script src="~/Scripts/Ace/chosen.jquery.js"></script>
     <script src="~/Scripts/Custom/Empregado/PesquisaTerceirizado.js"></script>
 }

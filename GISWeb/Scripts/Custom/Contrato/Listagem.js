@@ -4,15 +4,14 @@
 
 });
 
-
-function BuscarDetalhesUsuario(IDUsuario) {
+function BuscarDetalhesContrato(IDContrato) {
 
     $(".LoadingLayout").show();
 
     $.ajax({
         method: "POST",
-        url: "/Usuario/BuscarUsuarioPorID",
-        data: { idUsuario: IDUsuario },
+        url: "/Contrato/BuscarContratoPorID",
+        data: { IDContrato: IDContrato },
         error: function (erro) {
             $(".LoadingLayout").hide();
             ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
@@ -23,7 +22,7 @@ function BuscarDetalhesUsuario(IDUsuario) {
             if (content.data != null) {
                 bootbox.dialog({
                     message: content.data,
-                    title: "<span class='bigger-110'>Detalhes do Usuário</span>",
+                    title: "<span class='bigger-110'>Detalhes do Contrato</span>",
                     backdrop: true,
                     locale: "br",
                     buttons: {},
@@ -39,7 +38,7 @@ function BuscarDetalhesUsuario(IDUsuario) {
 
 }
 
-function DeletarUsuario(IDUsuario, Nome) {
+function DeletarContrato(IDContrato, Numero) {
 
     var callback = function () {
         $('.LoadingLayout').show();
@@ -47,8 +46,8 @@ function DeletarUsuario(IDUsuario, Nome) {
 
         $.ajax({
             method: "POST",
-            url: "/Usuario/Terminar",
-            data: { IDEmpresa: IDEmpresa },
+            url: "/Contrato/Terminar",
+            data: { IDContrato: IDContrato },
             error: function (erro) {
                 $(".LoadingLayout").hide();
                 $("#dynamic-table").css({ opacity: '' });
@@ -67,6 +66,6 @@ function DeletarUsuario(IDUsuario, Nome) {
         });
     };
 
-    ExibirMensagemDeConfirmacaoSimples("Tem certeza que deseja excluir o usuário '" + Nome + "'?", "Exclusão de Usuário", callback, "btn-danger");
+    ExibirMensagemDeConfirmacaoSimples("Tem certeza que deseja excluir o contrato '" + Numero + "'?", "Exclusão de Contrato", callback, "btn-danger");
 
 }

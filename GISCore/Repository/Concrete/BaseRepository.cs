@@ -23,9 +23,9 @@ namespace GISCore.Repository.Concrete
         public void Inserir(T entidade)
         {
             entidade.DataInclusao = DateTime.Now;
-            entidade.UsuarioInclusao = "LoginTeste";
+            entidade.UsuarioInclusao = entidade.UsuarioInclusao;
             entidade.DataExclusao = DateTime.MaxValue;
-            //entidade.ID = Guid.NewGuid().ToString();
+
             Context.Entry(entidade).State = EntityState.Added;
             Context.SaveChanges();
         }

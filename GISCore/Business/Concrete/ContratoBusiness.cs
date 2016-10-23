@@ -35,7 +35,7 @@ namespace GISCore.Business.Concrete
             {
                 tempContrato.Numero = contrato.Numero;
                 tempContrato.IDDepartamento = contrato.IDDepartamento;
-                tempContrato.IDEmpresa = contrato.IDEmpresa;
+                //tempContrato.IDEmpresa = contrato.IDEmpresa;
                 tempContrato.Inicio = contrato.Inicio;
                 tempContrato.Fim = contrato.Fim;
 

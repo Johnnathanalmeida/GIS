@@ -2,6 +2,7 @@
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
+using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,9 @@ namespace GISWeb.Controllers
 
             [Inject]
             public IPerfilBusiness PerfilBusiness { get; set; }
+
+            [Inject]
+            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
         #endregion
 
@@ -46,6 +50,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    Perfil.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     PerfilBusiness.Inserir(Perfil);
 
                     TempData["MensagemSucesso"] = "O perfil '" + Perfil.Nome + "' foi cadastrado com sucesso.";
@@ -85,6 +90,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+
                     PerfilBusiness.Alterar(Perfil);
 
                     TempData["MensagemSucesso"] = "O perfil '" + Perfil.Nome + "' foi atualizado com sucesso.";

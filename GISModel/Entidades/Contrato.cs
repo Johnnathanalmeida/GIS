@@ -29,11 +29,11 @@ namespace GISModel.Entidades
 
         public string Descricao { get; set; }
 
-        [Display(Name = "Empresa")]
-        [Required(ErrorMessage = "Selecione uma empresa")]
-        public string IDEmpresa { get; set; }
+        [Display(Name = "Fornecedor")]
+        [Required(ErrorMessage = "Selecione um fornecedor")]
+        public string IDFornecedor { get; set; }
 
-        public virtual Empresa Empresa { get; set; }
+        public virtual Fornecedor Fornecedor { get; set; }
 
         [Display(Name = "Departamento")]
         [Required(ErrorMessage = "Selecione um departamento")]

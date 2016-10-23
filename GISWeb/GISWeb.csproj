@@ -182,6 +182,7 @@
     <Content Include="Scripts\Ace\jQ\typeahead.jquery.js" />
     <Content Include="Scripts\Ace\moment.js" />
     <Content Include="Scripts\Ace\respond.js" />
+    <Content Include="Scripts\Custom\Contrato\Listagem.js" />
     <Content Include="Scripts\Custom\Contrato\Novo.js" />
     <Content Include="Scripts\Custom\custom-functions.js" />
     <Content Include="Scripts\Custom\Conta\custom-login.js" />
@@ -199,8 +200,8 @@
     <Content Include="Scripts\Custom\Departamento\Listagem.js" />
     <Content Include="Scripts\Custom\Departamento\Novo.js" />
     <Content Include="Scripts\Custom\Empregado\Edicao.js" />
-    <Content Include="Scripts\Custom\Empregado\Listagem.js" />
     <Content Include="Scripts\Custom\Empregado\Novo.js" />
+    <Content Include="Scripts\Custom\Empregado\PesquisaProprio.js" />
     <Content Include="Scripts\Custom\Empregado\PesquisaTerceirizado.js" />
     <Content Include="Scripts\Custom\Empresa\Edicao.js" />
     <Content Include="Scripts\Custom\Empresa\Listagem.js" />
@@ -322,6 +323,8 @@
     <Content Include="Views\Empregado\PesquisaTerceirizado.cshtml" />
     <Content Include="Views\Empregado\_Terceirizados.cshtml" />
     <Content Include="Views\Fornecedor\_Detalhes.cshtml" />
+    <Content Include="Views\Empregado\_Proprios.cshtml" />
+    <Content Include="Views\Usuario\_Detalhes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
