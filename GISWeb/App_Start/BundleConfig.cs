@@ -30,7 +30,8 @@ namespace GISWeb.App_Start
                         "~/Scripts/Ace/jQ/jquery-ui.js",
                         "~/Scripts/Ace/jQ/jquery-ui.custom.js",
                         "~/Scripts/Ace/jQ/jquery.ui.touch-punch.js",
-                        "~/Scripts/Ace/jQ/jquery.gritter.js"));
+                        "~/Scripts/Ace/jQ/jquery.gritter.js",
+                        "~/Scripts/Pace/pace.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ace_js_extra").Include(
                         "~/Scripts/Ace/ace-extra.js"));

@@ -41,7 +41,7 @@
         </div>
     }
     else { 
-        using (Ajax.BeginForm("Atualizar", "Departamento", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginAtualizarDepartamento", OnSuccess = "OnSuccessCadastrarDepartamento", }, new { @id = "formEdicaoDepartamento", @class = "form-horizontal" }))
+        using (Ajax.BeginForm("Atualizar", "Departamento", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginAtualizarDepartamento", OnSuccess = "OnSuccessAtualizarDepartamento", }, new { @id = "formEdicaoDepartamento", @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
 
@@ -123,5 +123,5 @@
 
 </div> <!-- Fim Form -->
 @section Scripts {
-    <script src="~/Scripts/Custom/Departamento/Novo.js"></script>
+    <script src="~/Scripts/Custom/Departamento/Edicao.js"></script>
 }

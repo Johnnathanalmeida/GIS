@@ -129,6 +129,7 @@ function AplicaTooltip() {
 function AplicaDatePicker() {
     $('.date-picker').datepicker({
         autoclose: true,
+        dateFormat: 'dd/mm/yyyy',
         todayHighlight: true,
         language: 'pt-BR'
     })

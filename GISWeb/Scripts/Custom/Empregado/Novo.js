@@ -2,15 +2,9 @@
 
 jQuery(function ($) {
 
-    $("#txtCPF").keydown(function () {
-        try {
-            $("#txtCPF").unmask();
-        } catch (e) { }
-
-        $("#txtCPF").inputmask("999.999.999-99");
-
-    });
-
+    $('#txtCPF').mask('999.999.999-99');
+    //$('#txtDataNascimento').mask('99/99/9999');
+    $("#txtTelefone").mask("(99) 9999 - 9999?9", { placeholder: " " });
     AplicaDatePicker();
 
 });

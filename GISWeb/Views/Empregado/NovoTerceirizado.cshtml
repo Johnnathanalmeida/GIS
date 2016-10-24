@@ -53,8 +53,14 @@
                 <div class="form-group">
                     @Html.LabelFor(d => d.Email, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.Email, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-at bigger-110"></i>
+                            </span>
+                            @Html.EditorFor(d => d.Email, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        </div>
                         @Html.ValidationMessageFor(d => d.Email, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                        
                     </div>
                 </div>
             </div>
@@ -62,7 +68,12 @@
                 <div class="form-group">
                     @Html.LabelFor(d => d.DataNascimento, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.DataNascimento, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "col-xs-12 col-sm-12 date-picker" } })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                            @Html.EditorFor(d => d.DataNascimento, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "col-xs-12 col-sm-12 date-picker", @id = "txtDataNascimento" } })
+                        </div>
                         @Html.ValidationMessageFor(d => d.DataNascimento, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                     </div>
                 </div>
@@ -74,7 +85,13 @@
                 <div class="form-group">
                     @Html.LabelFor(d => d.Telefone, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.Telefone, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-phone bigger-110"></i>
+                            </span>
+
+                            @Html.EditorFor(d => d.Telefone, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtTelefone" } })
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,12 +126,13 @@
     }
 
 </div> <!-- Fim Form -->
+
 @section Scripts {
+    <script src="~/Scripts/Ace/chosen.jquery.js"></script>
+    <script src="~/Scripts/Ace/jQ/jquery.inputmask.js"></script>
     <script src="~/Scripts/Ace/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/Ace/moment.js"></script>
 
-    <script src="~/Scripts/jQuery/inputmask.js"></script>
-    <script src="~/Scripts/jQuery/jquery.inputmask.js"></script>
     <script src="~/Scripts/Custom/Empregado/Novo.js"></script>
 }
 

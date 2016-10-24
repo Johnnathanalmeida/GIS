@@ -47,7 +47,7 @@ namespace GISWeb.Controllers
         }
 
         public ActionResult ListarDepartamentosPorEmpresa(string idEmpresa) {
-            return Json(new { resultado = DepartamentoBusiness.Consulta.Where(p => p.IDEmpresa.Equals(idEmpresa)).ToList().OrderBy(p=>p.Sigla) });
+            return Json(new { resultado = DepartamentoBusiness.Consulta.Where(p => p.IDEmpresa.Equals(idEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)).ToList().OrderBy(p=>p.Sigla) });
         }
 
         [HttpPost]
@@ -58,12 +58,22 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    bool bRedirect = false;
+                    if (Departamento.IDDepartamento != null && Departamento.IDDepartamento.Equals("redirect"))
+                        bRedirect = true;
+
                     Departamento.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     DepartamentoBusiness.Inserir(Departamento);
 
-                    TempData["MensagemSucesso"] = "O departamento '" + Departamento.Sigla + "' foi cadastrado com sucesso.";
-
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Departamento") } });
+                    if (bRedirect)
+                    {
+                        TempData["MensagemSucesso"] = "O departamento '" + Departamento.Sigla + "' foi cadastrado com sucesso.";
+                        return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Departamento") } });
+                    }
+                    else {
+                        return Json(new { resultado = new RetornoJSON() { Sucesso = "O departamento '" + Departamento.Sigla + "' foi cadastrado com sucesso." } });
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -87,6 +97,8 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Departamento")]
         public ActionResult Edicao(string id)
         {
+            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
+
             return View(DepartamentoBusiness.Consulta.FirstOrDefault(p => p.IDDepartamento.Equals(id)));
         }
 
@@ -98,6 +110,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    Departamento.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     DepartamentoBusiness.Alterar(Departamento);
 
                     TempData["MensagemSucesso"] = "O departamento '" + Departamento.Sigla + "' foi atualizado com sucesso.";

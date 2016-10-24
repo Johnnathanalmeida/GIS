@@ -27,7 +27,7 @@ namespace GISModel.Entidades
 
         [Display(Name = "Data de Nascimento")]
         [Required(ErrorMessage = "Informe sua data de nascimento")]
-        public DateTime? DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
 
         [Required(ErrorMessage = "Informe o e-mail do usuário")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Informe um e-mail válido")]

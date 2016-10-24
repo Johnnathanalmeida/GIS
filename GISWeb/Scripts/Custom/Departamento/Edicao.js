@@ -42,7 +42,7 @@
 
 });
 
-function OnSuccessCadastrarDepartamento(data) {
+function OnSuccessAtualizarDepartamento(data) {
     $('#formEdicaoDepartamento').removeAttr('style');
     $(".LoadingLayout").hide();
     $('#blnSalvar').show();

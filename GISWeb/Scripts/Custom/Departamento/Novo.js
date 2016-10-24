@@ -44,6 +44,12 @@
 
 function OnSuccessCadastrarDepartamento(data) {
     TratarResultadoJSON(data.resultado);
+
+    $("#btnLimpar").click();
+
+    $('#ddlDepartamento').empty();
+    $('#ddlDepartamento').append($('<option></option>').val("").html("Selecione antes uma Empresa..."));
+    $("#ddlDepartamento").attr("disabled", true);
 }
 
 function OnBeginCadastrarEmpresa() {
