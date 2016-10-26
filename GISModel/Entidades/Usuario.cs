@@ -46,7 +46,9 @@ namespace GISModel.Entidades
 
         public virtual Departamento Departamento { get; set; }
 
-        public TipoDeAcesso TipoDeAcesso { get; set; }
+        [Display(Name = "Tipo de Acesso")]
+        [Required(ErrorMessage = "Selecione como este usuário será validado")]
+        public TipoDeAcesso? TipoDeAcesso { get; set; }
 
     }
 }

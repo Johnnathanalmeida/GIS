@@ -57,12 +57,23 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    bool bRedirect = false;
+                    if (Usuario.IDUsuario != null && Usuario.IDUsuario.Equals("redirect"))
+                        bRedirect = true;
+
                     Usuario.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     UsuarioBusiness.Inserir(Usuario);
 
-                    TempData["MensagemSucesso"] = "O usuário '" + Usuario.Nome + "' foi cadastrado com sucesso.";
+                    if (bRedirect)
+                    {
+                        TempData["MensagemSucesso"] = "O usuário '" + Usuario.Nome + "' foi cadastrado com sucesso.";
+                        return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Usuario") } });
+                    }
+                    else
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Sucesso = "O usuário '" + Usuario.Nome + "' foi cadastrado com sucesso." } });
+                    }
 
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Usuario") } });
                 }
                 catch (Exception ex)
                 {

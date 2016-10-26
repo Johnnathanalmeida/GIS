@@ -2,14 +2,7 @@
 
 jQuery(function ($) {
 
-    $("#txtCPF").keydown(function () {
-        try {
-            $("#txtCPF").unmask();
-        } catch (e) { }
-
-        $("#txtCPF").inputmask("999.999.999-99");
-
-    });
+    $('#txtCPF').mask('999.999.999-99');
 
     $("#ddlEmpresa").change(function () {
 
@@ -54,5 +47,15 @@ jQuery(function ($) {
 });
 
 function OnSuccessCadastrarUsuario(data) {
-    ExibirMsgGritter(data.resultado);
+    TratarResultadoJSON(data.resultado);
+
+    $("#btnLimpar").click();
+    $(".LoadingLayout").hide();
+    $("#formCadastroUsuario").css({ opacity: "1" });
+
+}
+
+function OnBeginCadastrarUsuario() {
+    $(".LoadingLayout").show();
+    $("#formCadastroUsuario").css({ opacity: "0.5" });
 }

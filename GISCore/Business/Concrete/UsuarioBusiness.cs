@@ -23,7 +23,7 @@ namespace GISCore.Business.Concrete
 
             [Inject]
             public IUsuarioPerfilBusiness UsuarioPerfilBusiness { get; set; }
-
+        
             [Inject]
             public IPerfilBusiness PerfilBusiness { get; set; }
 
@@ -35,7 +35,6 @@ namespace GISCore.Business.Concrete
 
         #endregion
 
-        
         public UsuarioPerfisMenusViewModel ValidarCredenciais(AutenticacaoModel autenticacaoModel)
         {
             autenticacaoModel.Login = autenticacaoModel.Login.Trim();
@@ -162,28 +161,48 @@ namespace GISCore.Business.Concrete
 
         private void EnviarEmailParaUsuarioRecemCriado(Usuario usuario)
         {
-            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
-            var message = new MailMessage();
-            message.To.Add(new MailAddress(usuario.Email));  // replace with valid value 
-            message.From = new MailAddress("johnnathanalmeida22@gmail.com");  // replace with valid value
-            message.Subject = "Your email subject";
-            message.Body = string.Format(body, usuario.Nome, usuario.Email, "Teste");
-            message.IsBodyHtml = true;
+            MailMessage mail = new MailMessage("johnnathanalmeida22@gmail.com", usuario.Email);
+            mail.Subject = "GiS - Seja bem-vindo!";
+            mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Prezado(a) " + usuario.Nome;
+            mail.Body += "<br /><br />";
 
-            using (var smtp = new SmtpClient())
+            string NomeUsuarioInclusao = usuario.UsuarioInclusao;
+            Usuario uInclusao = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.Login.Equals(usuario.UsuarioInclusao));
+            if (uInclusao != null && !string.IsNullOrEmpty(uInclusao.Nome))
+                NomeUsuarioInclusao = uInclusao.Nome;
+
+            mail.Body += "Você foi cadastrado no sistema GiS - Gestão Inteligente da Segurança pelo " + NomeUsuarioInclusao + ".";
+            mail.Body += "<br /><br />";
+            mail.Body += "Clique <a href=\"#\">aqui</a> para ativar sua conta.";
+            mail.Body += "<br /><br />";
+            mail.Body += "Atenciosamente,";
+            mail.Body += "<br /><br />";
+            mail.Body += "<span style=\"color: #ccc; font-style: italic;\">Mensagem enviada automaticamente, favor não responder este email.</span>";
+            mail.Body += "<br /><br />";
+            mail.Body += "<strong>Gestão Inteligente da Segurança - GiS</strong>";
+            mail.Body += "</body></html>";
+            mail.IsBodyHtml = true;
+            
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+
+            smtpClient.Credentials = new System.Net.NetworkCredential()
             {
-                var credential = new NetworkCredential
-                {
-                    UserName = "johnnathanalmeida22@gmail.com",  // replace with valid value
-                    Password = "jrpalmeidaasdf0422"  // replace with valid value
-                };
-                smtp.Credentials = credential;
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                smtp.SendMailAsync(message);
-                
-            }
+                UserName = "johnnathanalmeida22@gmail.com",
+                Password = "jrpalmeidaasdf0422"
+            };
+
+            smtpClient.EnableSsl = true;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate(object s,
+                    System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+                    System.Security.Cryptography.X509Certificates.X509Chain chain,
+                    System.Net.Security.SslPolicyErrors sslPolicyErrors)
+            {
+                return true;
+            };
+
+            smtpClient.Send(mail);
+
         }
+
     }
 }
