@@ -1,6 +1,7 @@
 ﻿using BotDetect.Web.UI.Mvc;
 using GISCore.Business.Abstract;
 using GISModel.DTO.Conta;
+using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
 using GISWeb.Infraestrutura.Provider.Abstract;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -110,6 +112,103 @@ namespace GISWeb.Controllers
                 avatar = System.IO.File.ReadAllBytes(Server.MapPath("~/Content/Ace/avatars/unknown.png"));
 
             return File(avatar, "image/jpeg");
+        }
+
+        public ActionResult DefinirNovaSenha(string id) {
+
+            if (string.IsNullOrEmpty(id))
+            {
+                TempData["MensagemErro"] = "Não foi possível recuperar a identificação do usuário.";
+            }
+            else { 
+                id = GISHelpers.Utils.Criptografador.Descriptografar(WebUtility.UrlDecode(id.Replace("_@", "%")), 1);
+
+                string numDiasExpiracao = ConfigurationManager.AppSettings["Web:ExpirarLinkAcesso"];
+                if (string.IsNullOrEmpty(numDiasExpiracao))
+                    numDiasExpiracao = "7";
+
+                if (DateTime.Now.Subtract(DateTime.ParseExact(id.Substring(id.IndexOf("#") + 1), "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture)).Days > int.Parse(numDiasExpiracao))
+                {
+                    TempData["MensagemErro"] = "Este link já expirou, solicite um outro link na opção abaixo.";
+                }
+                else {
+                    NovaSenhaViewModel oNovaSenhaViewModel = new NovaSenhaViewModel();
+                    oNovaSenhaViewModel.IDUsuario = id.Substring(0, id.IndexOf("#"));
+                    return View(oNovaSenhaViewModel);    
+                }
+            }
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult DefinirSenha(NovaSenhaViewModel novaSenhaViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    //Empresa.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    //EmpresaBusiness.Inserir(Empresa);
+
+                    //TempData["MensagemSucesso"] = "A empresa '" + Empresa.NomeFantasia + "' foi cadastrada com sucesso.";
+
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empresa") } });
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetBaseException() == null)
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                    }
+                    else
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                    }
+                }
+
+            }
+            else
+            {
+                return Json(new { resultado = TratarRetornoValidacaoToJSON() });
+            }
+        }
+
+
+        public ActionResult SolicitarAcesso() {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    //Empresa.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    //EmpresaBusiness.Inserir(Empresa);
+
+                    //TempData["MensagemSucesso"] = "A empresa '" + Empresa.NomeFantasia + "' foi cadastrada com sucesso.";
+
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empresa") } });
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetBaseException() == null)
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                    }
+                    else
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                    }
+                }
+
+            }
+            else
+            {
+                return Json(new { resultado = TratarRetornoValidacaoToJSON() });
+            }
         }
 
 	}

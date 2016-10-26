@@ -182,6 +182,7 @@
     <Content Include="Scripts\Ace\jQ\typeahead.jquery.js" />
     <Content Include="Scripts\Ace\moment.js" />
     <Content Include="Scripts\Ace\respond.js" />
+    <Content Include="Scripts\Custom\Conta\NovaSenha.js" />
     <Content Include="Scripts\Custom\Contrato\Listagem.js" />
     <Content Include="Scripts\Custom\Contrato\Novo.js" />
     <Content Include="Scripts\Custom\custom-functions.js" />
@@ -325,6 +326,7 @@
     <Content Include="Views\Fornecedor\_Detalhes.cshtml" />
     <Content Include="Views\Empregado\_Proprios.cshtml" />
     <Content Include="Views\Usuario\_Detalhes.cshtml" />
+    <Content Include="Views\Conta\DefinirNovaSenha.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

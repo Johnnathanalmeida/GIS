@@ -2,6 +2,7 @@
 using GISModel.DTO.Conta;
 using GISModel.DTO.Usuario;
 using GISModel.Entidades;
+using GISModel.Enums;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -155,11 +158,18 @@ namespace GISCore.Business.Concrete
 
             base.Inserir(usuario);
 
-            //Enviar e-mail
-            EnviarEmailParaUsuarioRecemCriado(usuario);
+
+            if (usuario.TipoDeAcesso.Equals(TipoDeAcesso.AD))
+            {
+                EnviarEmailParaUsuarioRecemCriadoAD(usuario);
+            }
+            else {
+                EnviarEmailParaUsuarioRecemCriadoSistema(usuario);
+            }
+            
         }
 
-        private void EnviarEmailParaUsuarioRecemCriado(Usuario usuario)
+        private void EnviarEmailParaUsuarioRecemCriadoSistema(Usuario usuario)
         {
             MailMessage mail = new MailMessage("johnnathanalmeida22@gmail.com", usuario.Email);
             mail.Subject = "GiS - Seja bem-vindo!";
@@ -171,9 +181,12 @@ namespace GISCore.Business.Concrete
             if (uInclusao != null && !string.IsNullOrEmpty(uInclusao.Nome))
                 NomeUsuarioInclusao = uInclusao.Nome;
 
+
+            string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.IDUsuario + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
+
             mail.Body += "Você foi cadastrado no sistema GiS - Gestão Inteligente da Segurança pelo " + NomeUsuarioInclusao + ".";
             mail.Body += "<br /><br />";
-            mail.Body += "Clique <a href=\"#\">aqui</a> para ativar sua conta.";
+            mail.Body += "Clique <a href=\"" + sLink + "\">aqui</a> para ativar sua conta.";
             mail.Body += "<br /><br />";
             mail.Body += "Atenciosamente,";
             mail.Body += "<br /><br />";
@@ -181,7 +194,9 @@ namespace GISCore.Business.Concrete
             mail.Body += "<br /><br />";
             mail.Body += "<strong>Gestão Inteligente da Segurança - GiS</strong>";
             mail.Body += "</body></html>";
+
             mail.IsBodyHtml = true;
+            mail.BodyEncoding = Encoding.UTF8;
             
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
 
@@ -202,6 +217,76 @@ namespace GISCore.Business.Concrete
 
             smtpClient.Send(mail);
 
+        }
+
+        private void EnviarEmailParaUsuarioRecemCriadoAD(Usuario usuario)
+        {
+            MailMessage mail = new MailMessage("johnnathanalmeida22@gmail.com", usuario.Email);
+            mail.Subject = "GiS - Seja bem-vindo!";
+            mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Prezado(a) " + usuario.Nome;
+            mail.Body += "<br /><br />";
+
+            string NomeUsuarioInclusao = usuario.UsuarioInclusao;
+            Usuario uInclusao = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.Login.Equals(usuario.UsuarioInclusao));
+            if (uInclusao != null && !string.IsNullOrEmpty(uInclusao.Nome))
+                NomeUsuarioInclusao = uInclusao.Nome;
+
+
+            string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.IDUsuario + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
+
+            mail.Body += "Você foi cadastrado no sistema GiS - Gestão Inteligente da Segurança pelo " + NomeUsuarioInclusao + ".";
+            mail.Body += "<br /><br />";
+            mail.Body += "Clique <a href=\"" + sLink + "\">aqui</a> para ativar sua conta.";
+            mail.Body += "<br /><br />";
+            mail.Body += "Atenciosamente,";
+            mail.Body += "<br /><br />";
+            mail.Body += "<span style=\"color: #ccc; font-style: italic;\">Mensagem enviada automaticamente, favor não responder este email.</span>";
+            mail.Body += "<br /><br />";
+            mail.Body += "<strong>Gestão Inteligente da Segurança - GiS</strong>";
+            mail.Body += "</body></html>";
+
+            mail.IsBodyHtml = true;
+            mail.BodyEncoding = Encoding.UTF8;
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+
+            smtpClient.Credentials = new System.Net.NetworkCredential()
+            {
+                UserName = "johnnathanalmeida22@gmail.com",
+                Password = "jrpalmeidaasdf0422"
+            };
+
+            smtpClient.EnableSsl = true;
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate(object s,
+                    System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+                    System.Security.Cryptography.X509Certificates.X509Chain chain,
+                    System.Net.Security.SslPolicyErrors sslPolicyErrors)
+            {
+                return true;
+            };
+
+            smtpClient.Send(mail);
+
+        }
+
+        [ComVisible(false)]
+        private string CreateHashFromPassword(string pstrOriginalPassword)
+        {
+            if (string.IsNullOrEmpty(pstrOriginalPassword))
+                return string.Empty;
+
+            string str3 = ConvertToHashedString(pstrOriginalPassword).Substring(0, 5);
+            byte[] bytes = Encoding.UTF8.GetBytes(pstrOriginalPassword + str3);
+            HashAlgorithm lobjHash = new MD5CryptoServiceProvider();
+            return Convert.ToBase64String(lobjHash.ComputeHash(bytes));
+        }
+
+        [ComVisible(false)]
+        private string ConvertToHashedString(string pstrOriginal)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(pstrOriginal);
+            HashAlgorithm lobjHash = new MD5CryptoServiceProvider();
+            return Convert.ToBase64String(lobjHash.ComputeHash(bytes));
         }
 
     }

@@ -51,6 +51,7 @@
     <Compile Include="CustomAttributes\CustomValidationCNPJAttribute.cs" />
     <Compile Include="CustomAttributes\CustomValidationCPFAttribute.cs" />
     <Compile Include="DTO\Conta\AutenticacaoModel.cs" />
+    <Compile Include="DTO\Conta\NovaSenhaViewModel.cs" />
     <Compile Include="DTO\Departamento\CadastroViewModel.cs" />
     <Compile Include="DTO\Empregado\PesquisaEmpregadoViewModel.cs" />
     <Compile Include="DTO\Menu\PerfilMenuViewModel.cs" />
