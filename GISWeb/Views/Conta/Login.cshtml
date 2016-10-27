@@ -109,6 +109,23 @@
                                 <br />
                             </div>
                         }
+                        
+                        @if (TempData["MensagemSucesso"] != null && !string.IsNullOrWhiteSpace(TempData["MensagemSucesso"].ToString()))
+                        {
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="ace-icon fa fa-times"></i>
+                                </button>
+
+                                <strong>
+                                    <i class="ace-icon fa fa-times-circle"></i>
+                                    Sucesso!
+                                </strong>
+
+                                @TempData["MensagemSucesso"]
+                                <br />
+                            </div>
+                        }
 
                         <div class="position-relative">
                             <div id="login-box" class="login-box visible widget-box no-border">
@@ -209,10 +226,11 @@
                                         Informe seu email de contato
                                     </p>
 
-                                    @using (Ajax.BeginForm("SolicitarAcesso", "Account", null, new AjaxOptions
+                                    @using (Ajax.BeginForm("SolicitarAcesso", "Conta", null, new AjaxOptions
                                     {
                                         HttpMethod = "POST",
-                                        OnSuccess = "OnSuccessLogin",
+                                        OnBegin = "OnBeginSolicicacaoAcesso",
+                                        OnSuccess = "OnSuccessSolicicacaoAcesso",
                                         OnFailure = "FailMessage",
                                         InsertionMode = InsertionMode.Replace,
                                         LoadingElementId = "loadingSolicitacaoConta"
@@ -222,7 +240,7 @@
                                         <fieldset>
                                             <label class="block clearfix">
                                                 <span class="block input-icon input-icon-right">
-                                                    @Html.EditorFor(d => d.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
+                                                    @Html.EditorFor(d => d.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail ou Login" } })
                                                     <i class="ace-icon fa fa-envelope"></i>
                                                     @Html.ValidationMessageFor(d => d.Email, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                                                 </span>
@@ -232,7 +250,7 @@
                                                 @*<img id="loadingSolicitacaoConta" style="display: none; float: left; margin-top: 5px;" src="~/Content/Images/ajax-loading.GIF" />*@
                                                 <i id="loadingSolicitacaoConta" style="display: none; float: left; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
 
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-danger EmConstrucao">
+                                                <button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
                                                     <i class="ace-icon fa fa-lightbulb-o"></i>
                                                     <span class="bigger-110">Enviar</span>
                                                 </button>

@@ -95,7 +95,7 @@
                                     <div class="widget-main">
                                         <h4 class="header red lighter bigger">
                                             <i class="ace-icon fa fa-key"></i>
-                                            Solicitar acesso ao módulo
+                                            Solicitar acesso ao Sistema
                                         </h4>
 
                                         <div class="space-6"></div>
@@ -106,7 +106,8 @@
                                         @using (Ajax.BeginForm("SolicitarAcesso", "Conta", null, new AjaxOptions
                                         {
                                             HttpMethod = "POST",
-                                            OnSuccess = "OnSuccessLogin",
+                                            OnBegin = "OnBeginSolicicacaoAcesso",
+                                            OnSuccess = "OnSuccessSolicicacaoAcesso",
                                             OnFailure = "FailMessage",
                                             InsertionMode = InsertionMode.Replace,
                                             LoadingElementId = "loadingSolicitacaoConta"
@@ -116,17 +117,16 @@
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        @Html.EditorFor(d => d.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
+                                                        @Html.EditorFor(d => d.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail ou Login" } })
                                                         <i class="ace-icon fa fa-envelope"></i>
                                                         @Html.ValidationMessageFor(d => d.Email, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                                                     </span>
                                                 </label>
 
                                                 <div class="clearfix">
-                                                    @*<img id="loadingSolicitacaoConta" style="display: none; float: left; margin-top: 5px;" src="~/Content/Images/ajax-loading.GIF" />*@
                                                     <i id="loadingSolicitacaoConta" style="display: none; float: left; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
 
-                                                    <button type="button" class="width-35 pull-right btn btn-sm btn-danger EmConstrucao">
+                                                    <button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
                                                         <i class="ace-icon fa fa-lightbulb-o"></i>
                                                         <span class="bigger-110">Enviar</span>
                                                     </button>
@@ -159,9 +159,10 @@
 
                                             <div class="space-6"></div>
 
-                                            @using (Ajax.BeginForm("", "Conta", null, new AjaxOptions
+                                            @using (Ajax.BeginForm("DefinirSenha", "Conta", null, new AjaxOptions
                                                 {
                                                     HttpMethod = "POST",
+                                                    OnBegin = "OnBeginDefinirNovaSenha",
                                                     OnSuccess = "OnSuccessDefinirNovaSenha",
                                                     InsertionMode = InsertionMode.Replace,
                                                     LoadingElementId = "loadingLogin"

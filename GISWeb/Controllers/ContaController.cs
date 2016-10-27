@@ -116,31 +116,45 @@ namespace GISWeb.Controllers
 
         public ActionResult DefinirNovaSenha(string id) {
 
-            if (string.IsNullOrEmpty(id))
+            try
             {
-                TempData["MensagemErro"] = "Não foi possível recuperar a identificação do usuário.";
-            }
-            else { 
-                id = GISHelpers.Utils.Criptografador.Descriptografar(WebUtility.UrlDecode(id.Replace("_@", "%")), 1);
-
-                string numDiasExpiracao = ConfigurationManager.AppSettings["Web:ExpirarLinkAcesso"];
-                if (string.IsNullOrEmpty(numDiasExpiracao))
-                    numDiasExpiracao = "7";
-
-                if (DateTime.Now.Subtract(DateTime.ParseExact(id.Substring(id.IndexOf("#") + 1), "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture)).Days > int.Parse(numDiasExpiracao))
+                if (string.IsNullOrEmpty(id))
                 {
-                    TempData["MensagemErro"] = "Este link já expirou, solicite um outro link na opção abaixo.";
+                    TempData["MensagemErro"] = "Não foi possível recuperar a identificação do usuário.";
                 }
-                else {
-                    NovaSenhaViewModel oNovaSenhaViewModel = new NovaSenhaViewModel();
-                    oNovaSenhaViewModel.IDUsuario = id.Substring(0, id.IndexOf("#"));
-                    return View(oNovaSenhaViewModel);    
+                else
+                {
+                    id = GISHelpers.Utils.Criptografador.Descriptografar(WebUtility.UrlDecode(id.Replace("_@", "%")), 1);
+
+                    string numDiasExpiracao = ConfigurationManager.AppSettings["Web:ExpirarLinkAcesso"];
+                    if (string.IsNullOrEmpty(numDiasExpiracao))
+                        numDiasExpiracao = "1";
+
+                    if (DateTime.Now.Subtract(DateTime.ParseExact(id.Substring(id.IndexOf("#") + 1), "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture)).Days > int.Parse(numDiasExpiracao))
+                    {
+                        TempData["MensagemErro"] = "Este link já expirou, solicite um outro link na opção abaixo.";
+                    }
+                    else
+                    {
+                        NovaSenhaViewModel oNovaSenhaViewModel = new NovaSenhaViewModel();
+                        oNovaSenhaViewModel.IDUsuario = id.Substring(0, id.IndexOf("#"));
+                        return View(oNovaSenhaViewModel);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                if (ex.GetBaseException() == null)
+                {
+                    TempData["MensagemErro"] = ex.Message;
+                }
+                else
+                {
+                    TempData["MensagemErro"] = ex.GetBaseException().Message;
                 }
             }
 
             return View();
         }
-
 
         [HttpPost]
         [AllowAnonymous]
@@ -149,28 +163,32 @@ namespace GISWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
+                if (novaSenhaViewModel.NovaSenha.Equals(novaSenhaViewModel.ConfirmarNovaSenha))
                 {
-
-                    //Empresa.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
-                    //EmpresaBusiness.Inserir(Empresa);
-
-                    //TempData["MensagemSucesso"] = "A empresa '" + Empresa.NomeFantasia + "' foi cadastrada com sucesso.";
-
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empresa") } });
-                }
-                catch (Exception ex)
-                {
-                    if (ex.GetBaseException() == null)
+                    try
                     {
-                        return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                        if (string.IsNullOrEmpty(novaSenhaViewModel.IDUsuario))
+                            return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível localizar o ID do usuário através de sua requisição. Solicite um novo acesso." } });
+
+                        UsuarioBusiness.DefinirSenha(novaSenhaViewModel);
+                        TempData["MensagemSucesso"] = "Senha alterada com sucesso.";
+                        return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Login", "Conta") } });
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                        if (ex.GetBaseException() == null)
+                        {
+                            return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                        }
+                        else
+                        {
+                            return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                        }
                     }
                 }
-
+                else {
+                    return Json(new { resultado = new RetornoJSON() { Erro = "As duas senhas devem ser identicas." } });      
+                }
             }
             else
             {
@@ -178,19 +196,18 @@ namespace GISWeb.Controllers
             }
         }
 
-
-        public ActionResult SolicitarAcesso() {
-            if (ModelState.IsValid)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult SolicitarAcesso(NovaSenhaViewModel novaSenhaViewModel)
+        {
+            if (!string.IsNullOrEmpty(novaSenhaViewModel.Email))
             {
                 try
                 {
-
-                    //Empresa.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
-                    //EmpresaBusiness.Inserir(Empresa);
-
-                    //TempData["MensagemSucesso"] = "A empresa '" + Empresa.NomeFantasia + "' foi cadastrada com sucesso.";
-
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empresa") } });
+                    UsuarioBusiness.SolicitarAcesso(novaSenhaViewModel.Email);
+                    TempData["MensagemSucesso"] = "Solicitação de acesso realizada com sucesso.";
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Login", "Conta") } });
                 }
                 catch (Exception ex)
                 {
@@ -207,7 +224,7 @@ namespace GISWeb.Controllers
             }
             else
             {
-                return Json(new { resultado = TratarRetornoValidacaoToJSON() });
+                return Json(new { resultado = new RetornoJSON() { Erro = "Informe o e-mail cadastrado em sua conta." } });
             }
         }
 

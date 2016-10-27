@@ -16,5 +16,9 @@ namespace GISCore.Business.Abstract
 
         byte[] RecuperarFotoPerfil(string login);
 
+        void DefinirSenha(NovaSenhaViewModel novaSenhaViewModel);
+
+        void SolicitarAcesso(string email);
+
     }
 }

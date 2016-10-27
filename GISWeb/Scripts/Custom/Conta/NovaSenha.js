@@ -7,8 +7,30 @@
     });
 });
 
-
+function OnBeginDefinirNovaSenha(content) {
+    $("#login-box").css({ opacity: "0.5" });
+}
 
 function OnSuccessDefinirNovaSenha(content) {
-    alert("a");
+    $('#login-box').removeAttr('style');
+    TratarResultadoJSON(content.resultado);
+}
+
+
+
+
+function OnSuccessSolicicacaoAcesso(content) {
+    $('#forgot-box').removeAttr('style');
+    TratarResultadoJSON(content.resultado);
+}
+
+function OnBeginSolicicacaoAcesso(content) {
+    $("#forgot-box").css({ opacity: "0.5" });
+}
+
+
+
+
+function FailMessage(content) {
+    ExibirMensagemDeErro("Excessão na página de Definir Nova Senha");
 }
