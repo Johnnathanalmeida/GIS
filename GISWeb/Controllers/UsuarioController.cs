@@ -97,7 +97,14 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Usuario")]
         public ActionResult Edicao(string id)
         {
-            return View(UsuarioBusiness.Consulta.FirstOrDefault(p => p.IDUsuario.Equals(id)));
+            
+            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
+
+            Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(id));
+
+            ViewBag.Departamentos = new SelectList(DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDDepartamento", "Sigla");
+
+            return View(oUsuario);
         }
 
         [HttpPost]
@@ -108,6 +115,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    Usuario.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     UsuarioBusiness.Alterar(Usuario);
 
                     TempData["MensagemSucesso"] = "O usuário '" + Usuario.Nome + "' foi atualizado com sucesso.";
@@ -166,7 +174,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => p.IDUsuario.Equals(IDUsuario));
+                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(IDUsuario));
                 if (oUsuario == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o usuário, pois o mesmo não foi localizado." } });
@@ -174,7 +182,7 @@ namespace GISWeb.Controllers
                 else
                 {
                     oUsuario.DataExclusao = DateTime.Now;
-                    oUsuario.UsuarioExclusao = "LoginTeste";
+                    oUsuario.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     UsuarioBusiness.Alterar(oUsuario);
 
                     return Json(new { resultado = new RetornoJSON() { Sucesso = "O usuário '" + oUsuario.Nome + "' foi excluído com sucesso." } });
@@ -191,6 +199,44 @@ namespace GISWeb.Controllers
                     return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
                 }
             }
+
+        }
+
+        [HttpPost]
+        public ActionResult TerminarComRedirect(string IDUsuario)
+        {
+
+            try
+            {
+                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(IDUsuario));
+                if (oUsuario == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o usuário, pois o mesmo não foi localizado." } });
+                }
+                else
+                {
+                    oUsuario.DataExclusao = DateTime.Now;
+                    oUsuario.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+
+                    UsuarioBusiness.Alterar(oUsuario);
+
+                    TempData["MensagemSucesso"] = "O usuário '" + oUsuario.Nome + "' foi excluído com sucesso.";
+
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empresa") } });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
 
         }
 

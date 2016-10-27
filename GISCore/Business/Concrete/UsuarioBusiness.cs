@@ -155,16 +155,15 @@ namespace GISCore.Business.Concrete
             if (Consulta.Any(u => u.Login.Equals(usuario.Login) && string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Este login já está sendo usado por outro usuário.");
 
-            if (Consulta.Any(u => u.Login.Equals(usuario.CPF) && string.IsNullOrEmpty(u.UsuarioExclusao)))
+            if (Consulta.Any(u => u.CPF.Equals(usuario.CPF) && string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Este CPF já está sendo usado por outro usuário.");
 
-            if (Consulta.Any(u => u.Login.Equals(usuario.Email) && string.IsNullOrEmpty(u.UsuarioExclusao)))
+            if (Consulta.Any(u => u.Email.Equals(usuario.Email) && string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Este e-mail já está sendo usado por outro usuário.");
 
             usuario.IDUsuario = Guid.NewGuid().ToString();
 
             base.Inserir(usuario);
-
 
             if (usuario.TipoDeAcesso.Equals(TipoDeAcesso.AD))
             {
@@ -176,6 +175,31 @@ namespace GISCore.Business.Concrete
             
         }
 
+        public override void Alterar(Usuario entidade)
+        {
+
+            Usuario tempUsuario = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(entidade.IDUsuario));
+            if (tempUsuario == null)
+            {
+                throw new Exception("Não foi possível encontrar o usuário através do ID.");
+            }
+            else
+            {
+                if (Consulta.Any(u => u.Email.Equals(entidade.Email) && string.IsNullOrEmpty(u.UsuarioExclusao) && !entidade.Login.ToUpper().Equals(u.Login.ToUpper())))
+                    throw new InvalidOperationException("Este e-mail já está sendo usado por outro usuário.");
+
+                tempUsuario.DataExclusao = DateTime.Now;
+                tempUsuario.UsuarioExclusao = entidade.UsuarioExclusao;
+                base.Alterar(tempUsuario);
+
+                entidade.IDUsuario = Guid.NewGuid().ToString();
+                entidade.UsuarioExclusao = string.Empty;
+                base.Inserir(entidade);
+
+            }
+
+        }
+
         public void DefinirSenha(NovaSenhaViewModel novaSenhaViewModel) {
             Usuario oUsuario = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(novaSenhaViewModel.IDUsuario));
             if (oUsuario == null)
@@ -185,6 +209,7 @@ namespace GISCore.Business.Concrete
             else {
                 oUsuario.Senha = CreateHashFromPassword(novaSenhaViewModel.NovaSenha);
                 Alterar(oUsuario);
+                EnviarEmailParaUsuarioSenhaAlterada(oUsuario);
             }
         }
 
@@ -210,21 +235,79 @@ namespace GISCore.Business.Concrete
                 string sSMTP = ConfigurationManager.AppSettings["Web:SMTP"];
 
                 MailMessage mail = new MailMessage(sRemetente, usuario.Email);
-                mail.Subject = "GiS - Recuperação de Acesso!";
-                mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Prezado(a) " + GISHelpers.Utils.Severino.PrimeiraMaiusculaTodasPalavras(usuario.Nome);
+
+                string PrimeiroNome = GISHelpers.Utils.Severino.PrimeiraMaiusculaTodasPalavras(usuario.Nome);
+                if (PrimeiroNome.Contains(" "))
+                    PrimeiroNome = PrimeiroNome.Substring(0, PrimeiroNome.IndexOf(" "));
+
+                mail.Subject = PrimeiroNome + ", este é o link para redinir sua senha";
+                mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Olá, " + PrimeiroNome + ".";
+                mail.Body += "<br /><br />";
+                mail.Body += "<span style=\"color: #222;\">Redefina sua senha para começar novamente.";
                 mail.Body += "<br /><br />";
 
                 string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.IDUsuario + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
 
-                mail.Body += "Foi requisitado um novo acesso para o seu e-mail no sistema GiS - Gestão Inteligente da Segurança.";
+                mail.Body += "Para alterar sua senha do GiS, clique <a href=\"" + sLink + "\">aqui</a> ou cole o seguinte link no seu navegador.";
                 mail.Body += "<br /><br />";
-                mail.Body += "Clique <a href=\"" + sLink + "\">aqui</a> para definir uma nova senha para sua conta.";
+                mail.Body += sLink;
                 mail.Body += "<br /><br />";
-                mail.Body += "Atenciosamente,";
+                mail.Body += "O link é válido por 24 horas, portanto, utilize-o imediatamente.";
+                mail.Body += "<br /><br />";
+                mail.Body += "Obrigado por utilizar o GiS!<br />";
+                mail.Body += "<strong>Gestão Inteligente da Segurança</strong>";
+                mail.Body += "</span>";
                 mail.Body += "<br /><br />";
                 mail.Body += "<span style=\"color: #aaa; font-size: 10pt; font-style: italic;\">Mensagem enviada automaticamente, favor não responder este email.</span>";
+                mail.Body += "</body></html>";
+
+                mail.IsBodyHtml = true;
+                mail.BodyEncoding = Encoding.UTF8;
+
+
+                SmtpClient smtpClient = new SmtpClient(sSMTP, 587);
+
+                smtpClient.Credentials = new System.Net.NetworkCredential()
+                {
+                    UserName = "johnnathanalmeida22@gmail.com",
+                    Password = "jrpalmeidaasdf0422"
+                };
+
+                smtpClient.EnableSsl = true;
+                System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate(object s,
+                        System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+                        System.Security.Cryptography.X509Certificates.X509Chain chain,
+                        System.Net.Security.SslPolicyErrors sslPolicyErrors)
+                {
+                    return true;
+                };
+
+                smtpClient.Send(mail);
+
+            }
+
+            private void EnviarEmailParaUsuarioSenhaAlterada(Usuario usuario)
+            {
+                string sRemetente = ConfigurationManager.AppSettings["Web:Remetente"];
+                string sSMTP = ConfigurationManager.AppSettings["Web:SMTP"];
+
+                MailMessage mail = new MailMessage(sRemetente, usuario.Email);
+
+                string PrimeiroNome = GISHelpers.Utils.Severino.PrimeiraMaiusculaTodasPalavras(usuario.Nome);
+                if (PrimeiroNome.Contains(" "))
+                    PrimeiroNome = PrimeiroNome.Substring(0, PrimeiroNome.IndexOf(" "));
+
+                mail.Subject = PrimeiroNome + ", sua senha foi redefinida.";
+
+                mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Olá, " + PrimeiroNome + ".";
                 mail.Body += "<br /><br />";
-                mail.Body += "<strong>Gestão Inteligente da Segurança - GiS</strong>";
+                mail.Body += "<span style=\"color: #222;\">Você redefiniu sua senha do GiS.";
+                mail.Body += "<br /><br />";
+                mail.Body += "Obrigado por utilizar o GiS!<br />";
+                mail.Body += "<strong>Gestão Inteligente da Segurança</strong>";
+                mail.Body += "</span>";
+                mail.Body += "<br /><br />";
+                mail.Body += "<span style=\"color: #aaa; font-size: 10pt; font-style: italic;\">Mensagem enviada automaticamente, favor não responder este email.</span>";
                 mail.Body += "</body></html>";
 
                 mail.IsBodyHtml = true;
@@ -258,8 +341,13 @@ namespace GISCore.Business.Concrete
                 string sSMTP = ConfigurationManager.AppSettings["Web:SMTP"];
 
                 MailMessage mail = new MailMessage(sRemetente, usuario.Email);
-                mail.Subject = "GiS - Seja bem-vindo!";
-                mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Prezado(a) " + usuario.Nome;
+
+                string PrimeiroNome = GISHelpers.Utils.Severino.PrimeiraMaiusculaTodasPalavras(usuario.Nome);
+                if (PrimeiroNome.Contains(" "))
+                    PrimeiroNome = PrimeiroNome.Substring(0, PrimeiroNome.IndexOf(" "));
+
+                mail.Subject = PrimeiroNome + ", seja bem-vindo!";
+                mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Olá, " + PrimeiroNome + ";";
                 mail.Body += "<br /><br />";
 
                 string NomeUsuarioInclusao = usuario.UsuarioInclusao;
@@ -270,15 +358,16 @@ namespace GISCore.Business.Concrete
 
                 string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.IDUsuario + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
 
-                mail.Body += "Você foi cadastrado no sistema GiS - Gestão Inteligente da Segurança pelo " + NomeUsuarioInclusao + ".";
+                mail.Body += "Você foi cadastrado no sistema GiS - Gestão Inteligente da Segurança pelo " + GISHelpers.Utils.Severino.PrimeiraMaiusculaTodasPalavras(NomeUsuarioInclusao) + ".";
                 mail.Body += "<br /><br />";
-                mail.Body += "Clique <a href=\"" + sLink + "\">aqui</a> para ativar sua conta.";
+                mail.Body += "Clique <a href=\"" + sLink + "\">aqui</a> para ativar sua conta ou cole o seguinte link no seu navegador.";
                 mail.Body += "<br /><br />";
-                mail.Body += "Atenciosamente,";
+                mail.Body += sLink;
+                mail.Body += "<br /><br />";
+                mail.Body += "Obrigado por utilizar o GiS!<br />";
+                mail.Body += "<strong>Gestão Inteligente da Segurança</strong>";
                 mail.Body += "<br /><br />";
                 mail.Body += "<span style=\"color: #ccc; font-style: italic;\">Mensagem enviada automaticamente, favor não responder este email.</span>";
-                mail.Body += "<br /><br />";
-                mail.Body += "<strong>Gestão Inteligente da Segurança - GiS</strong>";
                 mail.Body += "</body></html>";
 
                 mail.IsBodyHtml = true;
@@ -311,8 +400,13 @@ namespace GISCore.Business.Concrete
                 string sSMTP = ConfigurationManager.AppSettings["Web:SMTP"];
 
                 MailMessage mail = new MailMessage(sRemetente, usuario.Email);
-                mail.Subject = "GiS - Seja bem-vindo!";
-                mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Prezado(a) " + usuario.Nome;
+
+                string PrimeiroNome = GISHelpers.Utils.Severino.PrimeiraMaiusculaTodasPalavras(usuario.Nome);
+                if (PrimeiroNome.Contains(" "))
+                    PrimeiroNome = PrimeiroNome.Substring(0, PrimeiroNome.IndexOf(" "));
+
+                mail.Subject = PrimeiroNome + ", seja bem-vindo!";
+                mail.Body = "<html style=\"font-family: Verdana; font-size: 11pt;\"><body>Olá, " + PrimeiroNome + ".";
                 mail.Body += "<br /><br />";
 
                 string NomeUsuarioInclusao = usuario.UsuarioInclusao;
@@ -324,13 +418,14 @@ namespace GISCore.Business.Concrete
 
                 mail.Body += "Você foi cadastrado no sistema GiS - Gestão Inteligente da Segurança pelo " + NomeUsuarioInclusao + ".";
                 mail.Body += "<br /><br />";
-                mail.Body += "Clique <a href=\"" + sLink + "\">aqui</a> para acessar a sua conta.";
+                mail.Body += "Clique <a href=\"" + sLink + "\">aqui</a> para acessar a sua conta ou cole o seguinte link no seu navegador.";
                 mail.Body += "<br /><br />";
-                mail.Body += "Atenciosamente,";
+                mail.Body += sLink;
+                mail.Body += "<br /><br />";
+                mail.Body += "Obrigado por utilizar o GiS!<br />";
+                mail.Body += "<strong>Gestão Inteligente da Segurança</strong>";
                 mail.Body += "<br /><br />";
                 mail.Body += "<span style=\"color: #ccc; font-style: italic;\">Mensagem enviada automaticamente, favor não responder este email.</span>";
-                mail.Body += "<br /><br />";
-                mail.Body += "<strong>Gestão Inteligente da Segurança - GiS</strong>";
                 mail.Body += "</body></html>";
 
                 mail.IsBodyHtml = true;
@@ -356,7 +451,6 @@ namespace GISCore.Business.Concrete
                 smtpClient.Send(mail);
 
             }
-
 
         #endregion
 

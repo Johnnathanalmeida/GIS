@@ -147,7 +147,7 @@ namespace GISWeb.Controllers
         {
 
             try {
-                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(IDEmpresa));
+                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpresa.Equals(IDEmpresa));
                 if (oEmpresa == null) {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir a empresa, pois a mesma não foi localizada." } });
                 }
@@ -180,7 +180,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(IDEmpresa));
+                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpresa.Equals(IDEmpresa));
                 if (oEmpresa == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir a empresa, pois a mesma não foi localizada." } });

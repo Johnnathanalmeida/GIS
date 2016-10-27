@@ -1,13 +1,13 @@
 ﻿
-function OnSuccessAtualizarPerfil(data) {
-    $('#formEdicaoPerfil').removeAttr('style');
+function OnSuccessAtualizarUsuario(data) {
+    $('#formEdicaoUsuario').removeAttr('style');
     $(".LoadingLayout").hide();
     $('#btnSalvar').show();
     TratarResultadoJSON(data.resultado);
 }
 
-function OnBeginAtualizarPerfil() {
+function OnBeginAtualizarUsuario() {
     $(".LoadingLayout").show();
     $('#btnSalvar').hide();
-    $("#formEdicaoPerfil").css({ opacity: "0.5" });
+    $("#formEdicaoUsuario").css({ opacity: "0.5" });
 }

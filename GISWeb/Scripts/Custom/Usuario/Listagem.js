@@ -48,7 +48,7 @@ function DeletarUsuario(IDUsuario, Nome) {
         $.ajax({
             method: "POST",
             url: "/Usuario/Terminar",
-            data: { IDEmpresa: IDEmpresa },
+            data: { IDUsuario: IDUsuario },
             error: function (erro) {
                 $(".LoadingLayout").hide();
                 $("#dynamic-table").css({ opacity: '' });
@@ -61,7 +61,7 @@ function DeletarUsuario(IDUsuario, Nome) {
                 TratarResultadoJSON(content.resultado);
 
                 if (content.resultado.Sucesso != null && content.resultado.Sucesso != "") {
-                    $("#linha-" + IDEmpresa).remove();
+                    $("#linha-" + IDUsuario).remove();
                 }
             }
         });

@@ -1,13 +1,6 @@
 ﻿jQuery(function ($) {
 
-    $("#txtCNPJ").keydown(function () {
-        try {
-            $("#txtCNPJ").unmask();
-        } catch (e) { }
-
-        $("#txtCNPJ").inputmask("99.999.999/9999-99");
-
-    });
+    $('#txtCNPJ').mask('99.999.999/9999-99');
 
     $("#URLLogoMarca").attr("data-target", "#modalArquivo");
     $("#URLLogoMarca").attr("data-toggle", "modal");
