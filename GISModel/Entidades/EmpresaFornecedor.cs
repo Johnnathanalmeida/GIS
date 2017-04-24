@@ -12,7 +12,6 @@ namespace GISModel.Entidades
     public class EmpresaFornecedor : EntidadeBase
     {
 
-        [Key]
         public string IDEmpresaFornecedor { get; set; }
 
         [Required(ErrorMessage = "Selecione uma empresa")]

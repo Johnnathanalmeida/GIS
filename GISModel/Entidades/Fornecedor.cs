@@ -13,7 +13,6 @@ namespace GISModel.Entidades
     public class Fornecedor : EntidadeBase
     {
 
-        [Key]
         public string IDFornecedor { get; set; }
 
         [Display(Name = "Número")]

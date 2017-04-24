@@ -12,7 +12,6 @@ namespace GISModel.Entidades
     public class Perfil : EntidadeBase
     {
 
-        [Key]
         public string IDPerfil { get; set; }
         
         [Required(ErrorMessage = "O perfil é obrigatório")]

@@ -13,7 +13,6 @@ namespace GISModel.Entidades
     public class Empresa : EntidadeBase
     {
 
-        [Key]
         public string IDEmpresa { get; set; }
 
         [Display(Name = "CNPJ")]

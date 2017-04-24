@@ -10,6 +10,9 @@ namespace GISModel.Entidades
     public class EntidadeBase
     {
 
+        [Key]
+        public string ID { get; set; }
+
         public string UsuarioInclusao { get; set; }
 
         public DateTime DataInclusao { get; set; }

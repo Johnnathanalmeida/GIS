@@ -14,7 +14,6 @@ namespace GISModel.Entidades
     public class Usuario : EntidadeBase
     {
 
-        [Key]
         public string IDUsuario { get; set; }
 
         [Display(Name = "CPF")]

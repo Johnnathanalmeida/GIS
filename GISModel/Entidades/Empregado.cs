@@ -14,7 +14,6 @@ namespace GISModel.Entidades
     public class Empregado : EntidadeBase
     {
 
-        [Key]
         public string IDEmpregado { get; set; }
 
         [Display(Name = "CPF")]

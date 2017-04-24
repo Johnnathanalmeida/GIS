@@ -12,7 +12,6 @@ namespace GISModel.Entidades
     public class Contrato : EntidadeBase
     {
 
-        [Key]
         public string IDContrato { get; set; }
 
         [Display(Name = "Número")]

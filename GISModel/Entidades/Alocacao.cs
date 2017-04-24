@@ -12,7 +12,6 @@ namespace GISModel.Entidades
     public class Alocacao : EntidadeBase
     {
 
-        [Key]
         public string IDAlocacao { get; set; }
 
         [Display(Name = "Empregado")]

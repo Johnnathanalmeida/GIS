@@ -13,7 +13,7 @@ namespace GISModel.Entidades
     [Table("tbDepartamento")]
     public class Departamento : EntidadeBase
     {
-        [Key]
+        
         public string IDDepartamento { get; set; }
 
         [Required(ErrorMessage = "Informe o código do departamento")]

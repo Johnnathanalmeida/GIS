@@ -12,7 +12,6 @@ namespace GISModel.Entidades
     public class Menu : EntidadeBase
     {
 
-        [Key]
         public string IDMenu { get; set; }
 
         [Required(ErrorMessage = "Informe o nome do menu")]

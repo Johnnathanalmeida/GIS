@@ -12,7 +12,6 @@ namespace GISModel.Entidades
     [Table("tbUsuarioPerfil")]
     public class UsuarioPerfil : EntidadeBase
     {
-        [Key]
         public string IDUsuarioPerfil { get; set; }
 
         [Required(ErrorMessage = "Selecione um usuário")]

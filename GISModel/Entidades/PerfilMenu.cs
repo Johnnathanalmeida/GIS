@@ -12,7 +12,7 @@ namespace GISModel.Entidades
     [Table("tbPerfilMenu")]
     public class PerfilMenu : EntidadeBase
     {
-        [Key]
+        
         public string IDPerfilMenu { get; set; }
 
         [Required(ErrorMessage = "Selecione um perfil")]
