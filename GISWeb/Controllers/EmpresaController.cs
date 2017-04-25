@@ -247,7 +247,7 @@ namespace GISWeb.Controllers
                             string sLocalFile = Path.Combine(Path.GetTempPath(), "GIS");
                             sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
                             sLocalFile = Path.Combine(sLocalFile, "Empresa");
-                            sLocalFile = Path.Combine(sLocalFile, "LoginTeste");
+                            sLocalFile = Path.Combine(sLocalFile, CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login);
 
                             if (!System.IO.Directory.Exists(sLocalFile))
                                 Directory.CreateDirectory(sLocalFile);

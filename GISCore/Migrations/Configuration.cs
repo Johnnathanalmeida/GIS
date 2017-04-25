@@ -9,7 +9,7 @@ namespace GISCore.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(GISCore.Repository.Configuration.GISContext context)

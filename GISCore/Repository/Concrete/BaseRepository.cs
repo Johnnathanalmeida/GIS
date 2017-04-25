@@ -22,6 +22,7 @@ namespace GISCore.Repository.Concrete
 
         public void Inserir(T entidade)
         {
+            entidade.ID = Guid.NewGuid().ToString();
             entidade.DataInclusao = DateTime.Now;
             entidade.UsuarioInclusao = entidade.UsuarioInclusao;
             entidade.DataExclusao = DateTime.MaxValue;
