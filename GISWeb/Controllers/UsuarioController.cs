@@ -37,7 +37,21 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Usuario")]
         public ActionResult Index()
         {
-            ViewBag.Usuarios = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(o => o.Nome).ToList();
+            //ViewBag.Usuarios = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(o => o.Nome).ToList();
+            ViewBag.Usuarios = from usr in UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                               join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.IDEmpresa equals emp.IDEmpresa
+                               join dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.IDDepartamento equals dep.IDDepartamento
+                               select new Usuario()
+                               {
+                                   IDUsuario = usr.IDUsuario,
+                                   Nome = usr.Nome,
+                                   Login = usr.Login,
+                                   CPF = usr.CPF,
+                                   Email = usr.Email,
+                                   Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia },
+                                   Departamento = new Departamento() { Sigla = dep.Sigla }
+                               };
+
             return View();
         }
 

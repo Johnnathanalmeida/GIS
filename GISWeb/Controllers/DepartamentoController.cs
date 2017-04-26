@@ -35,7 +35,10 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Departamento")]
         public ActionResult Index()
         {
-            ViewBag.Departamentos = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+            //ViewBag.Departamentos = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+            ViewBag.Departamentos = from dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                                    join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on dep.IDEmpresa equals emp.IDEmpresa
+                                    select new Departamento { IDDepartamento = dep.IDDepartamento, Codigo = dep.Codigo, Sigla = dep.Sigla, Descricao = dep.Descricao, Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia } };
             return View();
         }
 

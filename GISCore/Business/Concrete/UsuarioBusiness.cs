@@ -192,7 +192,7 @@ namespace GISCore.Business.Concrete
                 tempUsuario.UsuarioExclusao = entidade.UsuarioExclusao;
                 base.Alterar(tempUsuario);
 
-                entidade.IDUsuario = Guid.NewGuid().ToString();
+                entidade.IDUsuario = tempUsuario.IDUsuario;
                 entidade.UsuarioExclusao = string.Empty;
                 base.Inserir(entidade);
 
@@ -269,8 +269,8 @@ namespace GISCore.Business.Concrete
 
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {
-                    UserName = "johnnathanalmeida22@gmail.com",
-                    Password = "jrpalmeidaasdf0422"
+                    UserName = ConfigurationManager.AppSettings["Web:Remetente"],
+                    Password = "sesmtajt"
                 };
 
                 smtpClient.EnableSsl = true;
@@ -318,8 +318,8 @@ namespace GISCore.Business.Concrete
 
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {
-                    UserName = "johnnathanalmeida22@gmail.com",
-                    Password = "jrpalmeidaasdf0422"
+                    UserName = ConfigurationManager.AppSettings["Web:Remetente"],
+                    Password = "sesmtajt"
                 };
 
                 smtpClient.EnableSsl = true;
@@ -377,8 +377,8 @@ namespace GISCore.Business.Concrete
 
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {
-                    UserName = "johnnathanalmeida22@gmail.com",
-                    Password = "jrpalmeidaasdf0422"
+                    UserName = ConfigurationManager.AppSettings["Web:Remetente"],
+                    Password = "sesmtajt"
                 };
 
                 smtpClient.EnableSsl = true;
@@ -435,8 +435,8 @@ namespace GISCore.Business.Concrete
 
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {
-                    UserName = "johnnathanalmeida22@gmail.com",
-                    Password = "jrpalmeidaasdf0422"
+                    UserName = ConfigurationManager.AppSettings["Web:Remetente"],
+                    Password = "sesmtajt"
                 };
 
                 smtpClient.EnableSsl = true;
