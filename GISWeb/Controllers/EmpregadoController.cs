@@ -37,122 +37,18 @@ namespace GISWeb.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.Empregados = EmpregadoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Novo/Empregado/Proprios")]
-        public ActionResult NovoProprio()
+        public ActionResult Novo()
         {
-            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
-            return View();
-        }
-
-        [MenuAtivo(MenuAtivo = "Novo/Empregado/Terceirizados")]
-        public ActionResult NovoTerceirizado()
-        {
-            ViewBag.Fornecedores = new SelectList(FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDFornecedor", "Nome");
-
             return View();
         }
 
         public ActionResult Edicao(string id)
         {
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
-        }
-
-        [MenuAtivo(MenuAtivo = "Pesquisa/Empregado/Proprios")]
-        public ActionResult PesquisaProprio() {
-            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(p => p.NomeFantasia).ToList(), "IDEmpresa", "NomeFantasia");
-            return View();
-        }
-
-        [MenuAtivo(MenuAtivo = "Pesquisa/Empregado/Terceirizados")]
-        public ActionResult PesquisaTerceirizado()
-        {
-            ViewBag.Fornecedores = new SelectList(FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(p => p.Nome).ToList(), "IDFornecedor", "Nome");
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult CarregarContratosPorFornecedor() {
-            return Json(new { resultado = TratarRetornoValidacaoToJSON() });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PesquisarTerceirizados(PesquisaEmpregadoViewModel FornecedorContrato) {
-          
-            try
-            {
-
-                if (!string.IsNullOrEmpty(FornecedorContrato.Fornecedor) && string.IsNullOrEmpty(FornecedorContrato.Contrato))  {
-                    List<Empregado> listaEmpregados = EmpregadoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDFornecedor.Equals(FornecedorContrato.Fornecedor)).ToList();
-                    return Json(new { data = RenderRazorViewToString("_Terceirizados", listaEmpregados) });
-                }
-                else if (string.IsNullOrEmpty(FornecedorContrato.Fornecedor) && !string.IsNullOrEmpty(FornecedorContrato.Contrato)) {
-                    return Json(new { data = RenderRazorViewToString("_Terceirizados") });
-                }
-                else if (!string.IsNullOrEmpty(FornecedorContrato.Fornecedor) && !string.IsNullOrEmpty(FornecedorContrato.Contrato)) {
-                    return Json(new { data = RenderRazorViewToString("_Terceirizados") });
-                }
-                else {
-                    return Json(new { resultado = new RetornoJSON() { Alerta = "É necessário selecionar pelo menos um filtro." } });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetBaseException() == null)
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
-                }
-                else
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
-                }
-            }
-
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PesquisarProprios(PesquisaEmpregadoViewModel EmpresaContrato)
-        {
-
-            try
-            {
-
-                if (!string.IsNullOrEmpty(EmpresaContrato.Empresa) && string.IsNullOrEmpty(EmpresaContrato.Contrato))
-                {
-                    List<Empregado> listaEmpregados = EmpregadoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpresa.Equals(EmpresaContrato.Empresa)).ToList();
-                    return Json(new { data = RenderRazorViewToString("_Proprios", listaEmpregados) });
-                }
-                else if (string.IsNullOrEmpty(EmpresaContrato.Empresa) && !string.IsNullOrEmpty(EmpresaContrato.Contrato))
-                {
-                    return Json(new { data = RenderRazorViewToString("_Proprios") });
-                }
-                else if (!string.IsNullOrEmpty(EmpresaContrato.Empresa) && !string.IsNullOrEmpty(EmpresaContrato.Contrato))
-                {
-                    return Json(new { data = RenderRazorViewToString("_Proprios") });
-                }
-                else
-                {
-                    return Json(new { resultado = new RetornoJSON() { Alerta = "É necessário selecionar pelo menos um filtro." } });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetBaseException() == null)
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
-                }
-                else
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
-                }
-            }
-
         }
 
         [HttpPost]
@@ -163,6 +59,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    empregado.DataNascimento = DateTime.Now;
                     empregado.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     EmpregadoBusiness.Inserir(empregado);
                     return Json(new { resultado = new RetornoJSON() { Sucesso = "O empregado '" + empregado.Nome + "' foi cadastrado com sucesso." } });
@@ -220,5 +117,39 @@ namespace GISWeb.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult Terminar(string IDEmpregado)
+        {
+
+            try
+            {
+                Empregado oEmpregado = EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpregado.Equals(IDEmpregado));
+                if (oEmpregado == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o empregado, pois o mesmo não foi localizado." } });
+                }
+                else
+                {
+                    oEmpregado.DataExclusao = DateTime.Now;
+                    oEmpregado.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    EmpregadoBusiness.Excluir(oEmpregado);
+
+                    return Json(new { resultado = new RetornoJSON() { Sucesso = "O empregado '" + oEmpregado.Nome + "' foi excluído com sucesso." } });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
+        }
 	}
 }

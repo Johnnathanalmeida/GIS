@@ -25,7 +25,6 @@ namespace GISModel.Entidades
         public string Nome { get; set; }
 
         [Display(Name = "Data de Nascimento")]
-        [Required(ErrorMessage = "Informe sua data de nascimento")]
         public DateTime DataNascimento { get; set; }
 
         [Required(ErrorMessage = "Informe o e-mail do usuário")]
@@ -35,16 +34,6 @@ namespace GISModel.Entidades
         public string Endereco { get; set; }
 
         public string Telefone { get; set; }
-
-        [Display(Name = "Empresa")]
-        public string IDEmpresa { get; set; }
-
-        public virtual Empresa Empresa { get; set; }
-
-        [Display(Name = "Fornecedor")]
-        public string IDFornecedor { get; set; }
-
-        public Fornecedor Fornecedor { get; set; }
 
     }
 }

@@ -14,16 +14,6 @@ namespace GISCore.Business.Concrete
         public override void Inserir(Empregado empregado)
         {
 
-            if (!string.IsNullOrEmpty(empregado.IDEmpresa)) {
-                if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.CPF.Equals(empregado.CPF.Trim()) && u.IDEmpresa.Equals(empregado.IDEmpresa)))
-                    throw new InvalidOperationException("Não é possível inserir este empregado, pois já existe um cadastrado com este CPF e nesta empresa.");
-            }
-            else
-            {
-                if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.CPF.Equals(empregado.CPF.Trim()) && u.IDFornecedor.Equals(empregado.IDFornecedor)))
-                    throw new InvalidOperationException("Não é possível inserir este empregado, pois já existe um cadastrado com este CPF e neste fornecedor.");
-            }
-
             empregado.IDEmpregado = Guid.NewGuid().ToString();
 
             base.Inserir(empregado);
@@ -32,7 +22,6 @@ namespace GISCore.Business.Concrete
 
         public override void Alterar(Empregado empregado)
         {
-
             Empregado tempEmpregado = Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(empregado.IDEmpregado));
             if (tempEmpregado == null)
             {
@@ -44,13 +33,18 @@ namespace GISCore.Business.Concrete
                 tempEmpregado.UsuarioExclusao = empregado.UsuarioExclusao;
                 base.Alterar(tempEmpregado);
 
-                empregado.IDEmpregado = Guid.NewGuid().ToString();
+                empregado.IDEmpregado = tempEmpregado.IDEmpregado;
                 empregado.UsuarioExclusao = string.Empty;
                 base.Inserir(empregado);
-
             }
 
         }
 
+        public override void Excluir(Empregado empregado)
+        {
+            empregado.DataExclusao = DateTime.Now;
+            base.Alterar(empregado);
+        }
+        
     }
 }
