@@ -26,6 +26,9 @@ namespace GISWeb.Controllers
             [Inject]
             public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
+            [Inject]
+            public IEmpresaBusiness EmpresaBusiness { get; set; }
+
         #endregion
 
         [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
@@ -39,6 +42,16 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
         public ActionResult Novo()
         {
+            if (CustomAuthorizationProvider.UsuarioAutenticado.Perfis.Where(p => p.Nome.Equals("Super Administrador")).Count() > 0)
+            {
+                ViewBag.Perfil = "SuperAdministrador";
+                ViewBag.Empresas = EmpresaBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList();
+            }
+            else if (CustomAuthorizationProvider.UsuarioAutenticado.Perfis.Where(p => p.Nome.Equals("Administrador")).Count() > 0)
+            {
+                ViewBag.Perfil = "Administrador";
+            }
+
             return View();
         }
 
