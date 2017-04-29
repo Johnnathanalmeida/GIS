@@ -85,6 +85,18 @@
     <Compile Include="Migrations\201704190142442_inicial.Designer.cs">
       <DependentUpon>201704190142442_inicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704272258506_tt.cs" />
+    <Compile Include="Migrations\201704272258506_tt.Designer.cs">
+      <DependentUpon>201704272258506_tt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704282031289_addGarantia.cs" />
+    <Compile Include="Migrations\201704282031289_addGarantia.Designer.cs">
+      <DependentUpon>201704282031289_addGarantia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704282033473_addGarantia2.cs" />
+    <Compile Include="Migrations\201704282033473_addGarantia2.Designer.cs">
+      <DependentUpon>201704282033473_addGarantia2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstract\IBaseRepository.cs" />
@@ -108,6 +120,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704190142442_inicial.resx">
       <DependentUpon>201704190142442_inicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704272258506_tt.resx">
+      <DependentUpon>201704272258506_tt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704282031289_addGarantia.resx">
+      <DependentUpon>201704282031289_addGarantia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704282033473_addGarantia2.resx">
+      <DependentUpon>201704282033473_addGarantia2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

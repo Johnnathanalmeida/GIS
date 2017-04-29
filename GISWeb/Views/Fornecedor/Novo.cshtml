@@ -40,7 +40,16 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
+
+            @{
+                string sCol = "6";
+                if (ViewBag.Perfil != null && "SuperAdministrador".Equals(ViewBag.Perfil))
+                {
+                    sCol = "4";
+                }
+            }
+
+            <div class="col-xs-12 col-sm-@sCol">
                 <div class="form-group">
                     @Html.LabelFor(d => d.Numero, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
@@ -48,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-@sCol">
                 <div class="form-group">
                     @Html.LabelFor(d => d.Descricao, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
@@ -56,6 +65,16 @@
                     </div>
                 </div>
             </div>
+            @if (ViewBag.Perfil != null && "SuperAdministrador".Equals(ViewBag.Perfil)) { 
+                <div class="col-xs-12 col-sm-@sCol">
+                    <div class="form-group">
+                        @Html.LabelFor(d => d.IDEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                        <div class="col-xs-12 col-sm-12">
+                            @Html.DropDownListFor(d => d.IDEmpresa, new SelectList(ViewBag.Empresas, "IDEmpresa", "NomeFantasia"), "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
 
         <div class="row">
@@ -109,7 +128,6 @@
 
 
 @section Scripts {
-    <script src="~/Scripts/jQuery/inputmask.js"></script>
-    <script src="~/Scripts/jQuery/jquery.inputmask.js"></script>
+    <script src="~/Scripts/Ace/jQ/jquery.inputmask.js"></script>
     <script src="~/Scripts/Custom/Fornecedor/Novo.js"></script>
 }

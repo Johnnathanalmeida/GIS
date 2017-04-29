@@ -28,17 +28,26 @@ namespace GISModel.Entidades
 
         public string Descricao { get; set; }
 
+
+
+
         [Display(Name = "Fornecedor")]
         [Required(ErrorMessage = "Selecione um fornecedor")]
         public string IDFornecedor { get; set; }
 
         public virtual Fornecedor Fornecedor { get; set; }
 
+
+
+
         [Display(Name = "Departamento")]
         [Required(ErrorMessage = "Selecione um departamento")]
         public string IDDepartamento { get; set; }
 
         public virtual Departamento Departamento { get; set; }
+
+
+        public List<Garantia> Garantias { get; set; }
 
     }
 }

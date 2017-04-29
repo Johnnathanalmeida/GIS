@@ -39,5 +39,13 @@ namespace GISModel.Entidades
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 
+
+
+
+        public virtual Empresa Empresa { get; set; }
+
+        [Display(Name = "Empresa")]
+        public string IDEmpresa { get; set; }
+
     }
 }

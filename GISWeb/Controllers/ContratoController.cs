@@ -51,19 +51,6 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Contrato")]
         public ActionResult Novo()
         {
-
-            if (CustomAuthorizationProvider.UsuarioAutenticado.Perfis.Where(p => p.Nome.Equals("Super Administrador")).Count() > 0) {
-                ViewBag.Perfil = "SuperAdministrador";
-                ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(o => o.NomeFantasia).ToList(), "IDEmpresa", "NomeFantasia");
-            }
-            else if (CustomAuthorizationProvider.UsuarioAutenticado.Perfis.Where(p => p.Nome.Equals("Administrador")).Count() > 0)
-            { 
-                ViewBag.Perfil = "Administrador";
-
-                //ViewBag.Fornecedores = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
-                //ViewBag.Departamentos = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");    
-            }
-
             return View();
         }
 
