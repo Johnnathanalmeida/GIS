@@ -34,6 +34,7 @@
                             <th>E-mail</th>
                             <th>Data Nasc.</th>
                             <th>Telefone</th>
+                            <th>Tipo</th>
                             <th width="89px"></th>
                         </tr>
                     </thead>
@@ -46,10 +47,15 @@
                                 <td>@iEmpregado.CPF</td>
                                 <td>@iEmpregado.Nome</td>
                                 <td>@iEmpregado.Email</td>
-                                <td>@iEmpregado.DataNascimento</td>
+                                <td>@iEmpregado.DataNascimento.ToString().Substring(0,10)</td>
                                 <td>@iEmpregado.Telefone</td>
+                                <td>@iEmpregado.TipoEmpregado</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
+                                        <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
+                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                        </a>
+
                                         <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
@@ -66,6 +72,14 @@
                                             </button>
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="tooltip-success" data-rel="tooltip" title="Detalhes">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
                                                 <li>
                                                     <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">

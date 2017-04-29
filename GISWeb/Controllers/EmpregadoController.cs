@@ -51,6 +51,11 @@ namespace GISWeb.Controllers
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
         }
 
+        public ActionResult Detalhes(string id)
+        {
+            return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Cadastrar(Empregado empregado)

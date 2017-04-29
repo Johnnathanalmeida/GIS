@@ -84,6 +84,8 @@
     <Compile Include="DTO\Permissoes\UsuarioPerfilViewModel.cs" />
     <Compile Include="DTO\Shared\RetornoJSON.cs" />
     <Compile Include="DTO\Usuario\UsuarioPerfisMenusViewModel.cs" />
+    <Compile Include="Entidades\Proprio.cs" />
+    <Compile Include="Entidades\Terceirizado.cs" />
     <Compile Include="Entidades\Admissao.cs" />
     <Compile Include="Entidades\Alocacao.cs" />
     <Compile Include="Entidades\Contrato.cs" />
@@ -101,7 +103,9 @@
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\UsuarioPerfil.cs" />
     <Compile Include="Enums\Intervalo.cs" />
+    <Compile Include="Enums\TipoEmpregado.cs" />
     <Compile Include="Enums\Situacao.cs" />
+    <Compile Include="Enums\Sexo.cs" />
     <Compile Include="Enums\TipoDeAcesso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

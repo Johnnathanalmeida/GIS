@@ -18,13 +18,13 @@
     @using (Ajax.BeginForm("Atualizar", "Empregado", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginAtualizarEmpregado", OnSuccess = "OnSuccessAtualizarEmpregado", }, new { @id = "formEdicaoEmpregado", @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
-
+        
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.CPF, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.CPF, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtCPF", @readonly = "readonly" } })
+                        @Html.EditorFor(d => d.CPF, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtCPF" } })
                         @Html.ValidationMessageFor(d => d.CPF, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                         @Html.HiddenFor(d => d.IDEmpregado)
                     </div>
@@ -44,6 +44,16 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
+                    @Html.LabelFor(d => d.Sexo, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EnumDropDownListFor(x => x.Sexo, "Selecione o sexo...", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Sexo, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
                     @Html.LabelFor(d => d.Email, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
                         <div class="input-group">
@@ -56,6 +66,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.DataNascimento, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
@@ -65,14 +78,11 @@
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
                             @Html.EditorFor(d => d.DataNascimento, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12 date-picker-mes-e-ano", @id = "txtDataNascimento" } })
-                            @Html.ValidationMessageFor(d => d.DataNascimento, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
-                        </div>                       
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.Telefone, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
@@ -87,11 +97,23 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.Endereco, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
                         @Html.EditorFor(d => d.Endereco, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.TipoEmpregado, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EnumDropDownListFor(x => x.TipoEmpregado, "Selecione o tipo...", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.TipoEmpregado, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                     </div>
                 </div>
             </div>

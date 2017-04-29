@@ -43,6 +43,16 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
+                    @Html.LabelFor(d => d.Sexo, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EnumDropDownListFor(x => x.Sexo, "Selecione o sexo...", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Sexo, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
                     @Html.LabelFor(d => d.Email, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
                         <div class="input-group">
@@ -54,7 +64,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
+        </div>
+
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.DataNascimento, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
@@ -68,9 +81,7 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.Telefone, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
@@ -85,6 +96,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.Endereco, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
@@ -93,13 +107,27 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.TipoEmpregado, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EnumDropDownListFor(x => x.TipoEmpregado, "Selecione o tipo...", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.TipoEmpregado, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
         </div>
-
+        
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-sm-offset-3 align-center">
                 <button class="btn btn-info" id="btnSalvar" type="submit">
                     <i class="ace-icon fa fa-check bigger-110"></i>
                     Salvar
+                </button>
+                &nbsp;
+                <button class="btn btn-info" type="submit" onclick="$('#IDEmpregado').val('redirect');">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    Salvar e Fechar
                 </button>
                 &nbsp;
                 <button class="btn btn-warning" type="reset">

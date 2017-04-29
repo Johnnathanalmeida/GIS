@@ -1,0 +1,212 @@
+﻿@model GISModel.Entidades.Empregado
+
+@{
+    ViewBag.Title = "Detalhes do Empregado";
+}
+
+<div class="col-xs-12">
+    <!-- PAGE CONTENT BEGINS -->
+    <h3 class="header smaller lighter blue">
+        @Model.Nome [@Model.CPF]
+    </h3>
+
+    <div class="user-profile">
+        <div class="tabbable">
+            <ul class="nav nav-tabs padding-18">
+                <li class="active">
+                    <a data-toggle="tab" href="#empregado" aria-expanded="true">
+                        <i class="green ace-icon fa fa-user bigger-120"></i>
+                        Apresentação do Empregado
+                    </a>
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#admissao" aria-expanded="false">
+                        <i class="orange ace-icon fa fa-legal bigger-120"></i>
+                        Admissão e Alocações Atuais
+                    </a>
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#documentos" aria-expanded="false">
+                        <i class="blue ace-icon fa fa-file-text-o bigger-120"></i>
+                        Documentos
+                    </a>
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#historico" aria-expanded="false">
+                        <i class="pink ace-icon fa fa-history bigger-120"></i>
+                        Histórico de Alocações
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content no-border padding-24">
+                <div id="empregado" class="tab-pane active">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 center">
+                            <span class="profile-picture">
+                                <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2" src="~/Images/profile-pic.jpg">
+                            </span>
+
+                            <div class="space space-4"></div>
+
+                            <a href="#" class="btn btn-sm btn-block btn-success">
+                                <i class="ace-icon fa fa-plus-circle bigger-120"></i>
+                                <span class="bigger-110">Alocar</span>
+                            </a>
+
+                            <a href="#" class="btn btn-sm btn-block btn-warning">
+                                <i class="ace-icon fa fa-envelope-o bigger-110"></i>
+                                <span class="bigger-110">Cadastrar CAT</span>
+                            </a>
+
+                            <a href="#" class="btn btn-sm btn-block btn-danger">
+                                <i class="ace-icon fa fa-envelope-o bigger-110"></i>
+                                <span class="bigger-110">Demitir</span>
+                            </a>
+                        </div><!-- /.col -->
+
+                        <div class="col-xs-12 col-sm-9">
+                            <h4 class="blue">
+                                <span class="label label-purple arrowed-in-right">
+                                    <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+                                    online
+                                </span>
+                            </h4>
+
+                            <div class="profile-user-info">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Nome </div>
+
+                                    <div class="profile-info-value">
+                                        <span>@Model.Nome</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> CPF </div>
+
+                                    <div class="profile-info-value">
+                                        <span>@Model.CPF</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Data de Nascimento </div>
+
+                                    <div class="profile-info-value">
+                                        <span>@Model.DataNascimento</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Telefone </div>
+
+                                    <div class="profile-info-value">
+                                        <span>@Model.Telefone</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Cadastrado em </div>
+
+                                    <div class="profile-info-value">
+                                        <span>@Model.DataInclusao</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hr hr16 dotted"></div>
+
+                            <div class="center">
+                                <span class="btn btn-app btn-sm btn-light no-hover">
+                                    <span class="line-height-1 bigger-170 blue"> 0 </span>
+
+                                    <br>
+                                    <span class="line-height-1 smaller-70"> Alocações </span>
+                                </span>
+
+                                <span class="btn btn-app btn-sm btn-yellow no-hover">
+                                    <span class="line-height-1 bigger-170"> 0 </span>
+
+                                    <br>
+                                    <span class="line-height-1 smaller-70"> Contratos </span>
+                                </span>
+
+                                <span class="btn btn-app btn-sm btn-pink no-hover">
+                                    <span class="line-height-1 bigger-170"> 0 </span>
+
+                                    <br>
+                                    <span class="line-height-1 smaller-70"> Documentos </span>
+                                </span>
+
+                                <span class="btn btn-app btn-sm btn-grey no-hover">
+                                    <span class="line-height-1 bigger-170"> 0 </span>
+
+                                    <br>
+                                    <span class="line-height-1 smaller-70"> CAT's </span>
+                                </span>
+
+                                <span class="btn btn-app btn-sm btn-success no-hover">
+                                    <span class="line-height-1 bigger-170"> 0 </span>
+
+                                    <br>
+                                    <span class="line-height-1 smaller-70"> Inspeções </span>
+                                </span>
+                            </div>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div>
+
+                <div id="admissao" class="tab-pane">
+                    <div class="alert alert-warning">
+                        <strong>
+                            <i class="ace-icon fa fa-meh-o"></i>
+                            Oops!
+                        </strong>
+
+                        No momento, este empregado não está admitido em nenhuma empresa.
+                        <br>
+                    </div>
+                </div>
+
+                <div id="documentos" class="tab-pane">
+                    <div class="alert alert-warning">
+                        <strong>
+                            <i class="ace-icon fa fa-meh-o"></i>
+                            Oops!
+                        </strong>
+
+                        No momento, este empregado não possui nenhum documento.
+                        <br>
+                    </div>
+                </div>
+
+                <div id="historico" class="tab-pane">
+                    <div class="alert alert-warning">
+                        <strong>
+                            <i class="ace-icon fa fa-meh-o"></i>
+                            Oops!
+                        </strong>
+
+                        No momento, este empregado não possui histórico.
+                        <br>
+                    </div>
+                </div>
+            </div><div class="alert alert-warning">
+    <strong>
+        <i class="ace-icon fa fa-meh-o"></i>
+        Oops!
+    </strong>
+
+    No momento, este empregado não está admitido em nenhuma empresa.
+    <br>
+</div>
+        </div>
+    </div>
+
+    <!-- PAGE CONTENT ENDS -->
+</div>
+

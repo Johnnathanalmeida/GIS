@@ -143,6 +143,7 @@
     <Content Include="Content\Ace\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Croppie\croppie.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\profile-pic.jpg" />
     <Content Include="Scripts\Ace\ace-extra.js" />
     <Content Include="Scripts\Ace\ace.js" />
     <Content Include="Scripts\Ace\ace.sidebar-scroll-1.js" />
@@ -200,6 +201,7 @@
     <Content Include="Scripts\Custom\Departamento\Listagem.js" />
     <Content Include="Scripts\Custom\Departamento\Novo.js" />
     <Content Include="Scripts\Custom\Empregado\Edicao.js" />
+    <Content Include="Scripts\Custom\Empregado\Listagem.js" />
     <Content Include="Scripts\Custom\Empregado\Novo.js" />
     <Content Include="Scripts\Custom\Empregado\PesquisaProprio.js" />
     <Content Include="Scripts\Custom\Empregado\PesquisaTerceirizado.js" />
@@ -238,6 +240,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdmissaoController.cs" />
     <Compile Include="Controllers\ArquivoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
@@ -327,6 +330,8 @@
     <Content Include="Views\Empregado\_Proprios.cshtml" />
     <Content Include="Views\Usuario\_Detalhes.cshtml" />
     <Content Include="Views\Conta\DefinirNovaSenha.cshtml" />
+    <Content Include="Views\Empregado\Novo.cshtml" />
+    <Content Include="Views\Empregado\Detalhes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -342,6 +347,7 @@
     <Folder Include="Scripts\Custom\Obra\" />
     <Folder Include="Scripts\Custom\Painel\" />
     <Folder Include="Scripts\Custom\Proposito\" />
+    <Folder Include="Views\Admissao\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Obra\" />
     <Folder Include="Views\Proposito\" />
