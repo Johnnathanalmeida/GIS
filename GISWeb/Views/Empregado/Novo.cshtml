@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            @*<div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     @Html.LabelFor(d => d.DataNascimento, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
@@ -63,12 +63,11 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
-                            @Html.EditorFor(d => d.DataNascimento, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12 date-picker", @id = "txtDataNascimento" } })
-
+                            @Html.EditorFor(d => d.DataNascimento, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12 date-picker-mes-e-ano", @id = "txtDataNascimento" } })
                         </div>
                     </div>
                 </div>
-            </div>*@
+            </div>
         </div>
 
         <div class="row">

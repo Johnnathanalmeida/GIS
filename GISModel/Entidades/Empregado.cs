@@ -24,6 +24,9 @@ namespace GISModel.Entidades
         [Required(ErrorMessage = "O nome é obrigatório")]
         public string Nome { get; set; }
 
+        //[Required(ErrorMessage = "O sexo é obrigatório")]
+        //public string Sexo { get; set; }
+
         [Display(Name = "Data de Nascimento")]
         public DateTime DataNascimento { get; set; }
 

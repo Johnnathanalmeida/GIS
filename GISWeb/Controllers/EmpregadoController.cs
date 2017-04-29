@@ -59,10 +59,13 @@ namespace GISWeb.Controllers
             {
                 try
                 {
-                    empregado.DataNascimento = DateTime.Now;
+                    //empregado.DataNascimento = DateTime.Now;
                     empregado.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     EmpregadoBusiness.Inserir(empregado);
-                    return Json(new { resultado = new RetornoJSON() { Sucesso = "O empregado '" + empregado.Nome + "' foi cadastrado com sucesso." } });
+
+                    TempData["MensagemSucesso"] = "O empregado '" + empregado.Nome + "' foi cadastrado com sucesso.";
+
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empregado") } });
                 }
                 catch (Exception ex)
                 {

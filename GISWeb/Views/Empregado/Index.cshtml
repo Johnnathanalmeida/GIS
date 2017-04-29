@@ -50,10 +50,6 @@
                                 <td>@iEmpregado.Telefone</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
-                                        <a class="blue" href="#" onclick="BuscarDetalhesEmpregado('@iEmpregado.IDEmpregado'); return false;">
-                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                        </a>
-
                                         <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
@@ -70,14 +66,6 @@
                                             </button>
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                <li>
-                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesEmpregado('@iEmpregado.IDEmpregado'); return false;" data-rel="tooltip" title="View">
-                                                        <span class="blue">
-                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-
                                                 <li>
                                                     <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">
