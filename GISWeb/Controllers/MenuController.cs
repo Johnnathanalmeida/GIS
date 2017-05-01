@@ -134,6 +134,7 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    Menu.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     MenuBusiness.Alterar(Menu);
 
                     TempData["MensagemSucesso"] = "O menu '" + Menu.Nome + "' foi atualizado com sucesso.";

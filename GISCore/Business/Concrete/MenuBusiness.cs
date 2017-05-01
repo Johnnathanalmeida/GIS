@@ -22,28 +22,23 @@ namespace GISCore.Business.Concrete
             base.Inserir(Menu);
         }
 
-        public override void Alterar(Menu Menu)
+        public override void Alterar(Menu entidade)
         {
-            
-            Menu tempMenu = Consulta.FirstOrDefault(p => p.IDMenu.Equals(Menu.IDMenu));
+            Menu tempMenu = Consulta.FirstOrDefault(p => p.IDMenu.Equals(entidade.IDMenu));
             if (tempMenu == null)
             {
                 throw new Exception("Não foi possível encontra o menu através do ID.");
             }
             else
             {
-
-                tempMenu.Nome = Menu.Nome;
-                tempMenu.Ordem = Menu.Ordem;
-                tempMenu.Controller = Menu.Controller;
-                tempMenu.Action = Menu.Action;
-                tempMenu.Icone = Menu.Icone;
-                tempMenu.IDMenuSuperior = Menu.IDMenuSuperior;
-
+                tempMenu.DataExclusao = DateTime.Now;
+                tempMenu.UsuarioExclusao = entidade.UsuarioExclusao;
                 base.Alterar(tempMenu);
 
+                entidade.IDMenu = tempMenu.IDMenu;
+                entidade.UsuarioExclusao = string.Empty;
+                base.Inserir(entidade);
             }
-
         }
 
     }

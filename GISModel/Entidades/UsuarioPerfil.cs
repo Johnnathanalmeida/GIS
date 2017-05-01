@@ -14,15 +14,24 @@ namespace GISModel.Entidades
     {
         public string IDUsuarioPerfil { get; set; }
 
+
+
+
         [Required(ErrorMessage = "Selecione um usuário")]
         public string IDUsuario { get; set; }
 
         public virtual Usuario Usuario { get; set; }
 
+
+
+
         [Required(ErrorMessage = "Selecione um perfil")]
         public string IDPerfil { get; set; }
 
         public virtual Perfil Perfil { get; set; }
+
+
+
 
         public string IDArea { get; set; }
 

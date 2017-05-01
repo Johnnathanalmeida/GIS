@@ -31,7 +31,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
         public ActionResult Index()
         {
-            ViewBag.Perfis = PerfilBusiness.Consulta.ToList();
+            ViewBag.Perfis = PerfilBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList();
 
             return View();
         }
@@ -79,7 +79,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
         public ActionResult Edicao(string id)
         {
-            return View(PerfilBusiness.Consulta.FirstOrDefault(p => p.IDPerfil.Equals(id)));
+            return View(PerfilBusiness.Consulta.FirstOrDefault(p => p.ID.Equals(id)));
         }
 
         [HttpPost]
@@ -90,7 +90,8 @@ namespace GISWeb.Controllers
             {
                 try
                 {
-
+                    Perfil.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    Perfil.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     PerfilBusiness.Alterar(Perfil);
 
                     TempData["MensagemSucesso"] = "O perfil '" + Perfil.Nome + "' foi atualizado com sucesso.";

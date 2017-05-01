@@ -23,7 +23,7 @@
             Html.RenderPartial("_MensagensDeRetorno");
         }
 
-        @if (ViewBag.Empresas != null)
+        @if (ViewBag.Empresas != null && ViewBag.Empresas.Count > 0)
         {
             <div>
                 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
@@ -114,7 +114,19 @@
                 </table>
             </div>
         }
-        
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>
+                    <i class="ace-icon fa fa-meh-o"></i>
+                    Oops!
+                </strong>
+
+                No momento, nenhuma empresa encontrada.
+                <br>
+            </div>
+        }
+
     </div>
 </div>
 

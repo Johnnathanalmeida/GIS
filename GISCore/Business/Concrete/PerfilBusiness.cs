@@ -25,5 +25,24 @@ namespace GISCore.Business.Concrete
             base.Inserir(Perfil);
         }
 
+        public override void Alterar(Perfil entidade)
+        {
+            Perfil tempPerfil = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDPerfil.Equals(entidade.IDPerfil));
+            if (tempPerfil == null)
+            {
+                throw new Exception("Não foi possível encontra o perfil através do ID.");
+            }
+            else
+            {
+                tempPerfil.DataExclusao = DateTime.Now;
+                tempPerfil.UsuarioExclusao = entidade.UsuarioExclusao;
+                base.Alterar(tempPerfil);
+
+                entidade.IDPerfil = tempPerfil.IDPerfil;
+                entidade.UsuarioExclusao = string.Empty;
+                base.Inserir(entidade);
+            }
+        }
+
     }
 }

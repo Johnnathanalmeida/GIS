@@ -6,9 +6,7 @@
         List<GISModel.Entidades.Menu> ListaMenus = (List<GISModel.Entidades.Menu>)ViewBag.MenusUsuario;
         foreach (GISModel.Entidades.Menu iMenuRaiz in ListaMenus.Where(p => p.MenuSuperior == null).OrderBy(p => p.Ordem))
         {
-            iMenuRaiz.Nome = GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome);
-            
-            string sIDMenu = "ml" + iMenuRaiz.Nome.Replace(" ", "_");
+            string sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_");
         
             <li id='@sIDMenu'>
                 <a href="#" class="dropdown-toggle">
@@ -31,9 +29,7 @@
 
                     @foreach (GISModel.Entidades.Menu iMenu in ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.IDMenu.Equals(iMenuRaiz.IDMenu)).OrderBy(p => p.Ordem))
                     {
-                        iMenu.Nome = GISHelpers.Utils.Severino.RemoveAcentos(iMenu.Nome);
-                        
-                        sIDMenu = "ml" + iMenuRaiz.Nome.Replace(" ", "_") + iMenu.Nome.Replace(" ", "_");
+                        sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_") + GISHelpers.Utils.Severino.RemoveAcentos(iMenu.Nome).Replace(" ", "_");
                     
                         <li id="@sIDMenu">
                             @{
@@ -56,9 +52,7 @@
                                     <ul class="submenu">
                                         @foreach (GISModel.Entidades.Menu iSubMenu in ListaSubMenus.OrderBy(p => p.Ordem))
                                         {
-                                            iSubMenu.Nome = GISHelpers.Utils.Severino.RemoveAcentos(iSubMenu.Nome);
-                                            
-                                            sIDMenu = "ml" + iMenuRaiz.Nome.Replace(" ", "_") + iMenu.Nome.Replace(" ", "_") + iSubMenu.Nome.Replace(" ", "_");
+                                            sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_") + GISHelpers.Utils.Severino.RemoveAcentos(iMenu.Nome).Replace(" ", "_") + GISHelpers.Utils.Severino.RemoveAcentos(iSubMenu.Nome).Replace(" ", "_");
                                             <li id="@sIDMenu">
                                                 <a href="@Url.Action(@iSubMenu.Action, @iSubMenu.Controller)">
                                                     @if (!string.IsNullOrEmpty(iSubMenu.Icone))

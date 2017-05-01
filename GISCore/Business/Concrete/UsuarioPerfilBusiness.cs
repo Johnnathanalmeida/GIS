@@ -13,7 +13,7 @@ namespace GISCore.Business.Concrete
 
         public override void Inserir(UsuarioPerfil UsuarioPerfil)
         {
-            if (!Consulta.Any(u => u.IDUsuario.Equals(UsuarioPerfil.IDUsuario) && u.IDPerfil.Equals(UsuarioPerfil.IDPerfil) && string.IsNullOrEmpty(u.UsuarioExclusao)))
+            if (!Consulta.Any(u => u.IDUsuario.Equals(UsuarioPerfil.IDUsuario) && u.IDPerfil.Equals(UsuarioPerfil.IDPerfil) && u.IDArea.Equals(UsuarioPerfil.IDArea) && string.IsNullOrEmpty(u.UsuarioExclusao)))
             {
                 UsuarioPerfil.IDUsuarioPerfil = Guid.NewGuid().ToString();
 
