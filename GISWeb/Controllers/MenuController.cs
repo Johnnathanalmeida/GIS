@@ -36,11 +36,14 @@ namespace GISWeb.Controllers
         {
             //ViewBag.Menus = MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
 
-            ViewBag.Menus = from MenuPrincipal in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                            join MenuRaiz in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on MenuPrincipal.IDMenuSuperior equals MenuRaiz.IDMenu into prodGroup
-                            from item in prodGroup.DefaultIfEmpty()
-                            orderby MenuPrincipal.Ordem
-                            select new Menu { IDMenu = MenuPrincipal.IDMenu, Nome = MenuPrincipal.Nome, Ordem = MenuPrincipal.Ordem, DataInclusao = MenuPrincipal.DataInclusao, UsuarioInclusao = MenuPrincipal.UsuarioInclusao, MenuSuperior = new Menu() { Nome = item == null ? string.Empty : item.Nome  } };
+            List<Menu> menus = (from MenuPrincipal in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                               join MenuRaiz in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on MenuPrincipal.IDMenuSuperior equals MenuRaiz.IDMenu into prodGroup
+                               from item in prodGroup.DefaultIfEmpty()
+                               orderby MenuPrincipal.Ordem
+                               select new Menu { IDMenu = MenuPrincipal.IDMenu, Nome = MenuPrincipal.Nome, Ordem = MenuPrincipal.Ordem, DataInclusao = MenuPrincipal.DataInclusao, UsuarioInclusao = MenuPrincipal.UsuarioInclusao, MenuSuperior = new Menu() { Nome = item == null ? string.Empty : item.Nome  } }
+                               ).ToList();
+
+            ViewBag.Menus = menus;
 
             return View();
         }

@@ -55,14 +55,14 @@ function ListarUsuarios() {
     }
     else if (valOrgao != "") {
         $(".LoadingLayout").show();
-        $.post('/Permissoes/BuscarUsuariosPorDepartamento', { id: valOrgao }, function (partial) {
+        $.post('/Permissoes/BuscarPermissoesPorDepartamento', { id: valOrgao }, function (partial) {
             $(".LoadingLayout").hide();
             TratarResultadoListarUsuarios(partial);
         });
     }
     else if (valEmpresa != "") {
         $(".LoadingLayout").show();
-        $.post('/Permissoes/BuscarUsuariosPorEmpresa', { id: valEmpresa }, function (partial) {
+        $.post('/Permissoes/BuscarPermissoesPorEmpresa', { id: valEmpresa }, function (partial) {
             $(".LoadingLayout").hide();
             TratarResultadoListarUsuarios(partial);
         });
@@ -155,7 +155,14 @@ function SalvarPermissoes(Acao, Perfil, UIDsUsuarios) {
             });
         }
 
-        $.post('/Permissoes/SalvarPermissoes', { Acao: Acao, Perfil: Perfil, UIDsUsuarios: UIDsUsuarios, Orgao: valOrgao, Empresa: valEmpresa }, function (partial) {
+        alert(valOrgao);
+        alert(valEmpresa);
+        var idArea = valOrgao;
+        if (valOrgao == "") {
+            idArea = valEmpresa;
+        }
+
+        $.post('/Permissoes/SalvarPermissoes', { Acao: Acao, Perfil: Perfil, UIDsUsuarios: UIDsUsuarios, IDArea: idArea }, function (partial) {
             
             if (partial.resultado != undefined && partial.resultado != "") {
                 TratarResultadoJSON(partial.resultado);
@@ -168,4 +175,8 @@ function SalvarPermissoes(Acao, Perfil, UIDsUsuarios) {
 
     }
 
+}
+
+function BuscarUsuario() {
+    
 }

@@ -13,17 +13,12 @@ namespace GISCore.Business.Concrete
 
         public override void Inserir(Fornecedor fornecedor)
         {
-
-            if (string.IsNullOrEmpty(fornecedor.IDEmpresa))
-                throw new Exception("Informe uma empresa para continuar com o cadastro do fornecedor.");
-                
-            if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && fornecedor.IDEmpresa.Equals(u.IDEmpresa) && u.CNPJ.Equals(fornecedor.CNPJ.Trim())))
+            if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.CNPJ.Equals(fornecedor.CNPJ.Trim())))
                 throw new InvalidOperationException("Não é possível inserir o fornecedor, pois já existe um registrado com este CNPJ.");
 
             fornecedor.IDFornecedor = Guid.NewGuid().ToString();
 
             base.Inserir(fornecedor);
-
         }
 
         public override void Alterar(Fornecedor fornecedor)
@@ -36,7 +31,6 @@ namespace GISCore.Business.Concrete
             }
             else
             {
-
                 tempFornecedor.Numero = fornecedor.Numero;
                 tempFornecedor.Nome = fornecedor.Nome;
                 tempFornecedor.Descricao = fornecedor.Descricao;

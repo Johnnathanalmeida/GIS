@@ -1,4 +1,5 @@
 ﻿using GISCore.Business.Abstract;
+using GISCore.Infraestrutura.Comparer;
 using GISModel.DTO.Permissoes;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
@@ -46,7 +47,7 @@ namespace GISWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult SalvarPermissoes(bool Acao, string Perfil, string UIDsUsuarios, string Orgao, string Empresa)
+        public ActionResult SalvarPermissoes(bool Acao, string Perfil, string UIDsUsuarios, string IDArea)
         {
             try
             {
@@ -55,14 +56,13 @@ namespace GISWeb.Controllers
                     if (UIDsUsuarios.Contains("|")) {
                         foreach (string IDUsuario in UIDsUsuarios.Split('|')) {
                             if (!string.IsNullOrEmpty(IDUsuario)) {
-                                UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDUsuario = IDUsuario, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });        
+                                UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDArea = IDArea, IDUsuario = IDUsuario, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });        
                             }
                         }
                     }
                     else
                     {
-
-                        UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDUsuario = UIDsUsuarios, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
+                        UsuarioPerfilBusiness.Inserir(new UsuarioPerfil() { IDArea = IDArea, IDUsuario = UIDsUsuarios, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
                 else
@@ -74,13 +74,13 @@ namespace GISWeb.Controllers
                         {
                             if (!string.IsNullOrEmpty(IDUsuario))
                             {
-                                UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDUsuario = IDUsuario, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
+                                UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDArea = IDArea, IDUsuario = IDUsuario, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                             }
                         }
                     }
                     else
                     {
-                        UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDUsuario = UIDsUsuarios, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
+                        UsuarioPerfilBusiness.Alterar(new UsuarioPerfil() { IDArea = IDArea, IDUsuario = UIDsUsuarios, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
                 
@@ -100,24 +100,33 @@ namespace GISWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult BuscarUsuariosPorEmpresa(string id)
+        public ActionResult BuscarPermissoesPorEmpresa(string id)
         {
             try
             {
 
-                ViewBag.Perfis = PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+                if (CustomAuthorizationProvider.UsuarioAutenticado.Perfis.Where(p => p.Nome.Equals("Super Administrador")).Count() > 0)
+                {
+                    ViewBag.Perfis = PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+                }
+                else
+                {
+                    ViewBag.Perfis = PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && !p.Nome.Equals("Super Administrador")).ToList();
+                }
 
-                List<Usuario> lUsuarios = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpresa.Equals(id)).ToList();
-
+                var lUsuarios = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDArea.Equals(id)).ToList()
+                                          join usr in UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usuarioperfil.IDUsuario equals usr.IDUsuario
+                                          select new Usuario { Nome = usr.Nome, Login = usr.Login, IDUsuario = usr.IDUsuario };
+                
                 List<UsuarioPerfilViewModel> lUsuariosPerfis = new List<UsuarioPerfilViewModel>();
-                foreach (Usuario iUsr in lUsuarios) {
+                foreach (Usuario iUsr in lUsuarios.ToList()) {
                     UsuarioPerfilViewModel oUsrPerfViewModel = new UsuarioPerfilViewModel() {
                         IDUsuario = iUsr.IDUsuario,
                         Login = iUsr.Login,
                         Nome = iUsr.Nome
                     };
 
-                    var lPerfis = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                    var lPerfis = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDArea.Equals(id)).ToList()
                                   join perfil in PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usuarioperfil.IDPerfil equals perfil.IDPerfil
                                   where usuarioperfil.IDUsuario.Equals(iUsr.IDUsuario)
                                   select new Perfil { Nome = perfil.Nome, IDPerfil = perfil.IDPerfil };
@@ -144,16 +153,28 @@ namespace GISWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult BuscarUsuariosPorDepartamento(string id)
+        public ActionResult BuscarPermissoesPorDepartamento(string id)
         {
             try
             {
-                ViewBag.Perfis = PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+                if (CustomAuthorizationProvider.UsuarioAutenticado.Perfis.Where(p => p.Nome.Equals("Super Administrador")).Count() > 0)
+                {
+                    ViewBag.Perfis = PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+                }
+                else
+                {
+                    ViewBag.Perfis = PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && !p.Nome.Equals("Super Administrador")).ToList();
+                }
 
-                List<Usuario> lUsuarios = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDDepartamento.Equals(id)).ToList();
+                var lUsuariosComPermissao = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDArea.Equals(id)).ToList()
+                                join usr in UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usuarioperfil.IDUsuario equals usr.IDUsuario
+                                select new Usuario { Nome = usr.Nome, Login = usr.Login, IDUsuario = usr.IDUsuario };
+
+                List<Usuario> UsuariosPorDepartamento = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDDepartamento.Equals(id)).ToList();
+                UsuariosPorDepartamento = UsuariosPorDepartamento.Union(lUsuariosComPermissao.ToList(), new UsuarioComparer()).ToList();
 
                 List<UsuarioPerfilViewModel> lUsuariosPerfis = new List<UsuarioPerfilViewModel>();
-                foreach (Usuario iUsr in lUsuarios)
+                foreach (Usuario iUsr in UsuariosPorDepartamento)
                 {
                     UsuarioPerfilViewModel oUsrPerfViewModel = new UsuarioPerfilViewModel()
                     {
@@ -162,7 +183,7 @@ namespace GISWeb.Controllers
                         Nome = iUsr.Nome
                     };
 
-                    var lPerfis = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                    var lPerfis = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDArea.Equals(id)).ToList()
                                   join perfil in PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usuarioperfil.IDPerfil equals perfil.IDPerfil
                                   where usuarioperfil.IDUsuario.Equals(iUsr.IDUsuario)
                                   select new Perfil { Nome = perfil.Nome, IDPerfil = perfil.IDPerfil };
@@ -172,6 +193,7 @@ namespace GISWeb.Controllers
                     lUsuariosPerfis.Add(oUsrPerfViewModel);
 
                 }
+
 
                 return Json(new { data = RenderRazorViewToString("_UsuariosPerfis", lUsuariosPerfis), usuarios = lUsuariosPerfis.Count, colunas = ViewBag.Perfis.Count + 2 });
             }

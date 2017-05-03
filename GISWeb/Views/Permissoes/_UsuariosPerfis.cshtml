@@ -18,8 +18,8 @@
                     <table id="dynamic-table1" class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Login</th>
                                 <th>Nome</th>
+                                <th>Login</th>
                                 @{
                                     int idx = -1;
                                     foreach (Perfil iPerfil in ViewBag.Perfis) {
@@ -33,19 +33,14 @@
                                         </th>
                                     }
                                 }
-
-                                
-
                             </tr>
                         </thead>
-
                         <tbody>
-
                             @foreach (UsuarioPerfilViewModel item in Model)
                             {
                                 <tr>
-                                    <td>@item.Login</td>
                                     <td>@item.Nome</td>
+                                    <td>@item.Login</td>
 
                                     @foreach (Perfil iPerfil in ViewBag.Perfis) { 
                                         <td class="center">
@@ -76,18 +71,15 @@
 
     }
     else { 
-        <div class="row">
-			<div class="col-xs-12">
-				<div class="error-container" style="margin: 0;">
-					<div class="well">
-                        <h4 class="blue" style="margin: 0;">
-                            <i class="ace-icon fa fa-slack bigger-110"></i>
-                            Nenhum usuário encontrado na empresa / departamento
-                        </h4>
-					</div>
-				</div>
-			</div><!-- /.col -->
-		</div>
+        <div class="alert alert-warning">
+            <strong>
+                <i class="ace-icon fa fa-meh-o"></i>
+                Oops!
+            </strong>
+
+                Nenhuma permissão encontrada para o filtro.
+            <br>
+        </div>
     }
 
 }

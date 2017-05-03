@@ -81,6 +81,7 @@
     <Compile Include="Business\Concrete\UsuarioBusiness.cs" />
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
+    <Compile Include="Infraestrutura\Comparer\UsuarioComparer.cs" />
     <Compile Include="Migrations\201704190142442_inicial.cs" />
     <Compile Include="Migrations\201704190142442_inicial.Designer.cs">
       <DependentUpon>201704190142442_inicial.cs</DependentUpon>
@@ -88,6 +89,14 @@
     <Compile Include="Migrations\201705011314397_refresh1.cs" />
     <Compile Include="Migrations\201705011314397_refresh1.Designer.cs">
       <DependentUpon>201705011314397_refresh1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705022332188_refresh2.cs" />
+    <Compile Include="Migrations\201705022332188_refresh2.Designer.cs">
+      <DependentUpon>201705022332188_refresh2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705030126356_refresh3.cs" />
+    <Compile Include="Migrations\201705030126356_refresh3.Designer.cs">
+      <DependentUpon>201705030126356_refresh3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +124,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705011314397_refresh1.resx">
       <DependentUpon>201705011314397_refresh1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705022332188_refresh2.resx">
+      <DependentUpon>201705022332188_refresh2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705030126356_refresh3.resx">
+      <DependentUpon>201705030126356_refresh3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
