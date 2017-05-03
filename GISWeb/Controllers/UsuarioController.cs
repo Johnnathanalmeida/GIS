@@ -38,7 +38,7 @@ namespace GISWeb.Controllers
         public ActionResult Index()
         {
             //ViewBag.Usuarios = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(o => o.Nome).ToList();
-            ViewBag.Usuarios = from usr in UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+            ViewBag.Usuarios = (from usr in UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
                                join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.IDEmpresa equals emp.IDEmpresa
                                join dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.IDDepartamento equals dep.IDDepartamento
                                select new Usuario()
@@ -50,7 +50,7 @@ namespace GISWeb.Controllers
                                    Email = usr.Email,
                                    Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia },
                                    Departamento = new Departamento() { Sigla = dep.Sigla }
-                               };
+                               }).ToList();
 
             return View();
         }
