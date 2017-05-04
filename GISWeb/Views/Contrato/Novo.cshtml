@@ -1,4 +1,5 @@
-﻿@model GISModel.Entidades.Contrato
+﻿@model GISModel.DTO.Contrato.CadastroViewModel
+
 
 @{
     ViewBag.Title = "Cadastro de Contrato";
@@ -33,8 +34,15 @@
                 <div class="form-group">
                     @Html.LabelFor(d => d.Inicio, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.Inicio, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
-                        @Html.ValidationMessageFor(d => d.Numero, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+
+                        <div class="input-group">
+                            @Html.EditorFor(d => d.Inicio, new { htmlAttributes = new { @class = "form-control date-picker", @data_placeholder = "Data Início" } })
+
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(d => d.Inicio, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                     </div>
                 </div>
             </div>
@@ -42,7 +50,15 @@
                 <div class="form-group">
                     @Html.LabelFor(d => d.Fim, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     <div class="col-xs-12 col-sm-12">
-                        @Html.EditorFor(d => d.Fim, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+
+                        <div class="input-group">
+                            @Html.EditorFor(d => d.Fim, new { htmlAttributes = new { @class = "form-control date-picker", @data_placeholder = "Data Fim" } })
+
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                        </div>
+
                         @Html.ValidationMessageFor(d => d.Fim, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                     </div>
                 </div>
@@ -63,17 +79,20 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
-                    @Html.LabelFor(d => d.IDFornecedor, new { @class = "form-field-select-3 no-padding-right", @id = "lblAplicacao", @style = "padding-left: 0px" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.LabelFor(d => d.IDFornecedor, new { @class = "form-field-select-3  no-padding-right", @id = "lblFornecedor" })
 
-                    <span class="action-buttons">
-                        &nbsp;
-                        <a>
-                            <i class="ace-icon fa fa-exclamation-triangle bigger-120 orange CustomTooltip" title="Utilize o recurso de 'autocomplete' do campo abaixo para selecionar corretamente o fornecedor."></i>
-                        </a>
-                    </span>
+                        <span class="action-buttons">
+                            &nbsp;
+                            <a>
+                                <i class="ace-icon fa fa-exclamation-triangle bigger-120 orange CustomTooltip" title="Utilize o recurso de 'autocomplete' do campo abaixo para selecionar corretamente o fornecedor."></i>
+                            </a>
+                        </span>
+                    </div>
+                    
 
                     <div class="col-xs-12 col-sm-12">
-                        <input type="text" name="IDFornecedor" id="IDFornecedor" value="" placeholder="Código ou Nome da Aplicação" />
+                        <input type="text" name="IDFornecedor" style="width: 100%;" class="typeahead scrollable" id="IDFornecedor" value="" placeholder="Código ou Nome do Fornecedor" />
                         @Html.ValidationMessageFor(d => d.IDFornecedor, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                     </div>
                 </div>
@@ -81,18 +100,20 @@
 
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
-                    @Html.LabelFor(d => d.IDDepartamento, new { @class = "form-field-select-3 no-padding-right", @id = "lblAplicacao", @style = "padding-left: 0px" })
-
-                    <span class="action-buttons">
-                        &nbsp;
-                        <a>
-                            <i class="ace-icon fa fa-exclamation-triangle bigger-120 orange CustomTooltip" title="Utilize o recurso de 'autocomplete' do campo abaixo para selecionar corretamente os departamentos."></i>
-                        </a>
-                    </span>
-
                     <div class="col-xs-12 col-sm-12">
-                        <input type="text" name="IDDepartamento" id="IDDepartamento" value="" placeholder="Código ou Nome da Aplicação" />
-                        @Html.ValidationMessageFor(d => d.IDDepartamento, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                        @Html.LabelFor(d => d.Departamentos, new { @class = "form-field-select-3 no-padding-right", @id = "lblDepartamentos" })
+
+                        <span class="action-buttons">
+                            &nbsp;
+                            <a>
+                                <i class="ace-icon fa fa-exclamation-triangle bigger-120 orange CustomTooltip" title="Utilize o recurso de 'autocomplete' do campo abaixo para selecionar corretamente os departamentos."></i>
+                            </a>
+                        </span>
+                    </div>
+                    
+                    <div class="col-xs-12 col-sm-12">
+                        <input type="text" name="Departamentos" style="width: 100%;" id="Departamentos" value="" placeholder="Código ou Nome do Departamento" />
+                        @Html.ValidationMessageFor(d => d.Departamentos, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                     </div>
                 </div>
             </div>
@@ -152,5 +173,10 @@
 </div> <!-- Fim FormQuery -->
 
 @section Scripts {
+    <script src="~/Scripts/Ace/jQ/typeahead.jquery.js"></script>
+
+    <script src="~/Scripts/Ace/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/Ace/bootstrap-tag.js"></script>
+    <script src="~/Scripts/Ace/elements.typeahead.js"></script>
     <script src="~/Scripts/Custom/Contrato/Novo.js"></script>
 }

@@ -58,7 +58,7 @@
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
     <Compile Include="Business\Abstract\IContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoBusiness.cs" />
-    <Compile Include="Business\Abstract\IAdmissaoBusiness.cs" />
+    <Compile Include="Business\Abstract\IDepartamentoContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpregadoBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpresaBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpresaFornecedorBusiness.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
     <Compile Include="Business\Concrete\ContratoBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoBusiness.cs" />
-    <Compile Include="Business\Concrete\AdmissaoBusiness.cs" />
+    <Compile Include="Business\Concrete\DepartamentoContratoBusiness.cs" />
     <Compile Include="Business\Concrete\EmpregadoBusiness.cs" />
     <Compile Include="Business\Concrete\EmpresaBusiness.cs" />
     <Compile Include="Business\Concrete\EmpresaFornecedorBusiness.cs" />
@@ -84,9 +84,13 @@
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
     <Compile Include="Infraestrutura\Comparer\UsuarioComparer.cs" />
-    <Compile Include="Migrations\201705040116234_refresh.cs" />
-    <Compile Include="Migrations\201705040116234_refresh.Designer.cs">
-      <DependentUpon>201705040116234_refresh.cs</DependentUpon>
+    <Compile Include="Migrations\201705032318170_refresh.cs" />
+    <Compile Include="Migrations\201705032318170_refresh.Designer.cs">
+      <DependentUpon>201705032318170_refresh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040225465_dpcontrato.cs" />
+    <Compile Include="Migrations\201705040225465_dpcontrato.Designer.cs">
+      <DependentUpon>201705040225465_dpcontrato.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,8 +113,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705040116234_refresh.resx">
-      <DependentUpon>201705040116234_refresh.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705032318170_refresh.resx">
+      <DependentUpon>201705032318170_refresh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040225465_dpcontrato.resx">
+      <DependentUpon>201705040225465_dpcontrato.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

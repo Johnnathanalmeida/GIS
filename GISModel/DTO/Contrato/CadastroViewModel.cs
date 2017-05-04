@@ -1,15 +1,14 @@
-﻿using System;
+﻿using GISModel.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GISModel.Entidades
+namespace GISModel.DTO.Contrato
 {
-    [Table("tbContrato")]
-    public class Contrato : EntidadeBase
+    public class CadastroViewModel
     {
 
         public string IDContrato { get; set; }
@@ -20,11 +19,11 @@ namespace GISModel.Entidades
 
         [Display(Name = "Data Início")]
         [Required(ErrorMessage = "Informe a data de início do contrato")]
-        public DateTime Inicio { get; set; }
+        public string Inicio { get; set; }
 
         [Display(Name = "Data Término")]
         [Required(ErrorMessage = "Informe a data de término do contrato")]
-        public DateTime Fim { get; set; }
+        public string Fim { get; set; }
 
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
@@ -36,10 +35,15 @@ namespace GISModel.Entidades
         [Required(ErrorMessage = "Selecione um fornecedor")]
         public string IDFornecedor { get; set; }
 
-        public virtual Fornecedor Fornecedor { get; set; }
 
 
-        public List<Departamento> Departamentos { get; set; }
+
+        [Display(Name = "Departamento(s)")]
+        [Required(ErrorMessage = "Selecione pelo menos um departamento")]
+        public string Departamentos { get; set; }
+
+
+
 
         public List<Garantia> Garantias { get; set; }
 

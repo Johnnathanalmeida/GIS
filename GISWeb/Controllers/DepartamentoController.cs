@@ -140,5 +140,36 @@ namespace GISWeb.Controllers
         }
 
 
+        public ActionResult LocalizarDepartamentoAutoComplete(string q)
+        {
+
+            try
+            {
+                List<Departamento> departamentos = DepartamentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao) && (a.Codigo.ToUpper().Contains(q.ToUpper()) || a.Sigla.ToUpper().Contains(q.ToUpper()) || a.Descricao.ToUpper().Contains(q.ToUpper()))).ToList();
+
+                List<string> lista = new List<string>();
+                foreach (Departamento forn in departamentos)
+                {
+                    if (string.IsNullOrEmpty(forn.Codigo))
+                        lista.Add(forn.Sigla);
+                    else
+                        lista.Add(forn.Codigo + " - " + forn.Sigla);
+                }
+
+                return Json(new { Data = lista });
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
+        }
 	}
 }
