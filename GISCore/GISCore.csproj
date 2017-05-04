@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Abstract\IAdmissaoBusiness.cs" />
     <Compile Include="Business\Abstract\IAlocacaoBusiness.cs" />
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
     <Compile Include="Business\Abstract\IContratoBusiness.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Business\Abstract\IPerfilMenuBusiness.cs" />
     <Compile Include="Business\Abstract\IUsuarioBusiness.cs" />
     <Compile Include="Business\Abstract\IUsuarioPerfilBusiness.cs" />
+    <Compile Include="Business\Concrete\AdmissaoBusiness.cs" />
     <Compile Include="Business\Concrete\AlocacaoBusiness.cs" />
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
     <Compile Include="Business\Concrete\ContratoBusiness.cs" />
@@ -84,10 +86,6 @@
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
     <Compile Include="Infraestrutura\Comparer\UsuarioComparer.cs" />
-    <Compile Include="Migrations\201705032318170_refresh.cs" />
-    <Compile Include="Migrations\201705032318170_refresh.Designer.cs">
-      <DependentUpon>201705032318170_refresh.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201705040225465_dpcontrato.cs" />
     <Compile Include="Migrations\201705040225465_dpcontrato.Designer.cs">
       <DependentUpon>201705040225465_dpcontrato.cs</DependentUpon>
@@ -113,9 +111,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705032318170_refresh.resx">
-      <DependentUpon>201705032318170_refresh.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705040225465_dpcontrato.resx">
       <DependentUpon>201705040225465_dpcontrato.cs</DependentUpon>
     </EmbeddedResource>

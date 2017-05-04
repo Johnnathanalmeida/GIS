@@ -56,7 +56,7 @@ namespace GISWeb.Controllers
 
         public ActionResult Detalhes(string id)
         {
-            ViewBag.PossuiAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id) && !string.IsNullOrEmpty(p.DataAdmissao) && string.IsNullOrEmpty(p.DataDemissao));
+            ViewBag.PossuiAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id) && p.DataDemissao.ToShortDateString().Equals("31/12/9999"));
 
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
         }

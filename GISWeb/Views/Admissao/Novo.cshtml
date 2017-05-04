@@ -35,14 +35,11 @@
                         @Html.LabelFor(d => d.IDEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                     </div>
                     <div class="col-sm-9">
-                        <div class="input-group">                            
-                            <span class="input-group-addon">
-                                <i class="fa fa-at bigger-110"></i>
-                            </span>                            
-                            @Html.DropDownListFor(d => d.IDEmpresa, ViewBag.Empresas, "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
+                        <div class="input-group">
+                            @Html.DropDownListFor(d => d.IDEmpresa, (SelectList)ViewBag.Empresas, "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
 
@@ -54,11 +51,7 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-phone bigger-110"></i>
-                            </span>
-
-                            @Html.EditorFor(d => d.IDDepartamentos, new { htmlAttributes = new { @class = "col-xs-9 col-sm-9", @id = "txtTelefone" } })
+                            @Html.DropDownListFor(d => d.IDDepartamentos, (SelectList)ViewBag.Departamentos, "Selecione antes uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @autocomplete = "on", @id = "ddlDepartamento" })
                         </div>
                     </div>
                 </div>

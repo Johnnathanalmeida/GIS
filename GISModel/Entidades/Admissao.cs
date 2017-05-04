@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace GISModel.Entidades
 {
@@ -28,10 +29,10 @@ namespace GISModel.Entidades
 
         [Display(Name = "Data de Admissão")]
         [Required(ErrorMessage = "Informe a data de admissão")]
-        public string DataAdmissao { get; set; }
+        public DateTime DataAdmissao { get; set; }
 
         [Display(Name = "Data de Demissão")]
-        public string DataDemissao { get; set; }       
+        public DateTime DataDemissao { get; set; }       
         
     }
 }
