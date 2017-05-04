@@ -18,7 +18,8 @@ namespace GISCore.Business.Concrete
             if (Consulta.Any(u => u.Numero.Equals(contrato.Numero) && !string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Não é possível cadastrar o contrato, pois já existe um contrato ativo com este número.");
 
-            contrato.IDContrato = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(contrato.IDContrato))
+                contrato.IDContrato = Guid.NewGuid().ToString();
 
             base.Inserir(contrato);
         }
@@ -34,8 +35,6 @@ namespace GISCore.Business.Concrete
             else
             {
                 tempContrato.Numero = contrato.Numero;
-                tempContrato.IDDepartamento = contrato.IDDepartamento;
-                //tempContrato.IDEmpresa = contrato.IDEmpresa;
                 tempContrato.Inicio = contrato.Inicio;
                 tempContrato.Fim = contrato.Fim;
 

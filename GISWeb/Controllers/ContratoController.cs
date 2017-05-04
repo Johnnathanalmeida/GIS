@@ -1,4 +1,5 @@
 ﻿using GISCore.Business.Abstract;
+using GISModel.DTO.Contrato;
 using GISModel.DTO.Shared;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
@@ -37,6 +38,9 @@ namespace GISWeb.Controllers
 
             [Inject]
             public IDepartamentoBusiness DepartamentoBusiness { get; set; }
+
+            [Inject]
+            public IDepartamentoContratoBusiness DepartamentoContratoBusiness { get; set; }
 
         #endregion
 
@@ -81,14 +85,94 @@ namespace GISWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Cadastrar(Contrato contrato)
+        public ActionResult Cadastrar(CadastroViewModel contrato)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    contrato.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
-                    ContratoBusiness.Inserir(contrato);
+                    Fornecedor forn = null;
+                    if (contrato.IDFornecedor.Contains(" - "))
+                    {
+                        forn = FornecedorBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.CNPJ.ToUpper().Equals(contrato.IDFornecedor.Substring(contrato.IDFornecedor.IndexOf(" - ") + 3).ToUpper()));
+                    }
+                    else {
+                        forn = FornecedorBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.CNPJ.ToUpper().Equals(contrato.IDFornecedor.Trim().ToUpper()));
+                    }
+
+                    if (forn == null)
+                    {
+                        throw new Exception("Não foi possível localizar o fornecedor através do CNPJ.");
+                    }
+                    else {
+
+                        Contrato obj = new Contrato()
+                        {
+                            IDContrato = Guid.NewGuid().ToString(),
+                            Numero = contrato.Numero,
+                            Inicio = DateTime.ParseExact(contrato.Inicio, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            Fim = DateTime.ParseExact(contrato.Fim, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            Descricao = contrato.Descricao,
+                            UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login,
+                            IDFornecedor = forn.IDFornecedor
+                        };
+
+                        if (contrato.Departamentos.Contains(","))
+                        {
+                            foreach (string str in contrato.Departamentos.Split(','))
+                            {
+                                if (!string.IsNullOrEmpty(str.Trim()) && !str.Trim().Equals(","))
+                                {
+                                    Departamento dep = null;
+                                    if (str.Contains(" - "))
+                                        dep = DepartamentoBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.Codigo.ToUpper().Equals(str.Substring(0, str.IndexOf(" - ")).ToUpper().Trim()));
+                                    else
+                                        dep = DepartamentoBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.Sigla.ToUpper().Trim().Equals(str.Trim().ToUpper()));
+
+                                    if (dep != null)
+                                    {
+                                        DepartamentoContrato dc = new DepartamentoContrato()
+                                        {
+                                            IDDepartamentoContrato = Guid.NewGuid().ToString(),
+                                            IDContrato = obj.IDContrato,
+                                            IDDepartamento = dep.IDDepartamento,
+                                            UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
+                                        };
+                                        DepartamentoContratoBusiness.Inserir(dc);
+                                    }
+
+                                }
+                            }
+                        }
+                        else {
+                            Departamento dep = null;
+                            if (contrato.Departamentos.Contains(" - "))
+                                dep = DepartamentoBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.Codigo.ToUpper().Equals(contrato.Departamentos.Substring(0, contrato.Departamentos.IndexOf(" - ")).ToUpper().Trim()));
+                            else
+                                dep = DepartamentoBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.Sigla.ToUpper().Trim().Equals(contrato.Departamentos.Trim().ToUpper()));
+
+                            if (dep != null)
+                            {
+                                DepartamentoContrato dc = new DepartamentoContrato()
+                                {
+                                    IDDepartamentoContrato = Guid.NewGuid().ToString(),
+                                    IDContrato = obj.IDContrato,
+                                    IDDepartamento = dep.IDDepartamento,
+                                    UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
+                                };
+                                DepartamentoContratoBusiness.Inserir(dc);
+                            }
+                            else {
+                                throw new Exception("Departamento informado '" + contrato.Departamentos + "' não foi encontrado.");
+                            }
+                        }
+
+                        //Finalização com a inserção do contrato
+                        ContratoBusiness.Inserir(obj);
+
+                        //Tratar Garantias
+
+                    }
 
                     TempData["MensagemSucesso"] = "O contrato '" + contrato.Numero + "' foi cadastrado com sucesso.";
 

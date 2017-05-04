@@ -34,7 +34,7 @@
                             <th class="hidden-480">Descrição</th>
                             <th>Início</th>
                             <th>Fim</th>
-                            <th>Departamento</th>
+                            <th>Departamento(s)</th>
                             <th width="89px"></th>
                         </tr>
                     </thead>
@@ -45,11 +45,13 @@
                         {
                             <tr id="linha-@iContrato.IDContrato">
                                 <td>@iContrato.Numero</td>
-                                <td>@iContrato.Fornecedor.Nome</td>
+                                <td></td>
                                 <td class="hidden-480">@iContrato.Descricao</td>
                                 <td>@iContrato.Inicio</td>
                                 <td>@iContrato.Fim</td>
-                                <td>@iContrato.Departamento.Sigla</td>
+                                <td>
+                                    
+                                </td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
                                         <a class="blue" href="#" onclick="BuscarDetalhesEmpresa('@iContrato.IDContrato'); return false;">

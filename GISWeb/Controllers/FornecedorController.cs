@@ -157,6 +157,36 @@ namespace GISWeb.Controllers
 
         }
 
+        public ActionResult LocalizarFornecedorAutoComplete(string q)
+        {
+
+            try
+            {
+                List<Fornecedor> fornecedores = FornecedorBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao) && (a.CNPJ.Contains(q) || a.Nome.ToUpper().Contains(q.ToUpper()) || a.Numero.ToUpper().Contains(q.ToUpper()))).ToList();
+
+                List<string> lista = new List<string>();
+                foreach (Fornecedor forn in fornecedores)
+                {
+                    lista.Add(forn.Nome + " - " + forn.CNPJ);
+                }
+
+                return Json(new { Data = lista });
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
+        }
+
         [HttpPost]
         public ActionResult Terminar(string IDFornecedor)
         {

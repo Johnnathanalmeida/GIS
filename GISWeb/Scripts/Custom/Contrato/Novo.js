@@ -1,85 +1,137 @@
-﻿
-jQuery(function ($) {
+﻿jQuery(function ($) {
 
-    //$("#ddlEmpresa").change(function () {
-        
-    //    if ($(this).val() != "") {
+    AplicaDatePicker(false);
 
-    //        $('#ddFornecedor').empty();
-    //        $('#ddFornecedor').append($('<option></option>').val("").html("Aguarde ..."));
-    //        $("#ddFornecedor").attr("disabled", true);
+    AutoCompleteFornecedor();
 
-    //        $('#ddlDepartamento').empty();
-    //        $('#ddlDepartamento').append($('<option></option>').val("").html("Aguarde ..."));
-    //        $("#ddlDepartamento").attr("disabled", true);
-
-    //        $.ajax({
-    //            method: "POST",
-    //            url: "/Contrato/CarregarFornecedoresEDepartamentosPorEmpresa",
-    //            data: { IDEmpresa: $(this).val() },
-    //            error: function (erro) {
-    //                ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
-    //            },
-    //            success: function (content) {
-    //                if (content.fornecedores.length > 0) {
-    //                    $("#ddFornecedor").attr("disabled", false);
-    //                    $('#ddFornecedor').empty();
-    //                    $('#ddFornecedor').append($('<option></option>').val("").html("Selecione um fornecedor"));
-    //                    for (var i = 0; i < content.fornecedores.length; i++) {
-    //                        $('#ddFornecedor').append(
-    //                            $('<option></option>').val(content.fornecedores[i].Fornecedor.IDFornecedor).html(content.fornecedores[i].Fornecedor.Nome)
-    //                        );
-    //                    }
-    //                }
-    //                else {
-    //                    $('#ddFornecedor').empty();
-    //                    $('#ddFornecedor').append($('<option></option>').val("").html("Nenhum fornecedor encontrado para esta empresa"));
-    //                }
-
-    //                //##############################################################################################################################
-
-    //                if (content.departamentos.length > 0) {
-    //                    $("#ddlDepartamento").attr("disabled", false);
-    //                    $('#ddlDepartamento').empty();
-    //                    $('#ddlDepartamento').append($('<option></option>').val("").html("Selecione um departamento"));
-    //                    for (var i = 0; i < content.departamentos.length; i++) {
-    //                        $('#ddlDepartamento').append(
-    //                            $('<option></option>').val(content.departamentos[i].IDDepartamento).html(content.departamentos[i].Sigla)
-    //                        );
-    //                    }
-    //                }
-    //                else {
-    //                    $('#ddlDepartamento').empty();
-    //                    $('#ddlDepartamento').append($('<option></option>').val("").html("Nenhum departamento encontrado para esta empresa"));
-    //                }
-    //            }
-    //        });
-    //    }
-    //    else {
-    //        $('#ddFornecedor').empty();
-    //        $('#ddFornecedor').append($('<option></option>').val("").html("Selecione antes uma Empresa..."));
-    //        $("#ddFornecedor").attr("disabled", true);
-
-    //        $('#ddlDepartamento').empty();
-    //        $('#ddlDepartamento').append($('<option></option>').val("").html("Selecione antes uma Empresa..."));
-    //        $("#ddlDepartamento").attr("disabled", true);
-    //    }
-
-    //});
-
+    AutoCompleteDepartamento();
     
+    $('#Inicio').removeAttr("data-val-date");
+    $('#Fim').removeAttr("data-val-date");
 
 });
 
+function AutoCompleteFornecedor() {
+
+    var substringMatcher = function () {
+        return function findMatches(q, cb) {
+            var matches, substringRegex;
+            var strs;
+            matches = [];
+            substrRegex = new RegExp(q, 'i');
+
+            if (q.length > 2) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Fornecedor/LocalizarFornecedorAutoComplete',
+                    data: { q: q },
+                    success: function (partial) {
+
+                        if (partial.Erro != undefined && partial.Erro != "") {
+                            ExibirMensagemDeErro(partial.Erro);
+                        }
+                        else {
+                            strs = partial.Data;
+                            $.each(strs, function (i, str) {
+                                if (substrRegex.test(str)) {
+                                    matches.push({ value: str });
+                                }
+                            });
+                        }
+
+                        cb(matches);
+                    },
+                    async: false
+                });
+            }
+
+        }
+    }
+
+    $("#IDFornecedor").typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 1,
+    }, {
+        name: 'states',
+        displayKey: 'value',
+        source: substringMatcher(),
+        limit: 10
+    });
+
+}
+
+function AutoCompleteDepartamento() {
+    var tag_input = $('#Departamentos');
+    try {
+        tag_input.tag(
+          {
+              placeholder: tag_input.attr('placeholder'),
+              source: function (query, process) {
+                
+                $.post('/Departamento/LocalizarDepartamentoAutoComplete?q=' + encodeURIComponent(query), function (partial) {
+
+                    var arr = [];
+
+                    if (partial.Erro != undefined && partial.Erro != "") {
+                        ExibirMensagemDeErro(partial.Erro);
+                    }
+                    else {
+                        for (var x = 0; x < partial.Data.length; x++) {
+                            arr.push(partial.Data[x]);
+                        }
+                    }
+
+                    process(arr);
+                });
+                  
+              }
+
+          }
+        );
+
+        $(".tags").css("width", "100%");
+
+    }
+    catch (e) {
+        alert(e);
+        //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+        tag_input.after('<textarea id="' + tag_input.attr('id') + '" name="' + tag_input.attr('name') + '" rows="3">' + tag_input.val() + '</textarea>').remove();
+        //$('#form-field-tags').autosize({append: "\n"});
+    }
+}
 
 function OnSuccessCadastrarContrato(data) {
-    $('#formCadastroEmpresa').removeAttr('style');
+    $("#formCadastroContrato").css({ opacity: "1" });
     $(".LoadingLayout").hide();
     $('#btnSalvar').show();
     TratarResultadoJSON(data.resultado);
 }
 
 function OnBeginCadastrarContrato() {
+
+    var bValid = false;
+
+    if ($.trim($("#Departamentos").val()) == "") {
+        bValid = true;
+        $("#Departamentos").parent().next().html("Selecione um departamento");
+    }
+    else {
+        $("#Departamentos").parent().next().html("");
+    }
+
+    if ($.trim($("#IDFornecedor").val()) == "") {
+        bValid = true;
+        $("#IDFornecedor").parent().next().html("Selecione um fornecedor");
+    }
+    else {
+        $("#IDFornecedor").parent().next().html("");
+    }
+
+    if (bValid) {
+        return false;
+    }
+    
     $(".LoadingLayout").show();
     $('#btnSalvar').hide();
     $("#formCadastroContrato").css({ opacity: "0.5" });

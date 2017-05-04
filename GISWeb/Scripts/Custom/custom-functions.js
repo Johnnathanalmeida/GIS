@@ -126,16 +126,24 @@ function AplicaTooltip() {
     });
 }
 
-function AplicaDatePicker() {
-    $('.date-picker').datepicker({
-        autoclose: true,
-        dateFormat: 'dd/mm/yyyy',
-        todayHighlight: true,
-        language: 'pt-BR'
-    })
-	.next().on(ace.click_event, function () {
-	    $(this).prev().focus();
-	});
+function AplicaDatePicker(bloquearDataPassada) {
+    if (bloquearDataPassada) {
+        var date = new Date();
+        date.setDate(date.getDate());
+
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            language: 'pt-BR',
+            startDate: date
+        });
+    } else {
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            language: 'pt-BR'
+        });
+    }
 
     $('.date-picker-mes-e-ano').datepicker({
         format: "MM/yyyy",
@@ -144,10 +152,7 @@ function AplicaDatePicker() {
         autoclose: true,
         todayHighlight: true,
         language: 'pt-BR'
-    })
-	.next().on(ace.click_event, function () {
-	    $(this).prev().focus();
-	});
+    });
 }
 
 function AplicaDateRangePicker() {

@@ -20,6 +20,9 @@ namespace GISWeb.Controllers
                 {
                     foreach (System.Web.Mvc.ModelError i in item.Errors)
                     {
+                        if (!string.IsNullOrEmpty(msgAlerta))
+                            msgAlerta += ", ";
+
                         msgAlerta += i.ErrorMessage;
                     }
                 }
