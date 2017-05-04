@@ -47,7 +47,35 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Contrato")]
         public ActionResult Index()
         {
-            ViewBag.Contratos = ContratoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+            //ViewBag.Contratos = ContratoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+            List<Contrato> contratos = (from cont in ContratoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                                        join forn in FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on cont.IDFornecedor equals forn.IDFornecedor
+                                        select new Contrato()
+                                        {
+                                            ID = cont.ID,
+                                            IDContrato = cont.IDContrato,
+                                            Inicio = cont.Inicio,
+                                            Fim = cont.Fim,
+                                            Numero = cont.Numero,
+                                            Descricao = cont.Descricao,
+                                            Fornecedor = new Fornecedor() { IDFornecedor = forn.IDFornecedor, Nome = forn.Nome, CNPJ = forn.CNPJ },
+                                            Departamentos = new List<Departamento>()
+                                        }).ToList();
+
+            foreach (Contrato item in contratos) {
+
+                item.Departamentos = (from contdep in DepartamentoContratoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
+                                      join dep in DepartamentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList() on contdep.IDDepartamento equals dep.IDDepartamento
+                                      where contdep.IDContrato.Equals(item.IDContrato)
+                                      select new Departamento() { 
+                                        Sigla = dep.Sigla,
+                                        Codigo = dep.Codigo
+                                      }
+                                     ).ToList();
+
+            }
+
+            ViewBag.Contratos = contratos;
 
             return View();
         }
