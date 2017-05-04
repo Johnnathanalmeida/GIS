@@ -29,6 +29,7 @@
                 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>CPF</th>
                             <th>Nome</th>
                             <th>E-mail</th>
@@ -44,18 +45,23 @@
                         @foreach (Empregado iEmpregado in ViewBag.Empregados)
                         {
                             <tr id="linha-@iEmpregado.IDEmpregado">
+                                <td>
+                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green" style="text-decoration:none;">
+                                        <i class="ace-icon fa fa-user bigger-120"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
+                                        @iEmpregado.Nome                                        
+                                    </a>
+                                </td>
                                 <td>@iEmpregado.CPF</td>
-                                <td>@iEmpregado.Nome</td>
                                 <td>@iEmpregado.Email</td>
                                 <td>@iEmpregado.DataNascimento.ToString().Substring(0,10)</td>
                                 <td>@iEmpregado.Telefone</td>
                                 <td>@iEmpregado.TipoEmpregado</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
-                                        <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
-                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                        </a>
-
                                         <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
@@ -72,14 +78,6 @@
                                             </button>
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                <li>
-                                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="tooltip-success" data-rel="tooltip" title="Detalhes">
-                                                        <span class="blue">
-                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-
                                                 <li>
                                                     <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">

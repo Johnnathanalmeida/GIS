@@ -1,0 +1,69 @@
+﻿@model GISModel.Entidades.Admissao
+
+@{
+    ViewBag.Title = "Cadastrar Admissao";
+}
+
+<div id="formAdmissao">
+    @using (Ajax.BeginForm("Cadastrar", "Admissao", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginCadastrarAdmissao", OnSuccess = "OnSuccessCadastrarAdmissao", }, new { @id = "formCadastroAdmissao", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div >
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        @Html.LabelFor(d => d.DataAdmissao, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                            @Html.EditorFor(d => d.DataAdmissao, new { htmlAttributes = new { @class = "col-xs-9 col-sm-9  date-picker-mes-e-ano" } })
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        @Html.LabelFor(d => d.IDEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="input-group">                            
+                            <span class="input-group-addon">
+                                <i class="fa fa-at bigger-110"></i>
+                            </span>                            
+                            @Html.DropDownListFor(d => d.IDEmpresa, ViewBag.Empresas, "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        @Html.LabelFor(d => d.IDDepartamentos, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-phone bigger-110"></i>
+                            </span>
+
+                            @Html.EditorFor(d => d.IDDepartamentos, new { htmlAttributes = new { @class = "col-xs-9 col-sm-9", @id = "txtTelefone" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+

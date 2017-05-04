@@ -22,6 +22,9 @@ namespace GISWeb.Controllers
         #region Inject
 
             [Inject]
+            public IAdmissaoBusiness AdmissaoBusiness { get; set; }
+
+            [Inject]
             public IEmpregadoBusiness EmpregadoBusiness { get; set; }
 
             [Inject]
@@ -53,6 +56,8 @@ namespace GISWeb.Controllers
 
         public ActionResult Detalhes(string id)
         {
+            ViewBag.PossuiAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id) && !string.IsNullOrEmpty(p.DataAdmissao) && string.IsNullOrEmpty(p.DataDemissao));
+
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
         }
 

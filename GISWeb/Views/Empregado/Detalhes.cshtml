@@ -7,7 +7,7 @@
 <div class="col-xs-12">
     <!-- PAGE CONTENT BEGINS -->
     <h3 class="header smaller lighter blue">
-        @Model.Nome [@Model.CPF]
+        @Model.Nome [<span style="font-size:16px"> @Model.CPF </span>]
     </h3>
 
     <div class="user-profile">
@@ -51,31 +51,28 @@
                             </span>
 
                             <div class="space space-4"></div>
+                            @if (string.IsNullOrEmpty(ViewBag.PossuiAdmissao))
+                            {
+                                <a href="#" id="btnAdmitir" class="btn btn-sm btn-block btn-success">
+                                    <i class="ace-icon fa fa-legal bigger-110"></i>
+                                    <span class="bigger-110">Admitir</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="btn btn-sm btn-block btn-info">
+                                    <i class="ace-icon fa fa-plus-circle bigger-120"></i>
+                                    <span class="bigger-110">Alocar</span>
+                                </a>
 
-                            <a href="#" class="btn btn-sm btn-block btn-success">
-                                <i class="ace-icon fa fa-plus-circle bigger-120"></i>
-                                <span class="bigger-110">Alocar</span>
-                            </a>
-
-                            <a href="#" class="btn btn-sm btn-block btn-warning">
-                                <i class="ace-icon fa fa-envelope-o bigger-110"></i>
-                                <span class="bigger-110">Cadastrar CAT</span>
-                            </a>
-
-                            <a href="#" class="btn btn-sm btn-block btn-danger">
-                                <i class="ace-icon fa fa-envelope-o bigger-110"></i>
-                                <span class="bigger-110">Demitir</span>
-                            </a>
+                                <a href="#" id="btnDemitir" class="btn btn-sm btn-block btn-danger">
+                                    <i class="ace-icon fa fa-legal bigger-110"></i>
+                                    <span class="bigger-110">Demitir</span>
+                                </a>
+                            }
                         </div><!-- /.col -->
 
                         <div class="col-xs-12 col-sm-9">
-                            <h4 class="blue">
-                                <span class="label label-purple arrowed-in-right">
-                                    <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
-                                    online
-                                </span>
-                            </h4>
-
                             <div class="profile-user-info">
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> Nome </div>
@@ -110,6 +107,14 @@
                                 </div>
 
                                 <div class="profile-info-row">
+                                    <div class="profile-info-name"> Empregado </div>
+
+                                    <div class="profile-info-value" id="txtTipoEmpregado">
+                                        <span>@Model.TipoEmpregado</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
                                     <div class="profile-info-name"> Cadastrado em </div>
 
                                     <div class="profile-info-value">
@@ -121,39 +126,13 @@
                             <div class="hr hr16 dotted"></div>
 
                             <div class="center">
-                                <span class="btn btn-app btn-sm btn-light no-hover">
-                                    <span class="line-height-1 bigger-170 blue"> 0 </span>
 
-                                    <br>
-                                    <span class="line-height-1 smaller-70"> Alocações </span>
+                                <span class="btn btn-app btn-lg btn-danger no-hover">
+                                    <i class="ace-icon fa fa-thumbs-o-down bigger-200"></i>
                                 </span>
 
-                                <span class="btn btn-app btn-sm btn-yellow no-hover">
-                                    <span class="line-height-1 bigger-170"> 0 </span>
-
-                                    <br>
-                                    <span class="line-height-1 smaller-70"> Contratos </span>
-                                </span>
-
-                                <span class="btn btn-app btn-sm btn-pink no-hover">
-                                    <span class="line-height-1 bigger-170"> 0 </span>
-
-                                    <br>
-                                    <span class="line-height-1 smaller-70"> Documentos </span>
-                                </span>
-
-                                <span class="btn btn-app btn-sm btn-grey no-hover">
-                                    <span class="line-height-1 bigger-170"> 0 </span>
-
-                                    <br>
-                                    <span class="line-height-1 smaller-70"> CAT's </span>
-                                </span>
-
-                                <span class="btn btn-app btn-sm btn-success no-hover">
-                                    <span class="line-height-1 bigger-170"> 0 </span>
-
-                                    <br>
-                                    <span class="line-height-1 smaller-70"> Inspeções </span>
+                                <span class="btn btn-app btn-lg btn-success no-hover">
+                                    <i class="ace-icon fa fa-thumbs-o-up bigger-200"></i>
                                 </span>
                             </div>
                         </div><!-- /.col -->
@@ -195,18 +174,54 @@
                         <br>
                     </div>
                 </div>
-            </div><div class="alert alert-warning">
-    <strong>
-        <i class="ace-icon fa fa-meh-o"></i>
-        Oops!
-    </strong>
-
-    No momento, este empregado não está admitido em nenhuma empresa.
-    <br>
-</div>
+            </div>
         </div>
     </div>
 
     <!-- PAGE CONTENT ENDS -->
 </div>
 
+<div id="modalAdmissao" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="modalAdmissaoX" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="smaller lighter grey no-margin"><i class="ace-icon fa fa-legal green"></i> Processo de admissão...</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="modalAdmissaoCorpo" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="modalAdmissaoLoading" style="display: none; float: left; padding-top: 6px">
+                            <i style="display: none; float: left; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
+                        </span>
+
+                        <button id="modalAdmissaoFechar" class="btn btn-sm btn-default pull-right" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            Cancelar
+                        </button>
+
+                        <button id="modalAdmissaoProsseguir" class="btn btn-sm btn-danger" style="right: 5px; left: auto">
+                            <i class="ace-icon fa fa-check"></i>
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/Scripts/Custom/Empregado/Detalhes.js"></script>
+}
