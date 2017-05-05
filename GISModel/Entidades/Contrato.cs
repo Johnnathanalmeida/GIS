@@ -43,5 +43,10 @@ namespace GISModel.Entidades
 
         public List<Garantia> Garantias { get; set; }
 
+        public string NomeArquivoLocal { get; set; }
+
+        public string NomeArquivoRemoto { get; set; }
+
+
     }
 }

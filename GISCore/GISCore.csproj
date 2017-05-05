@@ -64,6 +64,7 @@
     <Compile Include="Business\Abstract\IEmpresaBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpresaFornecedorBusiness.cs" />
     <Compile Include="Business\Abstract\IFornecedorBusiness.cs" />
+    <Compile Include="Business\Abstract\IGarantiaBusiness.cs" />
     <Compile Include="Business\Abstract\IMenuBusiness.cs" />
     <Compile Include="Business\Abstract\IPerfilBusiness.cs" />
     <Compile Include="Business\Abstract\IPerfilMenuBusiness.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Business\Concrete\EmpresaBusiness.cs" />
     <Compile Include="Business\Concrete\EmpresaFornecedorBusiness.cs" />
     <Compile Include="Business\Concrete\FornecedorBusiness.cs" />
+    <Compile Include="Business\Concrete\GarantiaBusiness.cs" />
     <Compile Include="Business\Concrete\MenuBusiness.cs" />
     <Compile Include="Business\Concrete\PerfilBusiness.cs" />
     <Compile Include="Business\Concrete\PerfilMenuBusiness.cs" />
@@ -86,9 +88,9 @@
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
     <Compile Include="Infraestrutura\Comparer\UsuarioComparer.cs" />
-    <Compile Include="Migrations\201705040225465_dpcontrato.cs" />
-    <Compile Include="Migrations\201705040225465_dpcontrato.Designer.cs">
-      <DependentUpon>201705040225465_dpcontrato.cs</DependentUpon>
+    <Compile Include="Migrations\201705042349554_add-file-contrato.cs" />
+    <Compile Include="Migrations\201705042349554_add-file-contrato.Designer.cs">
+      <DependentUpon>201705042349554_add-file-contrato.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,8 +113,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705040225465_dpcontrato.resx">
-      <DependentUpon>201705040225465_dpcontrato.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705042349554_add-file-contrato.resx">
+      <DependentUpon>201705042349554_add-file-contrato.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

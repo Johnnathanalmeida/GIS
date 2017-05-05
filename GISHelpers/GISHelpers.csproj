@@ -34,6 +34,7 @@
       <HintPath>..\..\Sisgraph\TFS\CEMIG - Upgrade SPF2014\DEV\Customizacao\Package\Ionic.Zip\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Compactador.cs" />
     <Compile Include="Utils\Criptografador.cs" />
+    <Compile Include="Utils\EnumExtensions.cs" />
     <Compile Include="Utils\Severino.cs" />
     <Compile Include="Utils\Zip.cs" />
   </ItemGroup>

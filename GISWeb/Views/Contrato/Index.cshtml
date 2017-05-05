@@ -32,7 +32,6 @@
                             <th>Número</th>
                             <th>Fornecedor</th>
                             <th>Departamento(s)</th>
-                            <th class="hidden-480">Descrição</th>
                             <th>Início</th>
                             <th>Fim</th>
                             <th width="89px"></th>
@@ -45,9 +44,22 @@
                         {
                             <tr id="linha-@iContrato.IDContrato">
                                 <td>@iContrato.Numero</td>
-                                <td></td>
-                                <td></td>
-                                <td class="hidden-480">@iContrato.Descricao</td>
+                                <td>@iContrato.Fornecedor.Nome</td>
+                                <td>
+                                    @{
+                                        string Deps = string.Empty;
+                                        foreach (Departamento iDep in iContrato.Departamentos)
+                                        {
+                                            if (!string.IsNullOrEmpty(Deps))
+                                            {
+                                                Deps += ", ";
+                                            }
+
+                                            Deps += iDep.Sigla;
+                                        }    
+                                    }
+                                    <span>@Deps</span>
+                                </td>
                                 <td>@iContrato.Inicio</td>
                                 <td>@iContrato.Fim</td>
                                 

@@ -15,6 +15,8 @@ namespace GISModel.Entidades
 
         public string IDGarantia { get; set; }
 
+        public string Descricao { get; set; }
+
         public Intervalo Intervalo { get; set; }
 
         public int Prazo { get; set; }

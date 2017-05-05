@@ -62,7 +62,7 @@ namespace GISCore.Business.Concrete
                 string sLocalFile = Path.Combine(Path.GetTempPath(), "GIS");
                 sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
                 sLocalFile = Path.Combine(sLocalFile, "Empresa");
-                sLocalFile = Path.Combine(sLocalFile, "LoginTeste");
+                sLocalFile = Path.Combine(sLocalFile, pEmpresa.UsuarioInclusao);
                 sLocalFile = Path.Combine(sLocalFile, pEmpresa.URL_LogoMarca);
 
                 bool bLogoAlterada = false;

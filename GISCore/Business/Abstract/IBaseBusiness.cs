@@ -18,5 +18,7 @@ namespace GISCore.Business.Abstract
 
         IQueryable<T> Consulta { get; }
 
+        List<string> GetTodosEnumsIntervalo();
+
     }
 }

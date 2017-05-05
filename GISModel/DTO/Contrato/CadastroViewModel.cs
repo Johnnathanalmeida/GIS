@@ -43,6 +43,8 @@ namespace GISModel.DTO.Contrato
         public string Departamentos { get; set; }
 
 
+        [Display(Name = "Arquivo")]
+        public string NomeArquivoLocal { get; set; }
 
 
         public List<Garantia> Garantias { get; set; }

@@ -335,6 +335,8 @@
     <Content Include="Views\Empregado\Novo.cshtml" />
     <Content Include="Views\Empregado\Detalhes.cshtml" />
     <Content Include="Views\Admissao\Novo.cshtml" />
+    <Content Include="Views\Contrato\_Upload.cshtml" />
+    <Content Include="Views\Contrato\_NovaGarantia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

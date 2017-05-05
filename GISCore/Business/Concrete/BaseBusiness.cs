@@ -1,6 +1,7 @@
 ﻿using GISCore.Business.Abstract;
 using GISCore.Repository.Abstract;
 using GISModel.Entidades;
+using GISModel.Enums;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,19 @@ namespace GISCore.Business.Concrete
         public virtual IQueryable<T> Consulta
         {
             get { return Repository.Consulta; }
+        }
+
+        public List<string> GetTodosEnumsIntervalo()
+        {
+            List<string> lista = new List<string>();
+
+            foreach (Intervalo item in Enum.GetValues(typeof(Intervalo)))
+            {
+                lista.Add(item.ToString());
+                //GISHelpers.Utils.EnumExtensions.GetDisplayName(item)
+            }
+
+            return lista;
         }
 
     }
