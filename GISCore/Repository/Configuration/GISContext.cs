@@ -15,6 +15,8 @@ namespace GISCore.Repository.Configuration
             Database.SetInitializer<GISContext>(null);
         }
 
+        public DbSet<Estabelecimento> Estabelecimento { get; set; }
+
         public DbSet<Admissao> Admissao { get; set; }
 
         public DbSet<Empresa> Empresa { get; set; }

@@ -85,6 +85,7 @@
     <Compile Include="DTO\Permissoes\UsuarioPerfilViewModel.cs" />
     <Compile Include="DTO\Shared\RetornoJSON.cs" />
     <Compile Include="DTO\Usuario\UsuarioPerfisMenusViewModel.cs" />
+    <Compile Include="Entidades\Estabelecimento.cs" />
     <Compile Include="Entidades\Proprio.cs" />
     <Compile Include="Entidades\Terceirizado.cs" />
     <Compile Include="Entidades\Admissao.cs" />

@@ -250,7 +250,9 @@
     <Compile Include="Controllers\DepartamentoController.cs" />
     <Compile Include="Controllers\EmpregadoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
+    <Compile Include="Controllers\EstabelecimentoController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
+    <Compile Include="Controllers\GarantiaController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ObraController.cs" />
     <Compile Include="Controllers\PainelController.cs" />
@@ -353,6 +355,8 @@
     <Folder Include="Scripts\Custom\Painel\" />
     <Folder Include="Scripts\Custom\Proposito\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Estabelecimento\" />
+    <Folder Include="Views\Garantia\" />
     <Folder Include="Views\Obra\" />
     <Folder Include="Views\Proposito\" />
   </ItemGroup>

@@ -345,19 +345,7 @@ namespace GISWeb.Controllers
             }
         }
 
-        [RestritoAAjax]
-        public ActionResult NovaGarantia() {
-            try
-            {
-                ViewBag.Intervalos = BaseBusiness.GetTodosEnumsIntervalo();
-                return PartialView("_NovaGarantia");
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = 500;
-                return Content(ex.Message, "text/html");
-            }
-        }
+        
 
 	}
 }
