@@ -22,7 +22,6 @@
     });
 
     $("#modalAdmissaoProsseguir").on("click", function () {
-        alert();
         $("#formCadastroAdmissao").submit();
     });
 
@@ -37,7 +36,6 @@
         $('#modalAdmissaoCorpoConfirmar').hide();
         $('#modalAdmissaoCorpoLoading').hide();
 
-
         $.ajax({
             method: "GET",
             url: "/Admissao/Novo",
@@ -51,16 +49,56 @@
 
             },
         });
+    });
 
-
-        
+    $("#btnDemitir").on("click", function () {
+        bootbox.dialog({
+            title: "<span class='bigger-110'>Atenção!</span>",
+            message: "<span>Tem certeza que deseja demitir o empregado?</span> ",
+            buttons:
+                    {
+                        "success":
+                        {
+                            "label": "Não",
+                            "className": "btn-sm btn-danger btnReprovar",
+                            "callback": function () {
+                            }
+                        },
+                        "danger":
+                        {
+                            "label": "Sim",
+                            "className": "btn-sm btn-success btnAprovar",
+                            "callback": function () {
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/Admissao/Demitir",
+                                    data: { IDEmpregado: $('#IDEmpregado').text().trim() },
+                                    error: function (erro) {
+                                        ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+                                    },
+                                    success: function (content) {
+                                        TratarResultadoJSON(content.resultado);
+                                    }
+                                });
+                            }
+                        }
+                    }
+        });
     });
 });
 
 function OnSuccessCadastrarAdmissao(data) {
-    alert('1');
+    $('#modalAdmissao').hide();
 }
 
 function OnBeginCadastrarAdmissao() {
-    alert('2');
+    $('#modalAdmissao').modal('show');
+    $('#modalAdmissaoX').hide();
+    $('#modalAdmissaoFechar').addClass('disabled');
+    $('#modalAdmissaoFechar').attr('disabled', 'disabled');
+    $('#modalAdmissaoProsseguir').addClass('disabled');
+    $('#modalAdmissaoProsseguir').attr('disabled', 'disabled');
+    $('#modalAdmissaoCorpo').hide();
+    $('#modalAdmissaoCorpoConfirmar').hide();
+    $('#modalAdmissaoCorpoLoading').show();
 }

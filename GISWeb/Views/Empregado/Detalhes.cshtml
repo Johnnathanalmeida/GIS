@@ -51,14 +51,7 @@
                             </span>
 
                             <div class="space space-4"></div>
-                            @if (string.IsNullOrEmpty(ViewBag.PossuiAdmissao))
-                            {
-                                <a href="#" id="btnAdmitir" class="btn btn-sm btn-block btn-success">
-                                    <i class="ace-icon fa fa-legal bigger-110"></i>
-                                    <span class="bigger-110">Admitir</span>
-                                </a>
-                            }
-                            else
+                            @if (ViewBag.Admissao != null && ViewBag.Admissao.Count > 0)
                             {
                                 <a href="#" class="btn btn-sm btn-block btn-info">
                                     <i class="ace-icon fa fa-plus-circle bigger-120"></i>
@@ -68,6 +61,13 @@
                                 <a href="#" id="btnDemitir" class="btn btn-sm btn-block btn-danger">
                                     <i class="ace-icon fa fa-legal bigger-110"></i>
                                     <span class="bigger-110">Demitir</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" id="btnAdmitir" class="btn btn-sm btn-block btn-success">
+                                    <i class="ace-icon fa fa-legal bigger-110"></i>
+                                    <span class="bigger-110">Admitir</span>
                                 </a>
                             }
                         </div><!-- /.col -->
@@ -192,6 +192,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
+                        <div id="modalAdmissaoCorpoLoading">
+                            <h4 class="smaller lighter blue no-margin"> Aguarde, processando... <i style="display: none; float: right; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i></h4>
+                        </div>
+                        <br />
                         <div id="modalAdmissaoCorpo" />
                     </div>
                 </div>
@@ -219,8 +223,6 @@
         </div>
     </div>
 </div>
-
-
 
 @section Scripts {
     <script src="~/Scripts/Custom/Empregado/Detalhes.js"></script>

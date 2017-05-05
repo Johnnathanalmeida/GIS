@@ -42,9 +42,8 @@ namespace GISCore.Business.Concrete
 
         public override void Excluir(Empregado empregado)
         {
-            empregado.DataExclusao = DateTime.Now;
             base.Alterar(empregado);
         }
-        
+
     }
 }

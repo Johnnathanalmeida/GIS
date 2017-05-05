@@ -21,20 +21,20 @@ namespace GISWeb.Controllers
 
         #region Inject
 
-            [Inject]
-            public IAdmissaoBusiness AdmissaoBusiness { get; set; }
+        [Inject]
+        public IAdmissaoBusiness AdmissaoBusiness { get; set; }
 
-            [Inject]
-            public IEmpregadoBusiness EmpregadoBusiness { get; set; }
+        [Inject]
+        public IEmpregadoBusiness EmpregadoBusiness { get; set; }
 
-            [Inject]
-            public IEmpresaBusiness EmpresaBusiness { get; set; }
+        [Inject]
+        public IEmpresaBusiness EmpresaBusiness { get; set; }
 
-            [Inject]
-            public IFornecedorBusiness FornecedorBusiness { get; set; }
+        [Inject]
+        public IFornecedorBusiness FornecedorBusiness { get; set; }
 
-            [Inject]
-            public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
+        [Inject]
+        public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
         #endregion
 
@@ -60,8 +60,8 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
         public ActionResult Detalhes(string id)
         {
-            ViewBag.PossuiAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id) );
-
+            List<Admissao> lAdmissao = AdmissaoBusiness.Consulta.Where(p => p.IDEmpregado.Equals(id) && string.IsNullOrEmpty(p.IDUsuarioDemissao)).ToList();
+            ViewBag.Admissao = lAdmissao;
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
         }
 
@@ -168,5 +168,5 @@ namespace GISWeb.Controllers
             }
 
         }
-	}
+    }
 }

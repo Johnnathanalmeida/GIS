@@ -22,9 +22,8 @@ namespace GISCore.Business.Concrete
 
         public override void Excluir(Admissao admissao)
         {
-            admissao.DataExclusao = DateTime.Now;
             base.Alterar(admissao);
         }
-        
+
     }
 }

@@ -12,12 +12,14 @@ namespace GISModel.Entidades
 
         public string IDEmpregado { get; set; }
 
+        public string IDUsuarioDemissao { get; set; }
+
         [Display(Name = "Fornecedor")]
         public string IDFornecedor { get; set; }
 
         [Display(Name = "Empresa")]
         public string IDEmpresa { get; set; }
-        
+
         [Display(Name = "Departamento")]
         public string IDDepartamento { get; set; }
 
@@ -26,7 +28,7 @@ namespace GISModel.Entidades
         public DateTime DataAdmissao { get; set; }
 
         [Display(Name = "Data de Demissão")]
-        public DateTime DataDemissao { get; set; }       
-        
+        public DateTime DataDemissao { get; set; }
+
     }
 }
