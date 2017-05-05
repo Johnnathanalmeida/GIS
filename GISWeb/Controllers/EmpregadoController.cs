@@ -38,25 +38,29 @@ namespace GISWeb.Controllers
 
         #endregion
 
+        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
         public ActionResult Index()
         {
             ViewBag.Empregados = EmpregadoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             return View();
         }
 
+        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
         public ActionResult Novo()
         {
             return View();
         }
 
+        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
         public ActionResult Edicao(string id)
         {
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
         }
 
+        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
         public ActionResult Detalhes(string id)
         {
-            ViewBag.PossuiAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id) && p.DataDemissao.ToShortDateString().Equals("31/12/9999"));
+            ViewBag.PossuiAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id) );
 
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
         }

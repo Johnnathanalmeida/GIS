@@ -22,27 +22,11 @@
     });
 
     $("#modalAdmissaoProsseguir").on("click", function () {
-        var ddEmpresa = $("#ddlEmpresa").val();
-        var ddDepartamento = $("#ddlDepartamento").val();
-
-        $.ajax({
-            method: "POST",
-            url: "/Admissao/Cadastrar",
-            data: { IDEmpresa: ddEmpresa, IDDepartamento: ddDepartamento },
-            error: function (erro) {
-                $('#modalAdmissao').hide();
-                ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
-            },
-            success: function (content) {
-                $('#modalAdmissao').hide();
-                ExibirMensagemGritter('Oops! Erro inesperado', 'Sucesso', 'gritter-error')
-            }
-        });
+        alert();
+        $("#formCadastroAdmissao").submit();
     });
 
     $("#btnAdmitir").on("click", function () {
-
-
         $('#modalAdmissao').modal('show');
         $('#modalAdmissaoX').hide();
         $('#modalAdmissaoFechar').removeClass('disabled');
@@ -56,7 +40,8 @@
 
         $.ajax({
             method: "GET",
-            url: "/Admissao/Cadastrar",
+            url: "/Admissao/Novo",
+            data: { IDEmpregado: $('#IDEmpregado').text().trim() },
             error: function (erro) {
                 $('#modalArquivo').modal('hide');
                 ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
@@ -70,5 +55,12 @@
 
         
     });
-
 });
+
+function OnSuccessCadastrarAdmissao(data) {
+    alert('1');
+}
+
+function OnBeginCadastrarAdmissao() {
+    alert('2');
+}
