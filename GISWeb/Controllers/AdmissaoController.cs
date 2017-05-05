@@ -49,13 +49,15 @@ namespace GISWeb.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Cadastrar()
+        public ActionResult Novo(string IDEmpregado)
         {
             try
             {
                 ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
                 ViewBag.Departamentos = new SelectList(DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDDepartamento", "Sigla");
-                return PartialView("Novo");
+                Admissao objAdmissao = new Admissao();
+                objAdmissao.IDEmpregado = IDEmpregado;
+                return PartialView("Novo", objAdmissao);
             }
             catch (Exception ex)
             {
@@ -65,15 +67,12 @@ namespace GISWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Cadastrar(string IDEmpresa, string IDDepartamento)
+        [ValidateAntiForgeryToken]
+        public ActionResult Cadastrar(Admissao oAdmissao)
         {
             try
             {
-                Admissao oAdmissao = new Admissao();
-                oAdmissao.DataAdmissao = DateTime.Now;
-                oAdmissao.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
-                oAdmissao.IDEmpresa = IDEmpresa;
-                oAdmissao.IDDepartamentos = IDDepartamento;
+                oAdmissao.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                 AdmissaoBusiness.Inserir(oAdmissao);
                     
                 TempData["MensagemSucesso"] = "Admissao foi cadastrada com sucesso.";

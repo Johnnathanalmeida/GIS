@@ -12,20 +12,14 @@ namespace GISModel.Entidades
 
         public string IDEmpregado { get; set; }
 
-        public virtual Fornecedor Fornecedor { get; set; }
-
         [Display(Name = "Fornecedor")]
         public string IDFornecedor { get; set; }
 
-        public virtual Empresa Empresa { get; set; }
-
         [Display(Name = "Empresa")]
         public string IDEmpresa { get; set; }
-
-        public virtual Departamento Departamento { get; set; }
-
+        
         [Display(Name = "Departamento")]
-        public string IDDepartamentos { get; set; }
+        public string IDDepartamento { get; set; }
 
         [Display(Name = "Data de Admissão")]
         [Required(ErrorMessage = "Informe a data de admissão")]
