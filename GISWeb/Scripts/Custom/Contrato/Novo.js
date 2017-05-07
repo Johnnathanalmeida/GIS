@@ -323,7 +323,7 @@ function FormNovaGarantia() {
 
     $.ajax({
         method: "POST",
-        url: "/Contrato/NovaGarantia",
+        url: "/Garantia/Nova",
         error: function (erro) {
             $('#modalGarantia').modal('hide');
             ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
@@ -335,7 +335,155 @@ function FormNovaGarantia() {
 
             $('#modalGarantiaProsseguir').show();
 
+            $("#modalGarantiaProsseguir").off("click");
+            $("#modalGarantiaProsseguir").click(function () {
+                
+                var validate = true;
+                if ($.trim($("#txtDescricao").val()) == "") {
+                    validate = false;
+                    $("#txtDescricao").next().html($("#txtDescricao").data("val-required"));
+                }
+                else {
+                    $("#txtDescricao").next().html("");
+                }
+
+                if ($.trim($("#txtPrazo").val()) == "") {
+                    validate = false;
+                    $("#txtPrazo").next().html($("#txtPrazo").data("val-required"));
+                }
+                else {
+                    $("#txtPrazo").next().html("");
+                }
+
+                if ($.trim($("#ddlIntervalo").val()) == "") {
+                    validate = false;
+                    $("#ddlIntervalo").next().html($("#ddlIntervalo").data("val-required"));
+                }
+                else {
+                    $("#ddlIntervalo").next().html("");
+                }
+
+                if (!validate) {
+                    ExibirMensagemDeAlerta("Informe os campos obritatórios.");
+                }
+                else {
+                    InserirLinhaGarantia($.trim($("#txtDescricao").val()), $.trim($("#txtPrazo").val()), $.trim($("#ddlIntervalo").val()));
+                    $('#modalGarantia').modal('hide');
+                }
+
+            });
+
         },
     });
+
+}
+
+function InserirLinhaGarantia(Descricao, Prazo, Intervalo) {
+    
+    var sHTML = "<tr><td>" + Descricao + "</td><td class=\"center\">" + Prazo + "</td><td class=\"center\">" + Intervalo + "</td><td class=\"center\"><a href=\"#\" class=\"red CustomTooltip\" title=\"Excluir\" onclick=\"ExcluirLinhaGarantia(this); return false;\"><i class=\"ace-icon fa fa-remove bigger-120\"/></a></td></tr>";
+
+    if ($("#TableGarantias").length == 0) {
+        $("#alertaGarantia").hide();
+
+        sHTML = "<table id=\"TableGarantias\" class=\"table table-striped table-bordered table-hover\"><tr><th>Descrição</th><th width=\"80px\" class=\"center\">Prazo</th><th width=\"80px\" class=\"center\">Intervalo</th><th width=\"30px\"></th></tr>" + sHTML + "</table>";
+        $("#conteudoGarantia").html(sHTML);
+
+        AplicaTooltip();
+    }
+    else {
+        $('#TableGarantias tr:last').after(sHTML);
+
+        AplicaTooltip();
+    }
+}
+
+function ExcluirLinhaGarantia(obj) {
+    $(obj).parent().parent().remove();
+
+    if ($("#TableGarantias tr").length == 1) {
+        $("#conteudoGarantia").html("");
+        $("#alertaGarantia").show();
+    }
+
+}
+
+function FormNovoEstabelecimento() {
+
+    $('#modalEstabelecimentoX').show();
+    $('#modalEstabelecimentoFechar').removeClass('disabled');
+    $('#modalEstabelecimentoFechar').removeAttr('disabled');
+    $('#modalEstabelecimentoProsseguir').hide();
+    $('#modalEstabelecimentoCorpo').html('');
+    $('#modalEstabelecimentoCorpoLoading').show();
+
+    $.ajax({
+        method: "POST",
+        url: "/Estabelecimento/Novo",
+        error: function (erro) {
+            $('#modalEstabelecimento').modal('hide');
+            ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+        },
+        success: function (content) {
+
+            $('#modalEstabelecimentoCorpoLoading').hide();
+            $('#modalEstabelecimentoCorpo').html(content);
+
+            $('#modalEstabelecimentoProsseguir').show();
+
+            $("#modalEstabelecimentoProsseguir").off("click");
+            $("#modalEstabelecimentoProsseguir").click(function () {
+
+                var validate = true;
+                if ($.trim($("#txtEstabNome").val()) == "") {
+                    validate = false;
+                    $("#txtEstabNome").next().html($("#txtEstabNome").data("val-required"));
+                }
+                else {
+                    $("#txtEstabNome").next().html("");
+                }
+
+                if (!validate) {
+                    ExibirMensagemDeAlerta("Informe os campos obritatórios.");
+                }
+                else {
+                    InserirLinhaEstabelecimento($.trim($("#txtEstabNome").val()), $.trim($("#txtEstabDescricao").val()), $.trim($("#txtEstabEndereco").val()), $.trim($("#txtEstabArquivo").val()));
+                    $('#modalEstabelecimento').modal('hide');
+                }
+
+            });
+
+            AplicaDatePicker(false);
+
+        },
+    });
+
+}
+
+function InserirLinhaEstabelecimento(Nome, Descricao, Endereco, Arquivo) {
+
+    var sHTML = "<tr><td>" + Nome + "</td><td>" + Descricao + "</td><td>" + Endereco + "</td><td>" + Arquivo + "</td><td class=\"center\"><a href=\"#\" class=\"red CustomTooltip\" title=\"Excluir\" onclick=\"ExcluirLinhaEstabelecimento(this); return false;\"><i class=\"ace-icon fa fa-remove bigger-120\"/></a></td></tr>";
+
+    if ($("#TableEstabelecimentos").length == 0) {
+        $("#alertaEstabelecimento").hide();
+
+        sHTML = "<table id=\"TableEstabelecimentos\" class=\"table table-striped table-bordered table-hover\"><tr><th width=\"200px\">Nome</th><th>Descrição</th><th width=\"200px\">Endereço</th><th width=\"120px\">Arquivo</th><th width=\"30px\"></th></tr>" + sHTML + "</table>";
+        $("#conteudoEstabelecimento").html(sHTML);
+
+        AplicaTooltip();
+    }
+    else {
+        $('#TableEstabelecimentos tr:last').after(sHTML);
+
+        AplicaTooltip();
+    }
+}
+
+function ExcluirLinhaEstabelecimento(obj) {
+    $(obj).parent().parent().remove();
+
+    if ($("#TableEstabelecimentos tr").length == 1) {
+        $("#conteudoEstabelecimento").html("");
+        $("#alertaEstabelecimento").show();
+    }
 
 }

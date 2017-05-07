@@ -1,0 +1,37 @@
+﻿@model GISModel.Entidades.Garantia
+
+<div id="formCadGarantia">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Descricao, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                <div class="col-xs-12 col-sm-12">
+                    @Html.TextAreaFor(d => d.Descricao, new { style = "min-width: 100%; max-width: 100%; resize: none;", rows = "3", id="txtDescricao" })
+                    @Html.ValidationMessageFor(d => d.Descricao, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Prazo, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                <div class="col-xs-12 col-sm-12">
+                    @Html.EditorFor(d => d.Prazo, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtPrazo" } })
+                    @Html.ValidationMessageFor(d => d.Prazo, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(d => d.Intervalo, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DropDownListFor(d => d.Intervalo, new SelectList(ViewBag.Intervalos), "Selecione um Intervalo...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlIntervalo", @autocomplete = "on" })
+                    @Html.ValidationMessageFor(d => d.Prazo, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -17,12 +17,12 @@ namespace GISWeb.Controllers
         public IBaseBusiness<Garantia> BaseBusiness { get; set; }
 
         [RestritoAAjax]
-        public ActionResult NovaGarantia()
+        public ActionResult Nova()
         {
             try
             {
                 ViewBag.Intervalos = BaseBusiness.GetTodosEnumsIntervalo();
-                return PartialView("_NovaGarantia");
+                return PartialView("_Nova");
             }
             catch (Exception ex)
             {
