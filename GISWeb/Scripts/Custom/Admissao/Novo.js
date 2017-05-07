@@ -1,3 +1,3 @@
 ﻿jQuery(function ($) {
-    AplicaDatePicker();
+    AplicaDatePicker(false);
 });

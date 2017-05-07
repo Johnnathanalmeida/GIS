@@ -21,7 +21,7 @@
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
                             @Html.HiddenFor(d => d.IDEmpregado)
-                            @Html.EditorFor(d => d.DataAdmissao, new { htmlAttributes = new { @class = "col-xs-9 col-sm-9  date-picker-mes-e-ano" } })
+                            @Html.EditorFor(d => d.DataAdmissao, new { htmlAttributes = new { @class = "col-xs-9 col-sm-9  date-picker" } })
                         </div>
 
                     </div>
@@ -79,5 +79,9 @@
             </div>
         }
     }
+</div>
 
-
+@section Scripts {
+    <script src="~/Scripts/Ace/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/Custom/Admissao/Novo.js"></script>
+}

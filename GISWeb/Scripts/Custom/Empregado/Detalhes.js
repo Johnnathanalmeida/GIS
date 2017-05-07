@@ -1,5 +1,7 @@
 ﻿$(function () {
 
+    AplicaDatePicker(false);
+
     $("#cbxEmpresa").on('change', function () {
         $.ajax({
             url: "/Admissao/CarregarDepartamentos",
@@ -41,12 +43,11 @@
             url: "/Admissao/Novo",
             data: { IDEmpregado: $('#IDEmpregado').text().trim() },
             error: function (erro) {
-                $('#modalArquivo').modal('hide');
+                $('#modalAdmissao').modal('hide');
                 ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
             },
             success: function (content) {
                 $('#modalAdmissaoCorpo').html(content);
-
             },
         });
     });
@@ -87,8 +88,9 @@
     });
 });
 
-function OnSuccessCadastrarAdmissao(data) {
+function OnSuccessCadastrarAdmissao(data) {    
     $('#modalAdmissao').hide();
+    TratarResultadoJSON(data.resultado);
 }
 
 function OnBeginCadastrarAdmissao() {

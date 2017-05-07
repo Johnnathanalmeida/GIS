@@ -1,0 +1,73 @@
+﻿@using GISModel.Entidades
+
+@{
+    ViewBag.Title = "Listagem de Cargo - Função - Atividade";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">
+            Cargo / Função / Atividade
+            <a href="#" onclick="btnNovoCargo(); return false;" class="btn btn-white btn-info btn-bold" style="float: right; margin-top: -2px;">
+                <i class="ace-icon fa fa-plus bigger-120 blue"></i>
+                Novo Cargo
+            </a>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+
+        @{
+            Html.RenderPartial("_MensagensDeRetorno");
+        }
+
+        <div class="dd dd-draghandle">
+            <ol class="dd-list">
+                @foreach (Cargo iCargo in ViewBag.Cargos)
+                {
+                    <li class="dd-item dd2-item" data-id="15">
+                        <button data-action="collapse" type="button">Collapse</button>
+                        <button data-action="expand" type="button" style="display: none;">Expand</button>
+                        <div class="dd2-content">
+                            @iCargo.Carg_Nome
+                            <div class="pull-right action-buttons">
+                                <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.IDCargo')">
+                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>
+                                </a>
+                                <a class="blue" href="#" onclick="DeletarCargo('@iCargo.IDCargo', '@iCargo.Carg_Nome')">
+                                    <i class="ace-icon fa fa-remove bigger-125"></i>
+                                </a>
+                            </div>
+                        </div>
+                        @foreach (Funcao iFuncao in iCargo.Funcao)
+                        {
+                            <ol class="dd-list">
+                                <li class="dd-item dd2-item" data-id="16">
+                                    <div class="dd2-content">@iFuncao.Func_Nome</div>
+                                </li>
+                            </ol>
+                        }
+                            
+                    </li>
+                }
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script src="~/Scripts/Ace/dataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/Ace/dataTables/jquery.dataTables.bootstrap.js"></script>
+
+    <script src="~/Scripts/Ace/dataTables/dataTables.tableTools.js"></script>
+    <script src="~/Scripts/Ace/dataTables/dataTables.colVis.js"></script>
+
+    <script src="~/Scripts/Ace/jQ/jquery.nestable.js"></script>
+
+    <script src="~/Scripts/Custom/CargoFuncAtiv/Listagem.js"></script>
+}
+

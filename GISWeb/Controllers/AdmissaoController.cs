@@ -98,9 +98,7 @@ namespace GISWeb.Controllers
                 oAdmissao.DataDemissao = DateTime.MaxValue;
                 AdmissaoBusiness.Inserir(oAdmissao);
 
-                TempData["MensagemSucesso"] = "Admissao foi cadastrada com sucesso.";
-
-                return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empregado") } });
+                return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Detalhes", "Empregado", new { id = oAdmissao.IDEmpregado }) } });
             }
             catch (Exception ex)
             {
@@ -134,7 +132,7 @@ namespace GISWeb.Controllers
                     oAdmissao.IDUsuarioDemissao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     AdmissaoBusiness.Excluir(oAdmissao);
 
-                    return Json(new { resultado = new RetornoJSON() { Sucesso = "O empregado foi demitido com sucesso." } });
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Detalhes", "Empregado", new { id = oAdmissao.IDEmpregado }) } });
                 }
             }
             catch (Exception ex)
