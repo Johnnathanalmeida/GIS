@@ -338,7 +338,8 @@
     <Content Include="Views\Empregado\Detalhes.cshtml" />
     <Content Include="Views\Admissao\Novo.cshtml" />
     <Content Include="Views\Contrato\_Upload.cshtml" />
-    <Content Include="Views\Contrato\_NovaGarantia.cshtml" />
+    <Content Include="Views\Garantia\_Nova.cshtml" />
+    <Content Include="Views\Estabelecimento\_Novo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -355,8 +356,6 @@
     <Folder Include="Scripts\Custom\Painel\" />
     <Folder Include="Scripts\Custom\Proposito\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Estabelecimento\" />
-    <Folder Include="Views\Garantia\" />
     <Folder Include="Views\Obra\" />
     <Folder Include="Views\Proposito\" />
   </ItemGroup>

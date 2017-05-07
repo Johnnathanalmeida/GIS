@@ -222,8 +222,7 @@ namespace GISWeb.Controllers
                             Descricao = contrato.Descricao,
                             UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login,
                             IDFornecedor = forn.IDFornecedor,
-                            NomeArquivoLocal = contrato.NomeArquivoLocal,
-                            NomeArquivoRemoto = Guid.NewGuid().ToString() + contrato.NomeArquivoLocal.Substring(contrato.NomeArquivoLocal.LastIndexOf("."))
+                            Arquivo = new Arquivo() { NomeLocal = contrato.NomeArquivoLocal, NomeRemoto = Guid.NewGuid().ToString() + contrato.NomeArquivoLocal.Substring(contrato.NomeArquivoLocal.LastIndexOf(".")) }
                         };
 
                         if (contrato.Departamentos.Contains(","))

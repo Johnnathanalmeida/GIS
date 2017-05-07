@@ -34,7 +34,7 @@ namespace GISCore.Business.Concrete
             sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
             sLocalFile = Path.Combine(sLocalFile, "Contrato");
             sLocalFile = Path.Combine(sLocalFile, contrato.UsuarioInclusao);
-            sLocalFile = Path.Combine(sLocalFile, contrato.NomeArquivoLocal);
+            sLocalFile = Path.Combine(sLocalFile, contrato.Arquivo.NomeLocal);
 
             Usuario oUser = UsuarioBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.Login.Equals(contrato.UsuarioInclusao));
             if (oUser == null)
@@ -54,7 +54,7 @@ namespace GISCore.Business.Concrete
                         Directory.CreateDirectory(sDiretorio);
 
                     if (File.Exists(sLocalFile))
-                        File.Move(sLocalFile, sDiretorio + "\\" + contrato.NomeArquivoRemoto);
+                        File.Move(sLocalFile, sDiretorio + "\\" + contrato.Arquivo.NomeRemoto);
                 }
             }
 
