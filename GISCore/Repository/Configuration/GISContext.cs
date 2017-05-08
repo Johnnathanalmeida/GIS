@@ -45,6 +45,10 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<Alocacao> Alocacao { get; set; }
 
+        public DbSet<Cargo> Cargo { get; set; }
+
+        public DbSet<Funcao> Funcao { get; set; }
+
         public DbSet<Garantia> Garantia { get; set; }
 
         public DbSet<DepartamentoContrato> DepartamentoContrato { get; set; }

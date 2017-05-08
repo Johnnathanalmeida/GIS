@@ -31,8 +31,6 @@ namespace GISWeb.Controllers
         {
                         
             List<Cargo> listCargos = (from cg in CargoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                                      join fc in FuncaoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on cg.IDCargo equals fc.IDCargo into _fc
-                                      from x in _fc.DefaultIfEmpty()
                                       orderby cg.Carg_Nome
                                       select new Cargo
                                       {
@@ -40,6 +38,21 @@ namespace GISWeb.Controllers
                                           Carg_Nome = cg.Carg_Nome,
                                           Funcao = new List<Funcao>()
                                       }).ToList();
+
+            foreach (Cargo item in listCargos)
+            {
+
+                item.Funcao = (from funcao in FuncaoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
+                                      where funcao.IDCargo.Equals(item.IDCargo)
+                                      select new Funcao()
+                                      {
+                                          IDCargo = funcao.IDCargo,
+                                          IDFuncao = funcao.IDFuncao,
+                                          Func_Nome = funcao.Func_Nome
+                                      }
+                                     ).ToList();
+
+            }
 
             ViewBag.Cargos = listCargos;
 

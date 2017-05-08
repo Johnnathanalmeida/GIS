@@ -1,5 +1,6 @@
 ﻿jQuery(function ($) {
     $('.dd').nestable();
+    $('.dd').nestable('collapseAll');
 
     $('.dd-handle a').on('mousedown', function (e) {
         e.stopPropagation();

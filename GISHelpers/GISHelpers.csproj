@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip">
-      <HintPath>..\..\GISCore\bin\Debug\Ionic.Zip.dll</HintPath>
+      <HintPath>..\..\..\..\..\Clientes\CEMIG\TFS_Interno\GED-SGDOC\DEV\DEV_H1\Projeto_Migracao_SGDOC\source\Desenvolvimento\SPF.Custom.SGDOC\SPF.Custom.SGDOC.Web\bin\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

@@ -23,13 +23,13 @@
             Html.RenderPartial("_MensagensDeRetorno");
         }
 
-        <div class="dd dd-draghandle">
+        <div class="dd dd-draghandle" style="max-width:100%">
             <ol class="dd-list">
                 @foreach (Cargo iCargo in ViewBag.Cargos)
                 {
-                    <li class="dd-item dd2-item" data-id="15">
-                        <button data-action="collapse" type="button">Collapse</button>
-                        <button data-action="expand" type="button" style="display: none;">Expand</button>
+                    <li class="dd-item">
+                        <div class="dd-nodrag">
+                        </div>
                         <div class="dd2-content">
                             @iCargo.Carg_Nome
                             <div class="pull-right action-buttons">
@@ -44,12 +44,24 @@
                         @foreach (Funcao iFuncao in iCargo.Funcao)
                         {
                             <ol class="dd-list">
-                                <li class="dd-item dd2-item" data-id="16">
-                                    <div class="dd2-content">@iFuncao.Func_Nome</div>
+                                <li class="dd-item">
+                                    <div class="dd-nodrag">
+                                    </div>
+                                    <div class="dd2-content">
+                                        @iFuncao.Func_Nome
+                                        <div class="pull-right action-buttons">
+                                            <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.IDCargo', '@iFuncao.IDFuncao')">
+                                                <i class="ace-icon fa fa-plus-circle bigger-125"></i>
+                                            </a>
+                                            <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.IDCargo', '@iFuncao.IDFuncao', '@iFuncao.Func_Nome')">
+                                                <i class="ace-icon fa fa-remove bigger-125"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </li>
                             </ol>
                         }
-                            
+
                     </li>
                 }
             </ol>
@@ -66,8 +78,7 @@
     <script src="~/Scripts/Ace/dataTables/dataTables.tableTools.js"></script>
     <script src="~/Scripts/Ace/dataTables/dataTables.colVis.js"></script>
 
-    <script src="~/Scripts/Ace/jQ/jquery.nestable.js"></script>
-
     <script src="~/Scripts/Custom/CargoFuncAtiv/Listagem.js"></script>
+    <script src="~/Scripts/Ace/jQ/jquery.nestable.js"></script>    
 }
 

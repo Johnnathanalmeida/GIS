@@ -184,6 +184,7 @@
     <Content Include="Scripts\Ace\moment.js" />
     <Content Include="Scripts\Ace\respond.js" />
     <Content Include="Scripts\Custom\Admissao\Novo.js" />
+    <Content Include="Scripts\Custom\CargoFuncAtiv\Listagem.js" />
     <Content Include="Scripts\Custom\Conta\NovaSenha.js" />
     <Content Include="Scripts\Custom\Contrato\Listagem.js" />
     <Content Include="Scripts\Custom\Contrato\Novo.js" />
@@ -245,6 +246,7 @@
     <Compile Include="Controllers\AdmissaoController.cs" />
     <Compile Include="Controllers\ArquivoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CargoFuncAtivController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\DepartamentoController.cs" />
@@ -340,6 +342,7 @@
     <Content Include="Views\Contrato\_Upload.cshtml" />
     <Content Include="Views\Garantia\_Nova.cshtml" />
     <Content Include="Views\Estabelecimento\_Novo.cshtml" />
+    <Content Include="Views\CargoFuncAtiv\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

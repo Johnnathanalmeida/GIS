@@ -57,6 +57,7 @@
     <Compile Include="Business\Abstract\IAdmissaoBusiness.cs" />
     <Compile Include="Business\Abstract\IAlocacaoBusiness.cs" />
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
+    <Compile Include="Business\Abstract\ICargoBusiness.cs" />
     <Compile Include="Business\Abstract\IContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoContratoBusiness.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Business\Abstract\IEmpresaFornecedorBusiness.cs" />
     <Compile Include="Business\Abstract\IEstabelecimentoBusiness.cs" />
     <Compile Include="Business\Abstract\IFornecedorBusiness.cs" />
+    <Compile Include="Business\Abstract\IFuncaoBusiness.cs" />
     <Compile Include="Business\Abstract\IMenuBusiness.cs" />
     <Compile Include="Business\Abstract\IPerfilBusiness.cs" />
     <Compile Include="Business\Abstract\IPerfilMenuBusiness.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Business\Concrete\AdmissaoBusiness.cs" />
     <Compile Include="Business\Concrete\AlocacaoBusiness.cs" />
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
+    <Compile Include="Business\Concrete\CargoBusiness.cs" />
     <Compile Include="Business\Concrete\ContratoBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoContratoBusiness.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Business\Concrete\EmpresaFornecedorBusiness.cs" />
     <Compile Include="Business\Concrete\EstabelecimentoBusiness.cs" />
     <Compile Include="Business\Concrete\FornecedorBusiness.cs" />
+    <Compile Include="Business\Concrete\FuncaoBusiness.cs" />
     <Compile Include="Business\Concrete\MenuBusiness.cs" />
     <Compile Include="Business\Concrete\PerfilBusiness.cs" />
     <Compile Include="Business\Concrete\PerfilMenuBusiness.cs" />
@@ -88,9 +92,17 @@
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
     <Compile Include="Infraestrutura\Comparer\UsuarioComparer.cs" />
-    <Compile Include="Migrations\201705071724173_cont.cs" />
-    <Compile Include="Migrations\201705071724173_cont.Designer.cs">
-      <DependentUpon>201705071724173_cont.cs</DependentUpon>
+    <Compile Include="Migrations\201705072355517_refresh.cs" />
+    <Compile Include="Migrations\201705072355517_refresh.Designer.cs">
+      <DependentUpon>201705072355517_refresh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705080008147_refresh1.cs" />
+    <Compile Include="Migrations\201705080008147_refresh1.Designer.cs">
+      <DependentUpon>201705080008147_refresh1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705080014143_refresh11.cs" />
+    <Compile Include="Migrations\201705080014143_refresh11.Designer.cs">
+      <DependentUpon>201705080014143_refresh11.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,8 +125,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705071724173_cont.resx">
-      <DependentUpon>201705071724173_cont.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705072355517_refresh.resx">
+      <DependentUpon>201705072355517_refresh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705080008147_refresh1.resx">
+      <DependentUpon>201705080008147_refresh1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705080014143_refresh11.resx">
+      <DependentUpon>201705080014143_refresh11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
