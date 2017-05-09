@@ -13,9 +13,9 @@ namespace GISCore.Business.Concrete
 
         public override void Inserir(PerfilMenu PerfilMenu)
         {
-            if (!Consulta.Any(p => p.IDPerfil.Equals(PerfilMenu.IDPerfil) && p.IDMenu.Equals(PerfilMenu.IDMenu) && string.IsNullOrEmpty(p.UsuarioExclusao)))
+            if (!Consulta.Any(p => p.UKPerfil.Equals(PerfilMenu.UKPerfil) && p.UKMenu.Equals(PerfilMenu.UKMenu) && string.IsNullOrEmpty(p.UsuarioExclusao)))
             {
-                PerfilMenu.IDPerfilMenu = Guid.NewGuid().ToString();
+                PerfilMenu.UniqueKey = Guid.NewGuid().ToString();
 
                 base.Inserir(PerfilMenu);
             }
@@ -23,7 +23,7 @@ namespace GISCore.Business.Concrete
 
         public override void Alterar(PerfilMenu entidade)
         {
-            List<PerfilMenu> lPerfilMenu = Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDPerfil.Equals(entidade.IDPerfil) && p.IDMenu.Equals(entidade.IDMenu)).ToList();
+            List<PerfilMenu> lPerfilMenu = Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKPerfil.Equals(entidade.UKPerfil) && p.UKMenu.Equals(entidade.UKMenu)).ToList();
             if (lPerfilMenu.Count.Equals(1))
             {
                 PerfilMenu oPerfilMenu = lPerfilMenu[0];

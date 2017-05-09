@@ -37,7 +37,7 @@
                 $('#modalArquivoCorpoLoading').hide();
                 $('#modalArquivoCorpo').html(content);
 
-                InitDropZoneSingle();
+                InitDropZoneSingle(".pdf,.doc,.docx");
 
                 $.validator.unobtrusive.parse('#formUpload');
 
@@ -45,6 +45,8 @@
         });
 
     });
+
+    
 
 });
 
@@ -174,7 +176,7 @@ function OnBeginCadastrarContrato() {
     $("#formCadastroContrato").css({ opacity: "0.5" });
 }
 
-function InitDropZoneSingle() {
+function InitDropZoneSingle(Ext) {
     try {
         Dropzone.autoDiscover = false;
 
@@ -225,7 +227,7 @@ function InitDropZoneSingle() {
             dictFileTooBig: 'Tamanho máximo permitido ultrapassado.',
             //maxFiles: maxArquivos,
             dictMaxFilesExceeded: 'Limite máximo de número de arquivos permitidos ultrapassado.',
-            acceptedFiles: ".pdf,.doc,.docx",
+            acceptedFiles: Ext,
             dictInvalidFileType: 'Extensão de arquivo inválida para este tipo de anexo.',
             addRemoveLinks: true,
             dictCancelUpload: 'Cancelar',
@@ -451,6 +453,7 @@ function FormNovoEstabelecimento() {
                 }
 
             });
+
 
             AplicaDatePicker(false);
 

@@ -39,18 +39,18 @@ namespace GISWeb.Controllers
         {
             //ViewBag.Usuarios = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(o => o.Nome).ToList();
             ViewBag.Usuarios = (from usr in UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                               join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.IDEmpresa equals emp.IDEmpresa
-                               join dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.IDDepartamento equals dep.IDDepartamento
-                               select new Usuario()
-                               {
-                                   IDUsuario = usr.IDUsuario,
-                                   Nome = usr.Nome,
-                                   Login = usr.Login,
-                                   CPF = usr.CPF,
-                                   Email = usr.Email,
-                                   Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia },
-                                   Departamento = new Departamento() { Sigla = dep.Sigla }
-                               }).ToList();
+                                join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.UKEmpresa equals emp.UniqueKey
+                                join dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usr.UKDepartamento equals dep.UniqueKey
+                                select new Usuario()
+                                {
+                                    UniqueKey = usr.UniqueKey,
+                                    Nome = usr.Nome,
+                                    Login = usr.Login,
+                                    CPF = usr.CPF,
+                                    Email = usr.Email,
+                                    Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia },
+                                    Departamento = new Departamento() { Sigla = dep.Sigla }
+                                }).ToList();
 
             return View();
         }
@@ -58,7 +58,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Usuario")]
         public ActionResult Novo()
         {
-            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.ToList(), "IDEmpresa", "NomeFantasia");
+            ViewBag.Empresas = EmpresaBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList();
 
             return View();
         }
@@ -72,7 +72,7 @@ namespace GISWeb.Controllers
                 try
                 {
                     bool bRedirect = false;
-                    if (Usuario.IDUsuario != null && Usuario.IDUsuario.Equals("redirect"))
+                    if (Usuario.UniqueKey != null && Usuario.UniqueKey.Equals("redirect"))
                         bRedirect = true;
 
                     Usuario.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
@@ -114,7 +114,7 @@ namespace GISWeb.Controllers
             
             ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
 
-            Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(id));
+            Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id));
 
             ViewBag.Departamentos = new SelectList(DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDDepartamento", "Sigla");
 
@@ -159,7 +159,7 @@ namespace GISWeb.Controllers
         {
             try
             {
-                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => p.IDUsuario.Equals(IDUsuario));
+                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDUsuario));
                 if (oUsuario == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Alerta = "Usuário com o ID '" + IDUsuario + "' não encontrado." } });
@@ -188,7 +188,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(IDUsuario));
+                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDUsuario));
                 if (oUsuario == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o usuário, pois o mesmo não foi localizado." } });
@@ -222,7 +222,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(IDUsuario));
+                Usuario oUsuario = UsuarioBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDUsuario));
                 if (oUsuario == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o usuário, pois o mesmo não foi localizado." } });

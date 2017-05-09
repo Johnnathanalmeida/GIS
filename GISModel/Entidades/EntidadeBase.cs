@@ -13,6 +13,8 @@ namespace GISModel.Entidades
         [Key]
         public string ID { get; set; }
 
+        public string UniqueKey { get; set; }
+
         public string UsuarioInclusao { get; set; }
 
         public DateTime DataInclusao { get; set; }

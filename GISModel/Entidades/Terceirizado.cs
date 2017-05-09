@@ -3,15 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GISModel.Entidades
 {
-    [Table("tbTerceirizado")]
+    [Table("OBJTerceirizado")]
     public class Terceirizado : EntidadeBase
     {
 
-        public string IDAdmissao { get; set; }
+        public string UKAdmissao { get; set; }
 
-        public string IDEmpregado { get; set; }
-
-        public string IDFornecedor { get; set; }       
+        public string UKFornecedor { get; set; }       
         
     }
 }

@@ -9,21 +9,14 @@ using System.Threading.Tasks;
 namespace GISModel.Entidades
 {
 
-    [Table("tbDepartamentoContrato")]
+    [Table("RELDepartamentoContrato")]
     public class DepartamentoContrato : EntidadeBase
     {
-
-        public string IDDepartamentoContrato { get; set; }
-
-
-
-
         public virtual Departamento Departamento { get; set; }
 
         [Display(Name = "Departamento")]
         [Required(ErrorMessage = "Selecione um Departamento")]
-        public string IDDepartamento { get; set; }
-
+        public string UKDepartamento { get; set; }
 
 
 
@@ -31,10 +24,6 @@ namespace GISModel.Entidades
 
         [Display(Name = "Contrato")]
         [Required(ErrorMessage = "Selecione um Contrato")]
-        public string IDContrato { get; set; }
-
-
-
-
+        public string UKContrato { get; set; }
     }
 }

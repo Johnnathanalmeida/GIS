@@ -37,10 +37,10 @@ namespace GISWeb.Controllers
             //ViewBag.Menus = MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
 
             List<Menu> menus = (from MenuPrincipal in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                               join MenuRaiz in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on MenuPrincipal.IDMenuSuperior equals MenuRaiz.IDMenu into prodGroup
-                               from item in prodGroup.DefaultIfEmpty()
-                               orderby MenuPrincipal.Ordem
-                               select new Menu { IDMenu = MenuPrincipal.IDMenu, Nome = MenuPrincipal.Nome, Ordem = MenuPrincipal.Ordem, DataInclusao = MenuPrincipal.DataInclusao, UsuarioInclusao = MenuPrincipal.UsuarioInclusao, MenuSuperior = new Menu() { Nome = item == null ? string.Empty : item.Nome  } }
+                                join MenuRaiz in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on MenuPrincipal.UKMenuSuperior equals MenuRaiz.UniqueKey into prodGroup
+                                from item in prodGroup.DefaultIfEmpty()
+                                orderby MenuPrincipal.Ordem
+                                select new Menu { UniqueKey = MenuPrincipal.UniqueKey, Nome = MenuPrincipal.Nome, Ordem = MenuPrincipal.Ordem, DataInclusao = MenuPrincipal.DataInclusao, UsuarioInclusao = MenuPrincipal.UsuarioInclusao, MenuSuperior = new Menu() { Nome = item == null ? string.Empty : item.Nome } }
                                ).ToList();
 
             ViewBag.Menus = menus;
@@ -50,8 +50,8 @@ namespace GISWeb.Controllers
 
         private string BuscarMenuSuperior(Menu pMenu, string NomeMenuCompleto)
         {
-            if (!string.IsNullOrEmpty(pMenu.IDMenuSuperior)) {
-                Menu tMenu = MenuBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDMenu.Equals(pMenu.IDMenuSuperior));
+            if (!string.IsNullOrEmpty(pMenu.UKMenuSuperior)) {
+                Menu tMenu = MenuBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(pMenu.UKMenuSuperior));
 
                 if (tMenu != null) {
                     NomeMenuCompleto = tMenu.Nome + "/" + NomeMenuCompleto;
@@ -70,7 +70,7 @@ namespace GISWeb.Controllers
                 iMenu.Nome = BuscarMenuSuperior(iMenu, iMenu.Nome);
             }
 
-            ViewBag.Menus = new SelectList(listaMenus.OrderBy(p => p.Ordem), "IDMenu", "Nome");
+            ViewBag.Menus = listaMenus.OrderBy(p => p.Ordem).ToList();
             return View();
         }
 
@@ -111,21 +111,9 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Menu")]
         public ActionResult Edicao(string id)
         {
+            ViewBag.Menus = MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
 
-            Menu oMenu = MenuBusiness.Consulta.FirstOrDefault(p => p.IDMenu.Equals(id));
-
-            if (oMenu != null)
-            {
-                if (!string.IsNullOrEmpty(oMenu.IDMenuSuperior))
-                {
-                    ViewBag.Menus = new SelectList(MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDMenu", "Nome", oMenu.IDMenuSuperior);
-                }
-                else
-                {
-                    ViewBag.Menus = new SelectList(MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDMenu", "Nome");
-                }
-            }
-
+            Menu oMenu = MenuBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id));
             return View(oMenu);
         }
 
@@ -169,15 +157,15 @@ namespace GISWeb.Controllers
 
             try
             {
-                Menu oMenu = MenuBusiness.Consulta.FirstOrDefault(p => p.IDMenu.Equals(IDMenu));
+                Menu oMenu = MenuBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDMenu));
                 if (oMenu == null)
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o menu, pois a mesmo não foi localizado." } });
 
-                if (PerfilMenuBusiness.Consulta.Any(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDMenu.Equals(IDMenu)))
+                if (PerfilMenuBusiness.Consulta.Any(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDMenu)))
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o menu, pois a mesmo está vinculado a pelo menos um perfil." } });
                 
                 oMenu.DataExclusao = DateTime.Now;
-                oMenu.UsuarioExclusao = "LoginTeste";
+                oMenu.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                 MenuBusiness.Alterar(oMenu);
 
                 return Json(new { resultado = new RetornoJSON() { Sucesso = "O menu '" + oMenu.Nome + "' foi excluído com sucesso." } });
@@ -204,7 +192,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Menu oMenu = MenuBusiness.Consulta.FirstOrDefault(p => p.IDMenu.Equals(IDMenu));
+                Menu oMenu = MenuBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDMenu));
                 if (oMenu == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir a empresa, pois a mesma não foi localizada." } });
@@ -212,7 +200,7 @@ namespace GISWeb.Controllers
                 else
                 {
                     oMenu.DataExclusao = DateTime.Now;
-                    oMenu.UsuarioExclusao = "LoginTeste";
+                    oMenu.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
 
                     MenuBusiness.Alterar(oMenu);
 

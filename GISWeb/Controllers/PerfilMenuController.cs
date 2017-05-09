@@ -46,13 +46,13 @@ namespace GISWeb.Controllers
                         {
                             if (!string.IsNullOrEmpty(IDUsuario))
                             {
-                                PerfilMenuBusiness.Inserir(new PerfilMenu() { IDMenu = IDUsuario, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
+                                PerfilMenuBusiness.Inserir(new PerfilMenu() { UKMenu = IDUsuario, UKPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                             }
                         }
                     }
                     else
                     {
-                        PerfilMenuBusiness.Inserir(new PerfilMenu() { IDMenu = Menu, IDPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
+                        PerfilMenuBusiness.Inserir(new PerfilMenu() { UKMenu = Menu, UKPerfil = Perfil, UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
                 else
@@ -64,13 +64,13 @@ namespace GISWeb.Controllers
                         {
                             if (!string.IsNullOrEmpty(IDUsuario))
                             {
-                                PerfilMenuBusiness.Alterar(new PerfilMenu() { IDMenu = IDUsuario, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
+                                PerfilMenuBusiness.Alterar(new PerfilMenu() { UKMenu = IDUsuario, UKPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                             }
                         }
                     }
                     else
                     {
-                        PerfilMenuBusiness.Alterar(new PerfilMenu() { IDMenu = Menu, IDPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
+                        PerfilMenuBusiness.Alterar(new PerfilMenu() { UKMenu = Menu, UKPerfil = Perfil, DataExclusao = DateTime.Now, UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login });
                     }
                 }
 
@@ -95,9 +95,9 @@ namespace GISWeb.Controllers
             try
             {
                 var varPerfis = from perfil in PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                                join perfilmenu in PerfilMenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDMenu.Equals(IDMenu)).ToList() on perfil.IDPerfil equals perfilmenu.IDPerfil into prodGroup
+                                join perfilmenu in PerfilMenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKMenu.Equals(IDMenu)).ToList() on perfil.UniqueKey equals perfilmenu.UKPerfil into prodGroup
                                 from item in prodGroup.DefaultIfEmpty()
-                                select new PerfilMenuViewModel { NomePerfil = perfil.Nome, IDPerfil = perfil.IDPerfil, MenuVinculado = (item == null ? false : true), IDMenu = IDMenu };
+                                select new PerfilMenuViewModel { NomePerfil = perfil.Nome, IDPerfil = perfil.UniqueKey, MenuVinculado = (item == null ? false : true), IDMenu = IDMenu };
 
                 List<PerfilMenuViewModel> lPerfis = varPerfis.ToList();
 

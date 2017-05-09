@@ -14,10 +14,10 @@ namespace GISCore.Business.Concrete
         public override void Inserir(Alocacao alocacao)
         {
            
-            if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.IDContrato.Equals(alocacao.IDContrato) && u.IDEmpregado.Equals(alocacao.IDEmpregado)))
+            if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.UKContrato.Equals(alocacao.UKContrato) && u.UKEmpregado.Equals(alocacao.UKEmpregado)))
                 throw new InvalidOperationException("Este empregado já está alocado neste contrato.");
 
-            alocacao.IDAlocacao = Guid.NewGuid().ToString();
+            alocacao.UniqueKey = Guid.NewGuid().ToString();
 
             base.Inserir(alocacao);
         }

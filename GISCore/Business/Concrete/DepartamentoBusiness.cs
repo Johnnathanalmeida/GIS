@@ -21,16 +21,16 @@ namespace GISCore.Business.Concrete
 
             departamento.Status = GISModel.Enums.Situacao.Ativo;
 
-            if (!EmpresaBusiness.Consulta.Any(p => p.IDEmpresa.Equals(departamento.IDEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)))
+            if (!EmpresaBusiness.Consulta.Any(p => p.UniqueKey.Equals(departamento.UKEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)))
                 throw new Exception("Não foi possível localizar a empresa informada.");
 
-            if (Consulta.Any(u => u.Codigo.Equals(departamento.Codigo.Trim()) && u.IDEmpresa.Equals(departamento.IDEmpresa) && string.IsNullOrEmpty(u.UsuarioExclusao)))
+            if (Consulta.Any(u => u.Codigo.Equals(departamento.Codigo.Trim()) && u.UKEmpresa.Equals(departamento.UKEmpresa) && string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Não é possível inserir o departamento, pois já existe um departamento com este código para esta empresa.");
 
-            if (Consulta.Any(u => u.Sigla.ToUpper().Equals(departamento.Sigla.Trim().ToUpper()) && u.IDEmpresa.Equals(departamento.IDEmpresa) && string.IsNullOrEmpty(u.UsuarioExclusao)))
+            if (Consulta.Any(u => u.Sigla.ToUpper().Equals(departamento.Sigla.Trim().ToUpper()) && u.UKEmpresa.Equals(departamento.UKEmpresa) && string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Não é possível inserir o departamento, pois já existe um departamento com esta sigla para esta empresa.");
 
-            departamento.IDDepartamento = Guid.NewGuid().ToString();
+            departamento.UniqueKey = Guid.NewGuid().ToString();
 
             base.Inserir(departamento);
 
@@ -39,7 +39,7 @@ namespace GISCore.Business.Concrete
         public override void Alterar(Departamento departamento)
         {
 
-            Departamento tempDepartamento = Consulta.FirstOrDefault(p => p.IDDepartamento.Equals(departamento.IDDepartamento));
+            Departamento tempDepartamento = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(departamento.UniqueKey));
             if (tempDepartamento == null)
             {
                 throw new Exception("Não foi possível encontrar o departamento através do ID.");
@@ -50,7 +50,7 @@ namespace GISCore.Business.Concrete
                 tempDepartamento.UsuarioExclusao = departamento.UsuarioExclusao;
                 base.Alterar(tempDepartamento);
 
-                departamento.IDDepartamento = Guid.NewGuid().ToString();
+                departamento.UniqueKey = tempDepartamento.UniqueKey;
                 departamento.UsuarioExclusao = string.Empty;
                 base.Inserir(departamento);
             }

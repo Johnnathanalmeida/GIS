@@ -14,7 +14,7 @@ namespace GISCore.Business.Concrete
         public override void Inserir(Empregado empregado)
         {
 
-            empregado.IDEmpregado = Guid.NewGuid().ToString();
+            empregado.UniqueKey = Guid.NewGuid().ToString();
 
             base.Inserir(empregado);
 
@@ -22,7 +22,7 @@ namespace GISCore.Business.Concrete
 
         public override void Alterar(Empregado empregado)
         {
-            Empregado tempEmpregado = Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(empregado.IDEmpregado));
+            Empregado tempEmpregado = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(empregado.UniqueKey));
             if (tempEmpregado == null)
             {
                 throw new Exception("Não foi possível encontrar o empregado através do ID.");
@@ -33,7 +33,7 @@ namespace GISCore.Business.Concrete
                 tempEmpregado.UsuarioExclusao = empregado.UsuarioExclusao;
                 base.Alterar(tempEmpregado);
 
-                empregado.IDEmpregado = tempEmpregado.IDEmpregado;
+                empregado.UniqueKey = tempEmpregado.UniqueKey;
                 empregado.UsuarioExclusao = string.Empty;
                 base.Inserir(empregado);
             }

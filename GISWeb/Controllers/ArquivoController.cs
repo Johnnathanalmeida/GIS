@@ -1,6 +1,7 @@
 ﻿using GISWeb.Infraestrutura.Filters;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -45,8 +46,8 @@ namespace GISWeb.Controllers
                     fName = oFile.FileName;
                     if (oFile != null)
                     {
-                        
-                        string sLocalFile = Path.Combine(Path.GetTempPath(), "GIS");
+
+                        string sLocalFile = Path.Combine(Path.GetTempPath(), ConfigurationManager.AppSettings["Web:NomeModulo"]);
                         sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
                         //Após a autenticação está totalmente concluída, mudar para incluir uma pasta com o Login do usuário
                         sLocalFile = Path.Combine(sLocalFile, "LoginTeste");

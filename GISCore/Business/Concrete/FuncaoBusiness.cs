@@ -12,7 +12,7 @@ namespace GISCore.Business.Concrete
     {
         public override void Inserir(Funcao funcao)
         {
-            funcao.IDFuncao = Guid.NewGuid().ToString();
+            funcao.UniqueKey = Guid.NewGuid().ToString();
             base.Inserir(funcao);
         }
     }

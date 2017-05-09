@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 namespace GISModel.Entidades
 {
 
-    [Table("tbEstabelecimento")]
+    [Table("OBJEstabelecimento")]
     public class Estabelecimento : EntidadeBase
     {
-
-        public string IDEstabelecimento { get; set; }
 
         [Required(ErrorMessage = "Informe o nome do estabelecimento.")]
         public string Nome { get; set; }
@@ -23,14 +21,6 @@ namespace GISModel.Entidades
 
         [Display(Name = "Endereço")]
         public string Endereco { get; set; }
-
-
-
-
-        [Display(Name = "Imagem")]
-        public string IDArquivo { get; set; }
-
-        public virtual Arquivo Arquivo { get; set; }
 
     }
 }

@@ -3,17 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GISModel.Entidades
 {
-    [Table("tbAProprio")]
+    [Table("OBJProprio")]
     public class Proprio : EntidadeBase
     {
 
-        public string IDEmpregado { get; set; }
+        public string UKAdmissao { get; set; }
 
-        public string IDAdmissao { get; set; }
+        public string UKEmpresa { get; set; }
 
-        public string IDEmpresa { get; set; }
-
-        public string IDDepartamento { get; set; }       
+        public string UKDepartamento { get; set; }       
         
     }
 }

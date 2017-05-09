@@ -1,5 +1,5 @@
 ﻿@model GISModel.Entidades.Menu
-
+           
 @{
     ViewBag.Title = "Edição de Menu";
 }
@@ -53,7 +53,7 @@
                         <div class="col-xs-12 col-sm-12">
                             @Html.EditorFor(d => d.Nome, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
                             @Html.ValidationMessageFor(d => d.Nome, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
-                            @Html.HiddenFor(d => d.IDMenu)
+                            @Html.HiddenFor(d => d.UniqueKey)
                         </div>
                     </div>
                 </div>
@@ -96,9 +96,16 @@
                 </div>
                 <div class="col-xs-12 col-sm-4">
                     <div class="form-group">
-                        @Html.LabelFor(d => d.IDMenuSuperior, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                        @Html.LabelFor(d => d.UKMenuSuperior, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                         <div class="col-xs-12 col-sm-12">
-                            @Html.DropDownListFor(d => d.IDMenuSuperior, (SelectList)ViewBag.Menus, "Selecione um menu superior...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlMenuSuperior", @autocomplete = "on" })   
+                            @if (!string.IsNullOrEmpty(Model.UKMenuSuperior))
+                            {
+                                @Html.DropDownListFor(d => d.UKMenuSuperior, new SelectList(ViewBag.Menus, "UniqueKey", "Nome", Model.UKMenuSuperior), "Selecione um menu superior...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlMenuSuperior", @autocomplete = "on" })   
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(d => d.UKMenuSuperior, new SelectList(ViewBag.Menus, "UniqueKey", "Nome"), "Selecione um menu superior...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlMenuSuperior", @autocomplete = "on" })       
+                            }
                         </div>
                     </div>
                 </div>

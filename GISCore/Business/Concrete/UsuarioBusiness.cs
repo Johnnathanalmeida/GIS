@@ -76,10 +76,10 @@ namespace GISCore.Business.Concrete
                 }
                 else { 
                     //Login, validando a senha interna do GIS
-                    string IDUsuario = lUsuarios[0].IDUsuario;
+                    string IDUsuario = lUsuarios[0].UniqueKey;
 
                     string senhaTemp = CreateHashFromPassword(autenticacaoModel.Senha);
-                    Usuario oUsuario = Consulta.FirstOrDefault(p => p.IDUsuario.Equals(IDUsuario) && p.Senha.Equals(senhaTemp));
+                    Usuario oUsuario = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(IDUsuario) && p.Senha.Equals(senhaTemp));
 
                     if (oUsuario != null)
                     {
@@ -87,24 +87,25 @@ namespace GISCore.Business.Concrete
                         oUPMViewModel.Usuario = oUsuario;
 
                         var lPerfis = from usuarioperfil in UsuarioPerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                                      join perfil in PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usuarioperfil.IDPerfil equals perfil.IDPerfil
-                                      where usuarioperfil.IDUsuario.Equals(oUsuario.IDUsuario)
-                                      select new Perfil { Nome = perfil.Nome, IDPerfil = perfil.IDPerfil };
+                                      join perfil in PerfilBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on usuarioperfil.UKPerfil equals perfil.UniqueKey
+                                      where usuarioperfil.UKUsuario.Equals(oUsuario.UniqueKey)
+                                      select new Perfil { Nome = perfil.Nome, UniqueKey = perfil.UniqueKey };
 
                         oUPMViewModel.Perfis = lPerfis.ToList();
 
                         List<Menu> lMenus = new List<Menu>();
 
                         foreach (Perfil iPerfil in lPerfis.ToList()) {
-                            var listaMenus = from perfilmenu in PerfilMenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDPerfil.Equals(iPerfil.IDPerfil)).ToList()
-                                             join menu in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on perfilmenu.IDMenu equals menu.IDMenu
-                                             select new Menu { Nome = menu.Nome, 
-                                                               IDMenu = menu.IDMenu, 
+                            var listaMenus = from perfilmenu in PerfilMenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKPerfil.Equals(iPerfil.UniqueKey)).ToList()
+                                             join menu in MenuBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on perfilmenu.UKMenu equals menu.UniqueKey
+                                             select new Menu { Nome = menu.Nome,
+                                                               UniqueKey = menu.UniqueKey, 
                                                                Ordem = menu.Ordem, 
                                                                Controller = menu.Controller, 
                                                                Action = menu.Action, 
                                                                Icone = menu.Icone,
-                                                               MenuSuperior = string.IsNullOrEmpty(menu.IDMenuSuperior) ? null : new Menu { IDMenu = menu.IDMenuSuperior, Nome = MenuBusiness.Consulta.FirstOrDefault(i => i.IDMenu.Equals(menu.IDMenuSuperior)).Nome } };
+                                                               MenuSuperior = string.IsNullOrEmpty(menu.UKMenuSuperior) ? null : new Menu { UniqueKey = menu.UKMenuSuperior, Nome = MenuBusiness.Consulta.FirstOrDefault(i => i.UniqueKey.Equals(menu.UKMenuSuperior)).Nome }
+                                             };
 
                             lMenus.AddRange(listaMenus.ToList());
                         }
@@ -129,7 +130,7 @@ namespace GISCore.Business.Concrete
             
             idUsuario = idUsuario.Trim();
 
-            List<Usuario> lUsuarios = Consulta.Where(u => u.IDUsuario.Equals(idUsuario)).ToList();
+            List<Usuario> lUsuarios = Consulta.Where(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.UniqueKey.Equals(idUsuario)).ToList();
             if (lUsuarios.Count > 1 || lUsuarios.Count < 1)
             {
                 return null;
@@ -161,7 +162,7 @@ namespace GISCore.Business.Concrete
             if (Consulta.Any(u => u.Email.Equals(usuario.Email) && string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Este e-mail já está sendo usado por outro usuário.");
 
-            usuario.IDUsuario = Guid.NewGuid().ToString();
+            usuario.UniqueKey = Guid.NewGuid().ToString();
 
             base.Inserir(usuario);
 
@@ -178,7 +179,7 @@ namespace GISCore.Business.Concrete
         public override void Alterar(Usuario entidade)
         {
 
-            Usuario tempUsuario = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(entidade.IDUsuario));
+            Usuario tempUsuario = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(entidade.UniqueKey));
             if (tempUsuario == null)
             {
                 throw new Exception("Não foi possível encontrar o usuário através do ID.");
@@ -192,7 +193,7 @@ namespace GISCore.Business.Concrete
                 tempUsuario.UsuarioExclusao = entidade.UsuarioExclusao;
                 base.Alterar(tempUsuario);
 
-                entidade.IDUsuario = tempUsuario.IDUsuario;
+                entidade.UniqueKey = tempUsuario.UniqueKey;
                 entidade.UsuarioExclusao = string.Empty;
                 base.Inserir(entidade);
 
@@ -201,7 +202,7 @@ namespace GISCore.Business.Concrete
         }
 
         public void DefinirSenha(NovaSenhaViewModel novaSenhaViewModel) {
-            Usuario oUsuario = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDUsuario.Equals(novaSenhaViewModel.IDUsuario));
+            Usuario oUsuario = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(novaSenhaViewModel.IDUsuario));
             if (oUsuario == null)
             {
                 throw new Exception("Não foi possível localizar o usuário através da identificação. Solicite um novo acesso.");
@@ -246,7 +247,7 @@ namespace GISCore.Business.Concrete
                 mail.Body += "<span style=\"color: #222;\">Redefina sua senha para começar novamente.";
                 mail.Body += "<br /><br />";
 
-                string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.IDUsuario + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
+                string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.UniqueKey + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
 
                 mail.Body += "Para alterar sua senha do GiS, clique <a href=\"" + sLink + "\">aqui</a> ou cole o seguinte link no seu navegador.";
                 mail.Body += "<br /><br />";
@@ -356,7 +357,7 @@ namespace GISCore.Business.Concrete
                     NomeUsuarioInclusao = uInclusao.Nome;
 
 
-                string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.IDUsuario + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
+                string sLink = "http://localhost:26717/Conta/DefinirNovaSenha/" + WebUtility.UrlEncode(GISHelpers.Utils.Criptografador.Criptografar(usuario.UniqueKey + "#" + DateTime.Now.ToString("yyyyMMdd"), 1)).Replace("%", "_@");
 
                 mail.Body += "Você foi cadastrado no sistema GiS - Gestão Inteligente da Segurança pelo " + GISHelpers.Utils.Severino.PrimeiraMaiusculaTodasPalavras(NomeUsuarioInclusao) + ".";
                 mail.Body += "<br /><br />";

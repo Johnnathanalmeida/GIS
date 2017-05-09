@@ -13,9 +13,9 @@ namespace GISCore.Business.Concrete
 
         public override void Inserir(UsuarioPerfil UsuarioPerfil)
         {
-            if (!Consulta.Any(u => u.IDUsuario.Equals(UsuarioPerfil.IDUsuario) && u.IDPerfil.Equals(UsuarioPerfil.IDPerfil) && u.IDArea.Equals(UsuarioPerfil.IDArea) && string.IsNullOrEmpty(u.UsuarioExclusao)))
+            if (!Consulta.Any(u => u.UKUsuario.Equals(UsuarioPerfil.UKUsuario) && u.UKPerfil.Equals(UsuarioPerfil.UKPerfil) && u.UKArea.Equals(UsuarioPerfil.UKArea) && string.IsNullOrEmpty(u.UsuarioExclusao)))
             {
-                UsuarioPerfil.IDUsuarioPerfil = Guid.NewGuid().ToString();
+                UsuarioPerfil.UniqueKey = Guid.NewGuid().ToString();
 
                 base.Inserir(UsuarioPerfil);
             }
@@ -23,7 +23,7 @@ namespace GISCore.Business.Concrete
 
         public override void Alterar(UsuarioPerfil entidade)
         {
-            List<UsuarioPerfil> lUsuarioPerfil = Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDPerfil.Equals(entidade.IDPerfil) && p.IDUsuario.Equals(entidade.IDUsuario)).ToList();
+            List<UsuarioPerfil> lUsuarioPerfil = Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKPerfil.Equals(entidade.UKPerfil) && p.UKUsuario.Equals(entidade.UKUsuario)).ToList();
             if (lUsuarioPerfil.Count.Equals(1))
             {
                 UsuarioPerfil oUsuarioPerfil = lUsuarioPerfil[0];

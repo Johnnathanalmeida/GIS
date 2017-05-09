@@ -19,9 +19,13 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<Estabelecimento> Estabelecimento { get; set; }
 
+        public DbSet<EstabelecimentoContrato> EstabelecimentoContrato { get; set; }
+
         public DbSet<Admissao> Admissao { get; set; }
 
         public DbSet<Empresa> Empresa { get; set; }
+
+        public DbSet<EmpresaArquivo> EmpresaArquivo { get; set; }
 
         public DbSet<Departamento> Departamento { get; set; }
 
@@ -39,6 +43,14 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<Contrato> Contrato { get; set; }
 
+        public DbSet<ContratoGarantia> ContratoGarantia { get; set; }
+
+        public DbSet<ContratoArquivo> ContratoArquivo { get; set; }
+
+        public DbSet<Garantia> Garantia { get; set; }
+
+        public DbSet<DepartamentoContrato> DepartamentoContrato { get; set; }
+
         public DbSet<Empregado> Empregado { get; set; }
 
         public DbSet<EmpresaFornecedor> EmpresaFornecedor { get; set; }
@@ -48,10 +60,6 @@ namespace GISCore.Repository.Configuration
         public DbSet<Cargo> Cargo { get; set; }
 
         public DbSet<Funcao> Funcao { get; set; }
-
-        public DbSet<Garantia> Garantia { get; set; }
-
-        public DbSet<DepartamentoContrato> DepartamentoContrato { get; set; }
 
     }
 }

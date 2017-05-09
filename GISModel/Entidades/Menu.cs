@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("tbMenu")]
+    [Table("OBJMenu")]
     public class Menu : EntidadeBase
     {
-
-        public string IDMenu { get; set; }
 
         [Required(ErrorMessage = "Informe o nome do menu")]
         public string Nome { get; set; }
@@ -30,7 +28,7 @@ namespace GISModel.Entidades
         public string Icone { get; set; }
 
         [Display(Name = "Menu Superior")]
-        public string IDMenuSuperior { get; set; }
+        public string UKMenuSuperior { get; set; }
 
         public virtual Menu MenuSuperior { get; set; }
 

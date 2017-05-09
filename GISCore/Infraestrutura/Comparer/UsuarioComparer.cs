@@ -16,12 +16,12 @@ namespace GISCore.Infraestrutura.Comparer
                 return true;
             if (x1 == null || x2 == null)
                 return false;
-            return x1.IDUsuario.Equals(x2.IDUsuario);
+            return x1.UniqueKey.Equals(x2.UniqueKey);
         }
 
         public int GetHashCode(Usuario x)
         {
-            return x.IDUsuario.GetHashCode();
+            return x.UniqueKey.GetHashCode();
         }
 
     }

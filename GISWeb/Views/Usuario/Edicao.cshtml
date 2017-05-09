@@ -1,4 +1,5 @@
 ﻿@model GISModel.Entidades.Usuario
+
            
 @{
     ViewBag.Title = "Edição de Usuário";
@@ -53,7 +54,7 @@
                         <div class="col-xs-12 col-sm-12">
                             @Html.EditorFor(d => d.CPF, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtCPF", @readonly = "readyonly" } })
                             @Html.ValidationMessageFor(d => d.CPF, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
-                            @Html.HiddenFor(d => d.IDUsuario)
+                            @Html.HiddenFor(d => d.UniqueKey)
                         </div>
                     </div>
                 </div>
@@ -91,18 +92,18 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
-                        @Html.LabelFor(d => d.IDEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                        @Html.LabelFor(d => d.UKEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                         <div class="col-xs-12 col-sm-12">
-                            @Html.DropDownListFor(d => d.IDEmpresa, (SelectList)ViewBag.Empresas, new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on", @readyonly = "readyonly" })
-                            @Html.ValidationMessageFor(d => d.IDEmpresa, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                            @Html.DropDownListFor(d => d.UKEmpresa, (SelectList)ViewBag.Empresas, new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on", @readyonly = "readyonly" })
+                            @Html.ValidationMessageFor(d => d.UKEmpresa, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
-                        @Html.LabelFor(d => d.IDDepartamento, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                        @Html.LabelFor(d => d.UKDepartamento, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                         <div class="col-xs-12 col-sm-12">
-                            @Html.DropDownListFor(d => d.IDDepartamento, (SelectList)ViewBag.Departamentos, "Selecione um Departamento...", new { @class = "chosen-select form-control tag-input-style", @autocomplete = "on", @id = "ddlDepartamento" })
+                            @Html.DropDownListFor(d => d.UKDepartamento, (SelectList)ViewBag.Departamentos, "Selecione um Departamento...", new { @class = "chosen-select form-control tag-input-style", @autocomplete = "on", @id = "ddlDepartamento" })
                         </div>
                     </div>
                 </div>

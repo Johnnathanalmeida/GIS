@@ -23,7 +23,7 @@
             Html.RenderPartial("_MensagensDeRetorno");
         }
 
-        @if (ViewBag.Empregados != null)
+        @if (ViewBag.Empregados != null && ViewBag.Empregados.Count > 0)
         {
             <div>
                 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
@@ -44,14 +44,14 @@
 
                         @foreach (Empregado iEmpregado in ViewBag.Empregados)
                         {
-                            <tr id="linha-@iEmpregado.IDEmpregado">
+                            <tr id="linha-@iEmpregado.UniqueKey">
                                 <td>
-                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green" style="text-decoration:none;">
+                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.UniqueKey })' class="green" style="text-decoration:none;">
                                         <i class="ace-icon fa fa-user bigger-120"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
+                                    <a href='@Url.Action("Detalhes", "Empregado", new { id = @iEmpregado.UniqueKey })' class="green">
                                         @iEmpregado.Nome                                        
                                     </a>
                                 </td>
@@ -62,11 +62,11 @@
                                 <td>@iEmpregado.TipoEmpregado</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
-                                        <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="green">
+                                        <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.UniqueKey })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
 
-                                        <a class="red" href="#" onclick="DeletarEmpregado('@iEmpregado.IDEmpregado', '@iEmpregado.Nome');">
+                                        <a class="red" href="#" onclick="DeletarEmpregado('@iEmpregado.UniqueKey', '@iEmpregado.Nome');">
                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                         </a>
                                     </div>
@@ -79,7 +79,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.IDEmpregado })' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <a href='@Url.Action("Edicao", "Empregado", new { id = @iEmpregado.UniqueKey })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">
                                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                         </span>
@@ -87,7 +87,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#" class="tooltip-error" onclick="DeletarEmpregado('@iEmpregado.IDEmpregado', '@iEmpregado.Nome');" data-rel="tooltip" title="Delete">
+                                                    <a href="#" class="tooltip-error" onclick="DeletarEmpregado('@iEmpregado.UniqueKey', '@iEmpregado.Nome');" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                         </span>
@@ -103,6 +103,18 @@
 
                     </tbody>
                 </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>
+                    <i class="ace-icon fa fa-meh-o"></i>
+                    Oops!
+                </strong>
+
+                No momento, não foi encontrado nenhum empregado.
+                <br>
             </div>
         }
 

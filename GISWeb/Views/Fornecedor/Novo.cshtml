@@ -66,14 +66,14 @@
                 </div>
             </div>
             @if (ViewBag.Perfil != null && "SuperAdministrador".Equals(ViewBag.Perfil)) { 
-                <div class="col-xs-12 col-sm-@sCol">
+                @*<div class="col-xs-12 col-sm-@sCol">
                     <div class="form-group">
-                        @Html.LabelFor(d => d.IDEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                        @Html.LabelFor(d => d.UKEmpresa, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                         <div class="col-xs-12 col-sm-12">
-                            @Html.DropDownListFor(d => d.IDEmpresa, new SelectList(ViewBag.Empresas, "IDEmpresa", "NomeFantasia"), "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
+                            @Html.DropDownListFor(d => d.UKEmpresa, new SelectList(ViewBag.Empresas, "IDEmpresa", "NomeFantasia"), "Selecione uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @id = "ddlEmpresa", @autocomplete = "on" })
                         </div>
                     </div>
-                </div>
+                </div>*@
             }
         </div>
 

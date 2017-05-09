@@ -343,6 +343,7 @@
     <Content Include="Views\Garantia\_Nova.cshtml" />
     <Content Include="Views\Estabelecimento\_Novo.cshtml" />
     <Content Include="Views\CargoFuncAtiv\Index.cshtml" />
+    <Content Include="Views\Estabelecimento\_Upload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -354,7 +355,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Custom\" />
     <Folder Include="Images\Empresas\" />
-    <Folder Include="Models\" />
     <Folder Include="Scripts\Custom\Obra\" />
     <Folder Include="Scripts\Custom\Painel\" />
     <Folder Include="Scripts\Custom\Proposito\" />

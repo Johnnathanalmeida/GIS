@@ -42,7 +42,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(IDEmpresa));
+                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDEmpresa));
                 if (oEmpresa == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Alerta = "Empresa com o ID '" + IDEmpresa + "' não encontrada." } });
@@ -74,7 +74,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Empresa")]
         public ActionResult Edicao(string id)
         {
-            return View(EmpresaBusiness.Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(id)));
+            return View(EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
         [HttpPost]
@@ -147,7 +147,7 @@ namespace GISWeb.Controllers
         {
 
             try {
-                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpresa.Equals(IDEmpresa));
+                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDEmpresa));
                 if (oEmpresa == null) {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir a empresa, pois a mesma não foi localizada." } });
                 }
@@ -180,7 +180,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpresa.Equals(IDEmpresa));
+                Empresa oEmpresa = EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDEmpresa));
                 if (oEmpresa == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir a empresa, pois a mesma não foi localizada." } });

@@ -11,11 +11,9 @@ using GISModel.Enums;
 namespace GISModel.Entidades
 {
 
-    [Table("tbEmpregado")]
+    [Table("OBJEmpregado")]
     public class Empregado : EntidadeBase
     {
-
-        public string IDEmpregado { get; set; }
 
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "CPF obrigatório")]

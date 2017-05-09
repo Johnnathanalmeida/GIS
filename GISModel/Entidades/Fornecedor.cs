@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("tbFornecedor")]
+    [Table("OBJFornecedor")]
     public class Fornecedor : EntidadeBase
     {
-
-        public string IDFornecedor { get; set; }
 
         [Display(Name = "Número")]
         public string Numero { get; set; }

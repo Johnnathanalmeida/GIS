@@ -42,7 +42,7 @@
 
                         @foreach (Menu iMenu in ViewBag.Menus)
                         {
-                            <tr id="linha-@iMenu.IDMenu">
+                            <tr id="linha-@iMenu.UniqueKey">
                                 <td>
                                     @if (iMenu.MenuSuperior != null) { 
                                         @iMenu.MenuSuperior.Nome
@@ -58,15 +58,15 @@
                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                         </a>*@
 
-                                        <a href='#' class="blue" onclick="BuscarPerfis('@iMenu.IDMenu', '@iMenu.Nome');">
+                                        <a href='#' class="blue" onclick="BuscarPerfis('@iMenu.UniqueKey', '@iMenu.Nome');">
                                             <i class="ace-icon fa fa-users bigger-130"></i>
                                         </a>
 
-                                        <a href='@Url.Action("Edicao", "Menu", new { id = @iMenu.IDMenu })' class="green">
+                                        <a href='@Url.Action("Edicao", "Menu", new { id = @iMenu.UniqueKey })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
 
-                                        <a class="red" href="#" onclick="DeletarMenu('@iMenu.IDMenu', '@iMenu.Nome');">
+                                        <a class="red" href="#" onclick="DeletarMenu('@iMenu.UniqueKey', '@iMenu.Nome');">
                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                         </a>
                                     </div>
@@ -87,7 +87,7 @@
                                                 </li>*@
 
                                                 <li>
-                                                    <a href='@Url.Action("Edicao", "Menu", new { id = @iMenu.IDMenu })' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <a href='@Url.Action("Edicao", "Menu", new { id = @iMenu.UniqueKey })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">
                                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                         </span>
@@ -95,7 +95,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#" class="tooltip-error" onclick="DeletarMenu('@iMenu.IDMenu', '@iMenu.Nome');" data-rel="tooltip" title="Delete">
+                                                    <a href="#" class="tooltip-error" onclick="DeletarMenu('@iMenu.UniqueKey', '@iMenu.Nome');" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                         </span>

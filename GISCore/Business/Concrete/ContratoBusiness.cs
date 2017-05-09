@@ -27,37 +27,36 @@ namespace GISCore.Business.Concrete
             if (Consulta.Any(u => u.Numero.Equals(contrato.Numero) && !string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Não é possível cadastrar o contrato, pois já existe um contrato ativo com este número.");
 
-            if (string.IsNullOrEmpty(contrato.IDContrato))
-                contrato.IDContrato = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(contrato.UniqueKey))
+                contrato.UniqueKey = Guid.NewGuid().ToString();
 
-            string sLocalFile = Path.Combine(Path.GetTempPath(), "GIS");
-            sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
-            sLocalFile = Path.Combine(sLocalFile, "Contrato");
-            sLocalFile = Path.Combine(sLocalFile, contrato.UsuarioInclusao);
-            sLocalFile = Path.Combine(sLocalFile, contrato.Arquivo.NomeLocal);
+            //string sLocalFile = Path.Combine(Path.GetTempPath(), "GIS");
+            //sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
+            //sLocalFile = Path.Combine(sLocalFile, "Contrato");
+            //sLocalFile = Path.Combine(sLocalFile, contrato.UsuarioInclusao);
+            //sLocalFile = Path.Combine(sLocalFile, contrato.Arquivo.NomeLocal);
 
-            Usuario oUser = UsuarioBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.Login.Equals(contrato.UsuarioInclusao));
-            if (oUser == null)
-            {
-                throw new Exception("Não foi possível cadastrar o contrato, pois o usuário de inclusão não foi encontrado na base de dados.");
-            }
-            else
-            {
-                Empresa oEmp = EmpresaBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.IDEmpresa.Equals(oUser.IDEmpresa));
-                if (oEmp == null) {
-                    throw new Exception("Não foi possível cadastrar o contrato, pois a empresa do usuário de inclusão não foi encontrada na base de dados.");
-                }
-                else
-                {
-                    string sDiretorio = ConfigurationManager.AppSettings["DiretorioRaiz"] + "\\Images\\Empresas\\" + oEmp.CNPJ.Replace("/", "").Replace(".", "").Replace("-", "");
-                    if (!Directory.Exists(sDiretorio))
-                        Directory.CreateDirectory(sDiretorio);
+            //Usuario oUser = UsuarioBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.Login.Equals(contrato.UsuarioInclusao));
+            //if (oUser == null)
+            //{
+            //    throw new Exception("Não foi possível cadastrar o contrato, pois o usuário de inclusão não foi encontrado na base de dados.");
+            //}
+            //else
+            //{
+            //    Empresa oEmp = EmpresaBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.IDEmpresa.Equals(oUser.IDEmpresa));
+            //    if (oEmp == null) {
+            //        throw new Exception("Não foi possível cadastrar o contrato, pois a empresa do usuário de inclusão não foi encontrada na base de dados.");
+            //    }
+            //    else
+            //    {
+            //        string sDiretorio = ConfigurationManager.AppSettings["DiretorioRaiz"] + "\\Images\\Empresas\\" + oEmp.CNPJ.Replace("/", "").Replace(".", "").Replace("-", "");
+            //        if (!Directory.Exists(sDiretorio))
+            //            Directory.CreateDirectory(sDiretorio);
 
-                    if (File.Exists(sLocalFile))
-                        File.Move(sLocalFile, sDiretorio + "\\" + contrato.Arquivo.NomeRemoto);
-                }
-            }
-
+            //        if (File.Exists(sLocalFile))
+            //            File.Move(sLocalFile, sDiretorio + "\\" + contrato.Arquivo.NomeRemoto);
+            //    }
+            //}
 
             base.Inserir(contrato);
 
@@ -69,10 +68,10 @@ namespace GISCore.Business.Concrete
         public override void Alterar(Contrato contrato)
         {
 
-            Contrato tempContrato = Consulta.FirstOrDefault(p => p.IDContrato.Equals(contrato.IDContrato));
+            Contrato tempContrato = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(contrato.UniqueKey));
             if (tempContrato == null)
             {
-                throw new Exception("Não foi possível encontra o contrato através do ID.");
+                throw new Exception("Não foi possível encontra o contrato através da identificação única.");
             }
             else
             {

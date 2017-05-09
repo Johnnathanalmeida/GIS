@@ -4,24 +4,23 @@ using System;
 
 namespace GISModel.Entidades
 {
-    [Table("tbAdmissao")]
+    [Table("OBJAdmissao")]
     public class Admissao : EntidadeBase
     {
 
-        public string IDAdmissao { get; set; }
+        
+        public string UKEmpregado { get; set; }
 
-        public string IDEmpregado { get; set; }
-
-        public string IDUsuarioDemissao { get; set; }
+        public string UKUsuarioDemissao { get; set; }
 
         [Display(Name = "Fornecedor")]
-        public string IDFornecedor { get; set; }
+        public string UKFornecedor { get; set; }
 
         [Display(Name = "Empresa")]
-        public string IDEmpresa { get; set; }
+        public string UKEmpresa { get; set; }
 
         [Display(Name = "Departamento")]
-        public string IDDepartamento { get; set; }
+        public string UKDepartamento { get; set; }
 
         [Display(Name = "Data de Admissão")]
         [Required(ErrorMessage = "Informe a data de admissão")]

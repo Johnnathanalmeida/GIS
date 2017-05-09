@@ -36,21 +36,21 @@ namespace GISWeb.Controllers
         public ActionResult Index()
         {
             //ViewBag.Departamentos = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
-            ViewBag.Departamentos = from dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                                    join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on dep.IDEmpresa equals emp.IDEmpresa
-                                    select new Departamento { IDDepartamento = dep.IDDepartamento, Codigo = dep.Codigo, Sigla = dep.Sigla, Descricao = dep.Descricao, Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia } };
+            ViewBag.Departamentos = (from dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                                    join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on dep.UKEmpresa equals emp.UniqueKey
+                                    select new Departamento { UniqueKey = dep.UniqueKey, Codigo = dep.Codigo, Sigla = dep.Sigla, Descricao = dep.Descricao, Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia } }).ToList();
             return View();
         }
 
         [MenuAtivo(MenuAtivo = "Administracao/Departamento")]
         public ActionResult Novo()
         {
-            ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
+            ViewBag.Empresas = EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             return View();
         }
 
         public ActionResult ListarDepartamentosPorEmpresa(string idEmpresa) {
-            return Json(new { resultado = DepartamentoBusiness.Consulta.Where(p => p.IDEmpresa.Equals(idEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)).ToList().OrderBy(p=>p.Sigla) });
+            return Json(new { resultado = DepartamentoBusiness.Consulta.Where(p => p.UKEmpresa.Equals(idEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)).ToList().OrderBy(p=>p.Sigla) });
         }
 
         [HttpPost]
@@ -62,7 +62,7 @@ namespace GISWeb.Controllers
                 try
                 {
                     bool bRedirect = false;
-                    if (Departamento.IDDepartamento != null && Departamento.IDDepartamento.Equals("redirect"))
+                    if (Departamento.UniqueKey != null && Departamento.UniqueKey.Equals("redirect"))
                         bRedirect = true;
 
                     Departamento.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
@@ -102,7 +102,7 @@ namespace GISWeb.Controllers
         {
             ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
 
-            return View(DepartamentoBusiness.Consulta.FirstOrDefault(p => p.IDDepartamento.Equals(id)));
+            return View(DepartamentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
         [HttpPost]

@@ -20,14 +20,14 @@ namespace GISCore.Business.Concrete
             if (Consulta.Any(u => u.Nome.Equals(Perfil.Nome)))
                 throw new InvalidOperationException("Não é possível inserir o perfil, pois já existe um perfil cadastro com este nome.");
 
-            Perfil.IDPerfil = Guid.NewGuid().ToString();
+            Perfil.UniqueKey = Guid.NewGuid().ToString();
 
             base.Inserir(Perfil);
         }
 
         public override void Alterar(Perfil entidade)
         {
-            Perfil tempPerfil = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDPerfil.Equals(entidade.IDPerfil));
+            Perfil tempPerfil = Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(entidade.UniqueKey));
             if (tempPerfil == null)
             {
                 throw new Exception("Não foi possível encontra o perfil através do ID.");
@@ -38,7 +38,7 @@ namespace GISCore.Business.Concrete
                 tempPerfil.UsuarioExclusao = entidade.UsuarioExclusao;
                 base.Alterar(tempPerfil);
 
-                entidade.IDPerfil = tempPerfil.IDPerfil;
+                entidade.UniqueKey = tempPerfil.UniqueKey;
                 entidade.UsuarioExclusao = string.Empty;
                 base.Inserir(entidade);
             }

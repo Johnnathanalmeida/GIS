@@ -87,6 +87,10 @@
     <Compile Include="DTO\Usuario\UsuarioPerfisMenusViewModel.cs" />
     <Compile Include="Entidades\Arquivo.cs" />
     <Compile Include="Entidades\Cargo.cs" />
+    <Compile Include="Entidades\Categoria.cs" />
+    <Compile Include="Entidades\ContratoArquivo.cs" />
+    <Compile Include="Entidades\ContratoGarantia.cs" />
+    <Compile Include="Entidades\EmpresaArquivo.cs" />
     <Compile Include="Entidades\Estabelecimento.cs" />
     <Compile Include="Entidades\EstabelecimentoContrato.cs" />
     <Compile Include="Entidades\Funcao.cs" />
@@ -106,9 +110,11 @@
     <Compile Include="Entidades\Menu.cs" />
     <Compile Include="Entidades\Perfil.cs" />
     <Compile Include="Entidades\PerfilMenu.cs" />
+    <Compile Include="Entidades\Tipo.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\UsuarioPerfil.cs" />
     <Compile Include="Enums\Intervalo.cs" />
+    <Compile Include="Enums\StatusArquivo.cs" />
     <Compile Include="Enums\TipoEmpregado.cs" />
     <Compile Include="Enums\Situacao.cs" />
     <Compile Include="Enums\Sexo.cs" />

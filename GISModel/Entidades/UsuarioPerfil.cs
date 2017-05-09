@@ -9,16 +9,12 @@ using System.Threading.Tasks;
 namespace GISModel.Entidades
 {
 
-    [Table("tbUsuarioPerfil")]
+    [Table("RELUsuarioPerfil")]
     public class UsuarioPerfil : EntidadeBase
     {
-        public string IDUsuarioPerfil { get; set; }
-
-
-
-
+       
         [Required(ErrorMessage = "Selecione um usuário")]
-        public string IDUsuario { get; set; }
+        public string UKUsuario { get; set; }
 
         public virtual Usuario Usuario { get; set; }
 
@@ -26,14 +22,14 @@ namespace GISModel.Entidades
 
 
         [Required(ErrorMessage = "Selecione um perfil")]
-        public string IDPerfil { get; set; }
+        public string UKPerfil { get; set; }
 
         public virtual Perfil Perfil { get; set; }
 
 
 
 
-        public string IDArea { get; set; }
+        public string UKArea { get; set; }
 
     }
 }

@@ -5,12 +5,10 @@ using System.Collections.Generic;
 
 namespace GISModel.Entidades
 {
-    [Table("tbCargo")]
+    [Table("OBJCargo")]
     public class Cargo : EntidadeBase
     {
-       
-        public string IDCargo { get; set; }
-
+        
         [Display(Name = "Cargo")]
         public string Carg_Nome { get; set; }
 

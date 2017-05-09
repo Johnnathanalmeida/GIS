@@ -92,7 +92,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
         public ActionResult Edicao(string id)
         {
-            return View(FornecedorBusiness.Consulta.FirstOrDefault(p => p.IDFornecedor.Equals(id)));
+            return View(FornecedorBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
         [HttpPost]
@@ -133,7 +133,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Fornecedor oFornecedor = FornecedorBusiness.Consulta.FirstOrDefault(p => p.IDFornecedor.Equals(IDFornecedor));
+                Fornecedor oFornecedor = FornecedorBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDFornecedor));
                 if (oFornecedor == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Alerta = "Fornecedor com o ID '" + IDFornecedor + "' não encontrado." } });
@@ -193,7 +193,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Fornecedor oFornecedor = FornecedorBusiness.Consulta.FirstOrDefault(p => p.IDFornecedor.Equals(IDFornecedor));
+                Fornecedor oFornecedor = FornecedorBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDFornecedor));
                 if (oFornecedor == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir a empresa, pois a mesma não foi localizada." } });
@@ -202,7 +202,7 @@ namespace GISWeb.Controllers
                 {
 
                     oFornecedor.DataExclusao = DateTime.Now;
-                    oFornecedor.UsuarioExclusao = "LoginTeste";
+                    oFornecedor.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     FornecedorBusiness.Alterar(oFornecedor);
 
                     return Json(new { resultado = new RetornoJSON() { Sucesso = "O fornecedor '" + oFornecedor.Nome + "' foi excluído com sucesso." } });

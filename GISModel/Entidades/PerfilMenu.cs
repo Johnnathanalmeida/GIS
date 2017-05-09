@@ -9,19 +9,17 @@ using System.Threading.Tasks;
 namespace GISModel.Entidades
 {
 
-    [Table("tbPerfilMenu")]
+    [Table("RELPerfilMenu")]
     public class PerfilMenu : EntidadeBase
     {
-        
-        public string IDPerfilMenu { get; set; }
-
+       
         [Required(ErrorMessage = "Selecione um perfil")]
-        public string IDPerfil { get; set; }
+        public string UKPerfil { get; set; }
 
         public virtual Perfil Perfil { get; set; }
 
         [Required(ErrorMessage = "Selecione um menu")]
-        public string IDMenu { get; set; }
+        public string UKMenu { get; set; }
 
         public virtual Menu Menu { get; set; }
 

@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("tbContrato")]
+    [Table("OBJContrato")]
     public class Contrato : EntidadeBase
     {
-
-        public string IDContrato { get; set; }
 
         [Display(Name = "Número")]
         [Required(ErrorMessage = "Informe o número do contrato")]
@@ -34,7 +32,7 @@ namespace GISModel.Entidades
 
         [Display(Name = "Fornecedor")]
         [Required(ErrorMessage = "Selecione um fornecedor")]
-        public string IDFornecedor { get; set; }
+        public string UKFornecedor { get; set; }
 
         public virtual Fornecedor Fornecedor { get; set; }
 
@@ -43,12 +41,6 @@ namespace GISModel.Entidades
 
         public List<Garantia> Garantias { get; set; }
 
-
-
-
-        public string IDArquivo { get; set; }
-
-        public virtual Arquivo Arquivo { get; set; }
 
     }
 }

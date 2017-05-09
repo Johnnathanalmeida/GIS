@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("RELEmpresaFornecedor")]
-    public class EmpresaFornecedor : EntidadeBase
+    [Table("RELEmpresaArquivo")]
+    public class EmpresaArquivo : EntidadeBase
     {
 
         [Required(ErrorMessage = "Selecione uma empresa")]
@@ -17,10 +17,13 @@ namespace GISModel.Entidades
 
         public virtual Empresa Empresa { get; set; }
 
-        [Required(ErrorMessage = "Selecione um fornecedor")]
-        public string UKFornecedor { get; set; }
 
-        public virtual Fornecedor Fornecedor { get; set; }
+
+
+        [Required(ErrorMessage = "Selecione um Arquivo")]
+        public string UKArquivo { get; set; }
+
+        public virtual Arquivo Arquivo { get; set; }
 
     }
 }

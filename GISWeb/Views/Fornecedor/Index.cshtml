@@ -44,7 +44,7 @@
 
                         @foreach (Fornecedor iFornecedor in ViewBag.Fornecedores)
                         {
-                            <tr id="linha-@iFornecedor.IDFornecedor">
+                            <tr id="linha-@iFornecedor.UniqueKey">
                                 <td>@iFornecedor.Nome</td>
                                 <td>@iFornecedor.Numero</td>
                                 <td>@iFornecedor.CNPJ</td>
@@ -52,15 +52,15 @@
                                 <td>@iFornecedor.Email</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
-                                        <a class="blue" href="#" onclick="BuscarDetalhesFornecedor('@iFornecedor.IDFornecedor'); return false;">
+                                        <a class="blue" href="#" onclick="BuscarDetalhesFornecedor('@iFornecedor.UniqueKey'); return false;">
                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                         </a>
 
-                                        <a href='@Url.Action("Edicao", "Fornecedor", new { id = @iFornecedor.IDFornecedor })' class="green">
+                                        <a href='@Url.Action("Edicao", "Fornecedor", new { id = @iFornecedor.UniqueKey })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
 
-                                        <a class="red" href="#" onclick="DeletarFornecedor('@iFornecedor.IDFornecedor', '@iFornecedor.Nome');">
+                                        <a class="red" href="#" onclick="DeletarFornecedor('@iFornecedor.UniqueKey', '@iFornecedor.Nome');">
                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                         </a>
                                     </div>
@@ -73,7 +73,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesFornecedor('@iFornecedor.IDFornecedor'); return false;" data-rel="tooltip" title="View">
+                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesFornecedor('@iFornecedor.UniqueKey'); return false;" data-rel="tooltip" title="View">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
@@ -81,7 +81,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href='@Url.Action("Edicao", "Fornecedor", new { id = @iFornecedor.IDFornecedor })' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <a href='@Url.Action("Edicao", "Fornecedor", new { id = @iFornecedor.UniqueKey })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">
                                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                         </span>
@@ -89,7 +89,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#" class="tooltip-error" onclick="DeletarFornecedor('@iFornecedor.IDFornecedor', '@iFornecedor.Nome');" data-rel="tooltip" title="Delete">
+                                                    <a href="#" class="tooltip-error" onclick="DeletarFornecedor('@iFornecedor.UniqueKey', '@iFornecedor.Nome');" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                         </span>

@@ -44,7 +44,7 @@ namespace GISWeb.Controllers
         public JsonResult CarregarEmpresas()
         {
             var jsonSerialiser = new JavaScriptSerializer();
-            var json = jsonSerialiser.Serialize(new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia"));
+            var json = jsonSerialiser.Serialize(new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "UniqueKey", "NomeFantasia"));
 
             return Json(json, JsonRequestBehavior.AllowGet);
         }
@@ -53,7 +53,7 @@ namespace GISWeb.Controllers
         public JsonResult CarregarDepartamentos(string IDEmpresa)
         {
             var jsonSerialiser = new JavaScriptSerializer();
-            var json = jsonSerialiser.Serialize(new SelectList(DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpresa.Equals(IDEmpresa)).ToList(), "IDDepartamento", "Sigla"));
+            var json = jsonSerialiser.Serialize(new SelectList(DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(IDEmpresa)).ToList(), "UniqueKey", "Sigla"));
 
             return Json(json, JsonRequestBehavior.AllowGet);
         }
@@ -62,21 +62,21 @@ namespace GISWeb.Controllers
         {
             try
             {
-                Empregado oEmpregado = EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpregado.Equals(IDEmpregado));
+                Empregado oEmpregado = EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDEmpregado));
                 ViewBag.TipoEmpregado = oEmpregado.TipoEmpregado.ToString();
 
                 if (oEmpregado.TipoEmpregado.ToString().Equals("Próprio"))
                 {
-                    ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDEmpresa", "NomeFantasia");
-                    ViewBag.Departamentos = new SelectList(DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDDepartamento", "Sigla");
+                    ViewBag.Empresas = EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+                    ViewBag.Departamentos = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
                 }
                 else
                 {
-                    ViewBag.Fornecedores = new SelectList(FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList(), "IDFornecedor", "Nome");
+                    ViewBag.Fornecedores = FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
                 }
 
                 Admissao objAdmissao = new Admissao();
-                objAdmissao.IDEmpregado = IDEmpregado;
+                objAdmissao.UKEmpregado = IDEmpregado;
 
                 return PartialView("Novo", objAdmissao);
             }
@@ -98,7 +98,7 @@ namespace GISWeb.Controllers
                 oAdmissao.DataDemissao = DateTime.MaxValue;
                 AdmissaoBusiness.Inserir(oAdmissao);
 
-                return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Detalhes", "Empregado", new { id = oAdmissao.IDEmpregado }) } });
+                return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Detalhes", "Empregado", new { id = oAdmissao.UKEmpregado }) } });
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Admissao oAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.IDUsuarioDemissao) && p.IDEmpregado.Equals(IDEmpregado));
+                Admissao oAdmissao = AdmissaoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UKUsuarioDemissao) && p.UKEmpregado.Equals(IDEmpregado));
                 if (oAdmissao == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível demitir o empregado, pois o mesmo não foi localizado." } });
@@ -129,10 +129,10 @@ namespace GISWeb.Controllers
                 {
                     oAdmissao.DataExclusao = DateTime.Now;
                     oAdmissao.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
-                    oAdmissao.IDUsuarioDemissao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    oAdmissao.UKUsuarioDemissao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     AdmissaoBusiness.Excluir(oAdmissao);
 
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Detalhes", "Empregado", new { id = oAdmissao.IDEmpregado }) } });
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Detalhes", "Empregado", new { id = oAdmissao.UKEmpregado }) } });
                 }
             }
             catch (Exception ex)

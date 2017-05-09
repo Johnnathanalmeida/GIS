@@ -43,7 +43,7 @@
 
                         @foreach (Usuario iUsuario in ViewBag.Usuarios)
                         {
-                            <tr id="linha-@iUsuario.IDUsuario">
+                            <tr id="linha-@iUsuario.UniqueKey">
                                 <td>@iUsuario.Nome</td>
                                 <td>@iUsuario.Login</td>
                                 <td>@iUsuario.CPF</td>
@@ -52,15 +52,15 @@
                                 <td>@iUsuario.Departamento.Sigla</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
-                                        <a class="blue" href="#" onclick="BuscarDetalhesUsuario('@iUsuario.IDUsuario'); return false;">
+                                        <a class="blue" href="#" onclick="BuscarDetalhesUsuario('@iUsuario.UniqueKey'); return false;">
                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                         </a>
 
-                                        <a href='@Url.Action("Edicao", "Usuario", new { id = @iUsuario.IDUsuario })' class="green">
+                                        <a href='@Url.Action("Edicao", "Usuario", new { id = @iUsuario.UniqueKey })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
 
-                                        <a class="red" href="#" onclick="DeletarUsuario('@iUsuario.IDUsuario', '@iUsuario.Nome');">
+                                        <a class="red" href="#" onclick="DeletarUsuario('@iUsuario.UniqueKey', '@iUsuario.Nome');">
                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                         </a>
                                     </div>
@@ -73,7 +73,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesUsuario('@iUsuario.IDUsuario'); return false;" data-rel="tooltip" title="View">
+                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesUsuario('@iUsuario.UniqueKey'); return false;" data-rel="tooltip" title="View">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
@@ -81,7 +81,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href='@Url.Action("Edicao", "Usuario", new { id = @iUsuario.IDUsuario })' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <a href='@Url.Action("Edicao", "Usuario", new { id = @iUsuario.UniqueKey })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">
                                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                         </span>
@@ -89,7 +89,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#" class="tooltip-error" onclick="DeletarUsuario('@iUsuario.IDUsuario', '@iUsuario.Nome');" data-rel="tooltip" title="Delete">
+                                                    <a href="#" class="tooltip-error" onclick="DeletarUsuario('@iUsuario.UniqueKey', '@iUsuario.Nome');" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                         </span>

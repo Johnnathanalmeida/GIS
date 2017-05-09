@@ -8,24 +8,21 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("tbAlocacao")]
+    [Table("OBJAlocacao")]
     public class Alocacao : EntidadeBase
     {
 
-        public string IDAlocacao { get; set; }
-
         [Display(Name = "Empregado")]
         [Required(ErrorMessage = "Informe um empregado")]
-        public string IDEmpregado { get; set; }
+        public string UKEmpregado { get; set; }
 
         public virtual Empregado Empregado { get; set; }
 
         [Display(Name = "Contrato")]
         [Required(ErrorMessage = "Informe um contrato")]
-        public string IDContrato { get; set; }
+        public string UKContrato { get; set; }
 
         public virtual Contrato Contrato { get; set; }
-
 
     }
 }

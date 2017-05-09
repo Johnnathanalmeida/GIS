@@ -7,6 +7,7 @@ using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -53,24 +54,24 @@ namespace GISWeb.Controllers
         {
             //ViewBag.Contratos = ContratoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             List<Contrato> contratos = (from cont in ContratoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                                        join forn in FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on cont.IDFornecedor equals forn.IDFornecedor
+                                        join forn in FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on cont.UKFornecedor equals forn.UniqueKey
                                         select new Contrato()
                                         {
                                             ID = cont.ID,
-                                            IDContrato = cont.IDContrato,
+                                            UniqueKey = cont.UniqueKey,
                                             Inicio = cont.Inicio,
                                             Fim = cont.Fim,
                                             Numero = cont.Numero,
                                             Descricao = cont.Descricao,
-                                            Fornecedor = new Fornecedor() { IDFornecedor = forn.IDFornecedor, Nome = forn.Nome, CNPJ = forn.CNPJ },
+                                            Fornecedor = new Fornecedor() { UniqueKey = forn.UniqueKey, Nome = forn.Nome, CNPJ = forn.CNPJ },
                                             Departamentos = new List<Departamento>()
                                         }).ToList();
 
             foreach (Contrato item in contratos) {
 
                 item.Departamentos = (from contdep in DepartamentoContratoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
-                                      join dep in DepartamentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList() on contdep.IDDepartamento equals dep.IDDepartamento
-                                      where contdep.IDContrato.Equals(item.IDContrato)
+                                      join dep in DepartamentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList() on contdep.UKDepartamento equals dep.UniqueKey
+                                      where contdep.UKContrato.Equals(item.UniqueKey)
                                       select new Departamento() { 
                                         Sigla = dep.Sigla,
                                         Codigo = dep.Codigo
@@ -123,7 +124,7 @@ namespace GISWeb.Controllers
                         if (sExtensao.ToUpper().Contains("PDF") || sExtensao.ToUpper().Contains("DOC") || sExtensao.ToUpper().Contains("DOCX"))
                         {
                             //Após a autenticação está totalmente concluída, mudar para incluir uma pasta com o Login do usuário
-                            string sLocalFile = Path.Combine(Path.GetTempPath(), "GIS");
+                            string sLocalFile = Path.Combine(Path.GetTempPath(), ConfigurationManager.AppSettings["Web:NomeModulo"]);
                             sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
                             sLocalFile = Path.Combine(sLocalFile, "Contrato");
                             sLocalFile = Path.Combine(sLocalFile, CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login);
@@ -165,30 +166,30 @@ namespace GISWeb.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult CarregarFornecedoresEDepartamentosPorEmpresa(string IDEmpresa) {
+        //[HttpPost]
+        //public ActionResult CarregarFornecedoresEDepartamentosPorEmpresa(string IDEmpresa) {
 
-            try
-            {
-                List<EmpresaFornecedor> listaFornecedores = EmpresaFornecedorBusiness.Consulta.Where(p => p.Empresa.IDEmpresa.Equals(IDEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+        //    try
+        //    {
+        //        List<EmpresaFornecedor> listaFornecedores = EmpresaFornecedorBusiness.Consulta.Where(p => p.Empresa.UniqueKey.Equals(IDEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
 
-                List<Departamento> listaDepartamentos = DepartamentoBusiness.Consulta.Where(p => p.Empresa.IDEmpresa.Equals(IDEmpresa)).OrderBy(o => o.Sigla).ToList();
+        //        List<Departamento> listaDepartamentos = DepartamentoBusiness.Consulta.Where(p => p.Empresa.UniqueKey.Equals(IDEmpresa) && string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(o => o.Sigla).ToList();
 
-                return Json(new { fornecedores = listaFornecedores, departamentos = listaDepartamentos });
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetBaseException() == null)
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
-                }
-                else
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
-                }
-            }
+        //        return Json(new { fornecedores = listaFornecedores, departamentos = listaDepartamentos });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.GetBaseException() == null)
+        //        {
+        //            return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+        //        }
+        //        else
+        //        {
+        //            return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+        //        }
+        //    }
 
-        }
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -215,14 +216,14 @@ namespace GISWeb.Controllers
 
                         Contrato obj = new Contrato()
                         {
-                            IDContrato = Guid.NewGuid().ToString(),
+                            UniqueKey = Guid.NewGuid().ToString(),
                             Numero = contrato.Numero,
                             Inicio = DateTime.ParseExact(contrato.Inicio, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                             Fim = DateTime.ParseExact(contrato.Fim, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                             Descricao = contrato.Descricao,
                             UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login,
-                            IDFornecedor = forn.IDFornecedor,
-                            Arquivo = new Arquivo() { NomeLocal = contrato.NomeArquivoLocal, NomeRemoto = Guid.NewGuid().ToString() + contrato.NomeArquivoLocal.Substring(contrato.NomeArquivoLocal.LastIndexOf(".")) }
+                            UKFornecedor = forn.UniqueKey
+                            //, Arquivo = new Arquivo() { NomeLocal = contrato.NomeArquivoLocal, NomeRemoto = Guid.NewGuid().ToString() + contrato.NomeArquivoLocal.Substring(contrato.NomeArquivoLocal.LastIndexOf(".")) }
                         };
 
                         if (contrato.Departamentos.Contains(","))
@@ -241,9 +242,9 @@ namespace GISWeb.Controllers
                                     {
                                         DepartamentoContrato dc = new DepartamentoContrato()
                                         {
-                                            IDDepartamentoContrato = Guid.NewGuid().ToString(),
-                                            IDContrato = obj.IDContrato,
-                                            IDDepartamento = dep.IDDepartamento,
+                                            UniqueKey = Guid.NewGuid().ToString(),
+                                            UKContrato = obj.UniqueKey,
+                                            UKDepartamento = dep.UniqueKey,
                                             UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
                                         };
                                         DepartamentoContratoBusiness.Inserir(dc);
@@ -263,9 +264,9 @@ namespace GISWeb.Controllers
                             {
                                 DepartamentoContrato dc = new DepartamentoContrato()
                                 {
-                                    IDDepartamentoContrato = Guid.NewGuid().ToString(),
-                                    IDContrato = obj.IDContrato,
-                                    IDDepartamento = dep.IDDepartamento,
+                                    UniqueKey = Guid.NewGuid().ToString(),
+                                    UKContrato = obj.UniqueKey,
+                                    UKDepartamento = dep.UniqueKey,
                                     UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
                                 };
                                 DepartamentoContratoBusiness.Inserir(dc);
@@ -308,7 +309,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Contrato")]
         public ActionResult Edicao(string id)
         {
-            return View(ContratoBusiness.Consulta.FirstOrDefault(p => p.IDContrato.Equals(id)));
+            return View(ContratoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
         [HttpPost]

@@ -10,11 +10,9 @@ using System.Threading.Tasks;
 namespace GISModel.Entidades
 {
 
-    [Table("tbGarantia")]
+    [Table("OBJGarantia")]
     public class Garantia : EntidadeBase
     {
-
-        public string IDGarantia { get; set; }
 
         [Display(Name = "Descrição")]
         [Required(ErrorMessage = "Informe a descrição da Garantia.")]

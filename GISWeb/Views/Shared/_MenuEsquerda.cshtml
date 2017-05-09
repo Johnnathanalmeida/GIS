@@ -4,7 +4,7 @@
     @if (ViewBag.MenusUsuario != null && ViewBag.MenusUsuario is List<GISModel.Entidades.Menu>)
     {
         List<GISModel.Entidades.Menu> ListaMenus = (List<GISModel.Entidades.Menu>)ViewBag.MenusUsuario;
-        foreach (GISModel.Entidades.Menu iMenuRaiz in ListaMenus.Where(p => p.MenuSuperior == null).OrderBy(p => p.Ordem))
+        foreach (GISModel.Entidades.Menu iMenuRaiz in ListaMenus.Where(p => p.MenuSuperior == null).OrderBy(p => double.Parse(p.Ordem)))
         {
             string sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_");
         
@@ -27,13 +27,13 @@
                 <b class="arrow"></b>
                 <ul class="submenu">
 
-                    @foreach (GISModel.Entidades.Menu iMenu in ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.IDMenu.Equals(iMenuRaiz.IDMenu)).OrderBy(p => p.Ordem))
+                    @foreach (GISModel.Entidades.Menu iMenu in ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.UniqueKey.Equals(iMenuRaiz.UniqueKey)).OrderBy(p => p.Ordem))
                     {
                         sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_") + GISHelpers.Utils.Severino.RemoveAcentos(iMenu.Nome).Replace(" ", "_");
                     
                         <li id="@sIDMenu">
                             @{
-                                List<GISModel.Entidades.Menu> ListaSubMenus = ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.IDMenu.Equals(iMenu.IDMenu)).ToList();
+                        List<GISModel.Entidades.Menu> ListaSubMenus = ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.UniqueKey.Equals(iMenu.UniqueKey)).ToList();
                                 if (ListaSubMenus.Count > 0)
                                 {
                                     <a href="#" class="dropdown-toggle">

@@ -31,7 +31,7 @@ namespace GISCore.Business.Concrete
             if (!File.Exists(sLocalFile))
                 throw new Exception("Não foi possível localizar o arquivo '" + pEmpresa.URL_LogoMarca + "'. Favor realizar novamente o upload do mesmo.");
 
-            pEmpresa.IDEmpresa = Guid.NewGuid().ToString();
+            pEmpresa.UniqueKey = Guid.NewGuid().ToString();
 
             base.Inserir(pEmpresa);
 
@@ -46,13 +46,13 @@ namespace GISCore.Business.Concrete
 
         public override void Alterar(Empresa pEmpresa)
         {
-            if (Consulta.Any(u => u.CNPJ.Equals(pEmpresa.CNPJ.Trim()) && !u.IDEmpresa.Equals(pEmpresa.IDEmpresa)))
+            if (Consulta.Any(u => u.CNPJ.Equals(pEmpresa.CNPJ.Trim()) && !u.UniqueKey.Equals(pEmpresa.UniqueKey)))
                 throw new InvalidOperationException("Não é possível atualizar esta empresa, pois o CNPJ já está sendo usado por outra empresa.");
 
-            if (Consulta.Any(u => u.NomeFantasia.ToUpper().Equals(pEmpresa.NomeFantasia.Trim().ToUpper()) && !u.IDEmpresa.Equals(pEmpresa.IDEmpresa)))
+            if (Consulta.Any(u => u.NomeFantasia.ToUpper().Equals(pEmpresa.NomeFantasia.Trim().ToUpper()) && !u.UniqueKey.Equals(pEmpresa.UniqueKey)))
                 throw new InvalidOperationException("Não é possível atualizar esta empresa, pois o Nome Fatasia está sendo usado por outra empresa.");
 
-            Empresa tempEmpresa = Consulta.FirstOrDefault(p => p.IDEmpresa.Equals(pEmpresa.IDEmpresa));
+            Empresa tempEmpresa = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(pEmpresa.UniqueKey));
             if (tempEmpresa == null)
             {
                 throw new Exception("Não foi possível encontra a empresa através do ID.");

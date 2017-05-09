@@ -4,13 +4,11 @@ using System;
 
 namespace GISModel.Entidades
 {
-    [Table("tbFuncao")]
+    [Table("OBJFuncao")]
     public class Funcao : EntidadeBase
     {
        
-        public string IDCargo { get; set; }
-
-        public string IDFuncao { get; set; }
+        public string UKCargo { get; set; }
 
         [Display(Name = "Função")]
         public string Func_Nome { get; set; }

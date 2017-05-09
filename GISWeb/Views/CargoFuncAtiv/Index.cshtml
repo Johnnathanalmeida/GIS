@@ -33,10 +33,10 @@
                         <div class="dd2-content">
                             @iCargo.Carg_Nome
                             <div class="pull-right action-buttons">
-                                <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.IDCargo')">
+                                <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
                                     <i class="ace-icon fa fa-plus-circle bigger-125"></i>
                                 </a>
-                                <a class="blue" href="#" onclick="DeletarCargo('@iCargo.IDCargo', '@iCargo.Carg_Nome')">
+                                <a class="blue" href="#" onclick="DeletarCargo('@iCargo.UniqueKey', '@iCargo.Carg_Nome')">
                                     <i class="ace-icon fa fa-remove bigger-125"></i>
                                 </a>
                             </div>
@@ -50,10 +50,10 @@
                                     <div class="dd2-content">
                                         @iFuncao.Func_Nome
                                         <div class="pull-right action-buttons">
-                                            <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.IDCargo', '@iFuncao.IDFuncao')">
+                                            <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.UKCargo', '@iFuncao.UniqueKey')">
                                                 <i class="ace-icon fa fa-plus-circle bigger-125"></i>
                                             </a>
-                                            <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.IDCargo', '@iFuncao.IDFuncao', '@iFuncao.Func_Nome')">
+                                            <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.UKCargo', '@iFuncao.UniqueKey', '@iFuncao.Func_Nome')">
                                                 <i class="ace-icon fa fa-remove bigger-125"></i>
                                             </a>
                                         </div>

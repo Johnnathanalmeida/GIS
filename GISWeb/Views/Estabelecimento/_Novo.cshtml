@@ -46,20 +46,11 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-12">
             <div class="form-group">
                 @Html.LabelFor(d => d.Endereco, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                 <div class="col-xs-12 col-sm-12">
                     @Html.EditorFor(d => d.Endereco, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtEstabEndereco" } })
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6">
-            <div class="form-group">
-                @Html.LabelFor(d => d.IDArquivo, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
-                <div class="col-xs-12 col-sm-12">
-                    @Html.EditorFor(d => d.IDArquivo, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @readonly = "readonly", @id = "txtEstabArquivo" } })
                 </div>
             </div>
         </div>

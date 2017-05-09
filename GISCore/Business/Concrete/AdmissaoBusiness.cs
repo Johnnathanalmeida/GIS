@@ -14,7 +14,7 @@ namespace GISCore.Business.Concrete
         public override void Inserir(Admissao admissao)
         {
 
-            admissao.IDAdmissao = Guid.NewGuid().ToString();
+            admissao.UniqueKey = Guid.NewGuid().ToString();
 
             base.Inserir(admissao);
 

@@ -212,50 +212,7 @@
 
 </div> <!-- Fim FormQuery -->
 
-<div id="modalArquivo" class="modal fade" style="z-index: 10001">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button id="modalArquivoX" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="smaller lighter blue no-margin"><i class="ace-icon fa fa-folder-open orange2"></i> Arquivo referente ao contrato</h3>
-            </div>
 
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div id="modalArquivoCorpoLoading" style="float: right; display: none">
-                            ...Carregando
-                            @*<img src="~/Content/Images/ajax-loading.GIF" />*@
-                            <i id="loadingLogin" style="margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
-                        </div>
-                        <div id="modalArquivoCorpo"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <span id="modalArquivoLoading" style="display: none; float: left; padding-top: 6px">
-                            @*<img src="~/Content/Images/ajax-loading.GIF" />*@
-                            <i id="loadingLogin" style="margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
-                        </span>
-
-                        <button id="modalArquivoFechar" class="btn btn-sm btn-default pull-right" data-dismiss="modal">
-                            <i class="ace-icon fa fa-times"></i>
-                            Fechar
-                        </button>
-
-                        <button id="modalArquivoProsseguir" class="btn btn-sm btn-info" style="right: 5px; left: auto">
-                            <i class="ace-icon fa fa-check"></i>
-                            Prosseguir
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="modalGarantia" class="modal fade" style="z-index: 10001">
     <div class="modal-dialog">
@@ -335,6 +292,51 @@
                         </button>
 
                         <button id="modalEstabelecimentoProsseguir" class="btn btn-sm btn-info" style="right: 5px; left: auto">
+                            <i class="ace-icon fa fa-check"></i>
+                            Prosseguir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalArquivo" class="modal fade" style="z-index: 10002">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="modalArquivoX" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="smaller lighter blue no-margin"><i class="ace-icon fa fa-folder-open orange2"></i> Arquivo referente ao contrato</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="modalArquivoCorpoLoading" style="float: right; display: none">
+                            ...Carregando
+                            @*<img src="~/Content/Images/ajax-loading.GIF" />*@
+                            <i id="loadingLogin" style="margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
+                        </div>
+                        <div id="modalArquivoCorpo"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="modalArquivoLoading" style="display: none; float: left; padding-top: 6px">
+                            @*<img src="~/Content/Images/ajax-loading.GIF" />*@
+                            <i id="loadingLogin" style="margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
+                        </span>
+
+                        <button id="modalArquivoFechar" class="btn btn-sm btn-default pull-right" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            Fechar
+                        </button>
+
+                        <button id="modalArquivoProsseguir" class="btn btn-sm btn-info" style="right: 5px; left: auto">
                             <i class="ace-icon fa fa-check"></i>
                             Prosseguir
                         </button>

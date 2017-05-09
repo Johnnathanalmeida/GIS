@@ -27,7 +27,7 @@
                                         <th class="center">
                                             @iPerfil.Nome <br />&nbsp;
                                             <label class="pos-rel">
-                                                <input type="checkbox" id="@iPerfil.IDPerfil" rel="@idx" class="ace" />
+                                                <input type="checkbox" id="@iPerfil.UniqueKey" rel="@idx" class="ace" />
                                                 <span class="lbl"></span>
                                             </label>
                                         </th>
@@ -48,12 +48,13 @@
                                                 
                                                 @{
                                                     string PossuiPerfil = string.Empty;
-                                                    if (item.Perfis.FirstOrDefault(p => p.IDPerfil.Equals(iPerfil.IDPerfil)) != null) {
+                                                    if (item.Perfis.FirstOrDefault(p => p.UniqueKey.Equals(iPerfil.UniqueKey)) != null)
+                                                    {
                                                         PossuiPerfil = " checked=\"checked\" ";
                                                     }
                                                 }
 
-                                                <input type="checkbox" onclick="SalvarPermissoes(this.checked, '@iPerfil.IDPerfil', '@item.IDUsuario');" id="@item.IDUsuario|" @PossuiPerfil class="ace" />
+                                                <input type="checkbox" onclick="SalvarPermissoes(this.checked, '@iPerfil.UniqueKey', '@item.IDUsuario');" id="@item.IDUsuario|" @PossuiPerfil class="ace" />
                                                 <span class="lbl"></span>
                                             </label>
                                         </td>

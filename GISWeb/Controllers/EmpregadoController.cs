@@ -54,15 +54,15 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
         public ActionResult Edicao(string id)
         {
-            return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
+            return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
         [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
         public ActionResult Detalhes(string id)
         {
-            List<Admissao> lAdmissao = AdmissaoBusiness.Consulta.Where(p => p.IDEmpregado.Equals(id) && string.IsNullOrEmpty(p.IDUsuarioDemissao)).ToList();
+            List<Admissao> lAdmissao = AdmissaoBusiness.Consulta.Where(p => p.UKEmpregado.Equals(id) && string.IsNullOrEmpty(p.UKUsuarioDemissao)).ToList();
             ViewBag.Admissao = lAdmissao;
-            return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => p.IDEmpregado.Equals(id)));
+            return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
         [HttpPost]
@@ -141,7 +141,7 @@ namespace GISWeb.Controllers
 
             try
             {
-                Empregado oEmpregado = EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.IDEmpregado.Equals(IDEmpregado));
+                Empregado oEmpregado = EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDEmpregado));
                 if (oEmpregado == null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o empregado, pois o mesmo não foi localizado." } });

@@ -8,25 +8,23 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-
-    [Table("RELEstabelecimentoContrato")]
-    public class EstabelecimentoContrato : EntidadeBase
+    [Table("RELContratoArquivo")]
+    public class ContratoArquivo : EntidadeBase
     {
-
-        public virtual Estabelecimento Estabelecimento { get; set; }
-
-        [Display(Name = "Estabelecimento")]
-        [Required(ErrorMessage = "Selecione um Estabelecimento")]
-        public string UKEstabelecimento { get; set; }
-
-
-
 
         public virtual Contrato Contrato { get; set; }
 
         [Display(Name = "Contrato")]
         [Required(ErrorMessage = "Selecione um Contrato")]
         public string UKContrato { get; set; }
+
+
+
+        public virtual Arquivo Arquivo { get; set; }
+
+        [Display(Name = "Arquivo")]
+        [Required(ErrorMessage = "Selecione um Arquivo")]
+        public string UKArquivo { get; set; }
 
     }
 }

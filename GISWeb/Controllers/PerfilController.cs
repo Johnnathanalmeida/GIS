@@ -79,7 +79,7 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
         public ActionResult Edicao(string id)
         {
-            return View(PerfilBusiness.Consulta.FirstOrDefault(p => p.ID.Equals(id)));
+            return View(PerfilBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.ID.Equals(id)));
         }
 
         [HttpPost]

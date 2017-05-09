@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 namespace GISModel.Entidades
 {
 
-    [Table("tbDepartamento")]
+    [Table("OBJDepartamento")]
     public class Departamento : EntidadeBase
     {
         
-        public string IDDepartamento { get; set; }
 
         [Required(ErrorMessage = "Informe o código do departamento")]
         public string Codigo { get; set; }
@@ -22,6 +21,7 @@ namespace GISModel.Entidades
         [Required(ErrorMessage = "Informe a sigla do departamento")]
         public string Sigla { get; set; }
 
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 
         public Situacao Status { get; set; }
@@ -33,13 +33,13 @@ namespace GISModel.Entidades
 
         [Display(Name = "Empresa")]
         [Required(ErrorMessage = "Selecione uma empresa")]
-        public string IDEmpresa { get; set; }
+        public string UKEmpresa { get; set; }
 
 
 
 
         [Display(Name = "Departamento Vinculado")]
-        public string DepartamentoVinculado { get; set; }
+        public string UKDepartamentoVinculado { get; set; }
 
     }
 }

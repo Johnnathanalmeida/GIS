@@ -41,7 +41,7 @@
 
                         @foreach (Empresa iEmpresa in ViewBag.Empresas)
                         {
-                            <tr id="linha-@iEmpresa.IDEmpresa">
+                            <tr id="linha-@iEmpresa.UniqueKey">
                                 <td>
                                     <img src="/Images/Empresas/@iEmpresa.CNPJ.Replace("/", "").Replace("-", "").Replace(".", "")/@iEmpresa.URL_LogoMarca" alt="Logo-Marca" width="40px" />
                                 </td>
@@ -59,15 +59,15 @@
                                 <td class="hidden-480">@iEmpresa.RazaoSocial</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs action-buttons">
-                                        <a class="blue" href="#" onclick="BuscarDetalhesEmpresa('@iEmpresa.IDEmpresa'); return false;">
+                                        <a class="blue" href="#" onclick="BuscarDetalhesEmpresa('@iEmpresa.UniqueKey'); return false;">
                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                         </a>
 
-                                        <a href='@Url.Action("Edicao", "Empresa", new { id = @iEmpresa.IDEmpresa })' class="green">
+                                        <a href='@Url.Action("Edicao", "Empresa", new { id = @iEmpresa.UniqueKey })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
 
-                                        <a class="red" href="#" onclick="DeletarEmpresa('@iEmpresa.IDEmpresa', '@iEmpresa.NomeFantasia');">
+                                        <a class="red" href="#" onclick="DeletarEmpresa('@iEmpresa.UniqueKey', '@iEmpresa.NomeFantasia');">
                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                         </a>
                                     </div>
@@ -80,7 +80,7 @@
 
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesEmpresa('@iEmpresa.IDEmpresa'); return false;" data-rel="tooltip" title="View">
+                                                    <a href="#" class="tooltip-info" onclick="BuscarDetalhesEmpresa('@iEmpresa.UniqueKey'); return false;" data-rel="tooltip" title="View">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
@@ -88,7 +88,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href='@Url.Action("Edicao", "Empresa", new { id = @iEmpresa.IDEmpresa })' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <a href='@Url.Action("Edicao", "Empresa", new { id = @iEmpresa.UniqueKey })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">
                                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                         </span>
@@ -96,7 +96,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#" class="tooltip-error" onclick="DeletarEmpresa('@iEmpresa.IDEmpresa', '@iEmpresa.NomeFantasia');" data-rel="tooltip" title="Delete">
+                                                    <a href="#" class="tooltip-error" onclick="DeletarEmpresa('@iEmpresa.UniqueKey', '@iEmpresa.NomeFantasia');" data-rel="tooltip" title="Delete">
                                                         <span class="red">
                                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                         </span>

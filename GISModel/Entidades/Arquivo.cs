@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("tbArquivo")]
+
+    [Table("OBJArquivo")]
     public class Arquivo : EntidadeBase
     {
 
@@ -15,7 +16,13 @@ namespace GISModel.Entidades
 
         public string NomeRemoto { get; set; }
 
-        public int Versao { get; set; }
+        public string Complemento { get; set; }
+
+        public string Comentario { get; set; }
+
+        public string UKCategoria { get; set; }
+
+        public string UKTipo { get; set; }
 
     }
 }

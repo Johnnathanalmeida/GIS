@@ -23,7 +23,7 @@
             Html.RenderPartial("_MensagensDeRetorno");
         }
 
-        @if (ViewBag.Departamentos != null)
+        @if (ViewBag.Departamentos != null && ViewBag.Departamentos.Count > 0)
         {
             <div>
                 <table id="dynamic-table" class="table table-striped table-bordered table-hover">
@@ -65,7 +65,7 @@
                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                         </a>
 
-                                        <a href='@Url.Action("Edicao", "Departamento", new { id = @iDepartamento.IDDepartamento })' class="green">
+                                        <a href='@Url.Action("Edicao", "Departamento", new { id = @iDepartamento.UniqueKey })' class="green">
                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                         </a>
 
@@ -90,8 +90,7 @@
                                                 </li>
 
                                                 <li>
-                                                    @Html.ActionLink("Hello", "Edicao", "Empresa", new { i = "123" }, null)
-                                                    <a href='@Url.Action("Edicao", "Empresa")' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                    <a href='@Url.Action("Edicao", "Departamento", new { id = @iDepartamento.UniqueKey })' class="tooltip-success" data-rel="tooltip" title="Edit">
                                                         <span class="green">
                                                             <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                         </span>
@@ -117,7 +116,18 @@
                 </table>
             </div>
         }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>
+                    <i class="ace-icon fa fa-meh-o"></i>
+                    Oops!
+                </strong>
 
+                No momento, nenhum departamento encontrado.
+                <br>
+            </div>
+        }
 
 
     </div>

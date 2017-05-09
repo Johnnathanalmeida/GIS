@@ -10,11 +10,9 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("tbUsuario")]
+    [Table("OBJUsuario")]
     public class Usuario : EntidadeBase
     {
-
-        public string IDUsuario { get; set; }
 
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "CPF obrigatório")]
@@ -35,13 +33,13 @@ namespace GISModel.Entidades
 
         [Display(Name = "Empresa")]
         [Required(ErrorMessage = "Selecione uma empresa")]
-        public string IDEmpresa { get; set; }
+        public string UKEmpresa { get; set; }
 
         public virtual Empresa Empresa { get; set; }
 
         [Display(Name = "Departamento")]
         [Required(ErrorMessage = "Selecione um departamento")]
-        public string IDDepartamento { get; set; }
+        public string UKDepartamento { get; set; }
 
         public virtual Departamento Departamento { get; set; }
 

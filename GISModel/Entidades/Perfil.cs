@@ -8,12 +8,10 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("tbPerfil")]
+    [Table("OBJPerfil")]
     public class Perfil : EntidadeBase
     {
 
-        public string IDPerfil { get; set; }
-        
         [Required(ErrorMessage = "O perfil é obrigatório")]
         public string Nome { get; set; }
 
