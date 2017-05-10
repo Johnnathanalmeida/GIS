@@ -1,4 +1,6 @@
 ﻿using GISCore.Business.Abstract;
+using GISModel.DTO.Shared;
+using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
 using GISWeb.Infraestrutura.Provider.Abstract;
 using Ninject;
@@ -12,7 +14,9 @@ using System.Web.Mvc;
 
 namespace GISWeb.Controllers
 {
-    public class EstabelecimentoController : Controller
+    [DadosUsuario]
+    [Autorizador]
+    public class EstabelecimentoController : BaseController
     {
 
         #region Inject
@@ -20,19 +24,171 @@ namespace GISWeb.Controllers
             [Inject]
             public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
+            [Inject]
+            public IEstabelecimentoBusiness EstabelecimentoBusiness { get; set; }
+
         #endregion
 
-        [RestritoAAjax]
+        [MenuAtivo(MenuAtivo = "Administracao/Estabelecimento")]
+        public ActionResult Index()
+        {
+            ViewBag.Estabelecimentos = EstabelecimentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
+
+            return View();
+        }
+
+        [MenuAtivo(MenuAtivo = "Administracao/Estabelecimento")]
         public ActionResult Novo()
         {
+            return View();
+        }
+
+        [MenuAtivo(MenuAtivo = "Administracao/Estabelecimento")]
+        public ActionResult Edicao(string id)
+        {
+            return View(EstabelecimentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Cadastrar(Estabelecimento entidade)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    entidade.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    EstabelecimentoBusiness.Inserir(entidade);
+
+                    TempData["MensagemSucesso"] = "O estabelecimento '" + entidade.Nome + "' foi cadastrado com sucesso.";
+
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Estabelecimento") } });
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetBaseException() == null)
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                    }
+                    else
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                    }
+                }
+
+            }
+            else
+            {
+                return Json(new { resultado = TratarRetornoValidacaoToJSON() });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Terminar(string IDEstabelecimento)
+        {
+
             try
             {
-                return PartialView("_Novo");
+                Estabelecimento oEstabelecimento = EstabelecimentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDEstabelecimento));
+                if (oEstabelecimento == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o estabelecimento, pois o mesmo não foi localizado." } });
+                }
+                else
+                {
+
+                    oEstabelecimento.DataExclusao = DateTime.Now;
+                    oEstabelecimento.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    EstabelecimentoBusiness.Alterar(oEstabelecimento);
+
+                    return Json(new { resultado = new RetornoJSON() { Sucesso = "O estabelecimento '" + oEstabelecimento.Nome + "' foi excluído com sucesso." } });
+                }
             }
             catch (Exception ex)
             {
-                Response.StatusCode = 500;
-                return Content(ex.Message, "text/html");
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
+
+        }
+
+        [HttpPost]
+        public ActionResult TerminarComRedirect(string IDEstabelecimento)
+        {
+
+            try
+            {
+                Estabelecimento oEstabelecimento = EstabelecimentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(IDEstabelecimento));
+                if (oEstabelecimento == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = "Não foi possível excluir o estabelecimento, pois o mesmo não foi localizado." } });
+                }
+                else
+                {
+                    oEstabelecimento.DataExclusao = DateTime.Now;
+                    oEstabelecimento.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+
+                    EstabelecimentoBusiness.Alterar(oEstabelecimento);
+
+                    TempData["MensagemSucesso"] = "O estabelecimento '" + oEstabelecimento.Nome + "' foi excluído com sucesso.";
+
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Estabelecimento") } });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Atualizar(Estabelecimento entidade)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    EstabelecimentoBusiness.Alterar(entidade);
+
+                    TempData["MensagemSucesso"] = "O estabelecimento '" + entidade.Nome + "' foi atualizado com sucesso.";
+
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empresa") } });
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetBaseException() == null)
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                    }
+                    else
+                    {
+                        return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                    }
+                }
+
+            }
+            else
+            {
+                return Json(new { resultado = TratarRetornoValidacaoToJSON() });
             }
         }
 

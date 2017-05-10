@@ -162,8 +162,6 @@ namespace GISCore.Business.Concrete
             if (Consulta.Any(u => u.Email.Equals(usuario.Email) && string.IsNullOrEmpty(u.UsuarioExclusao)))
                 throw new InvalidOperationException("Este e-mail já está sendo usado por outro usuário.");
 
-            usuario.UniqueKey = Guid.NewGuid().ToString();
-
             base.Inserir(usuario);
 
             if (usuario.TipoDeAcesso.Equals(TipoDeAcesso.AD))

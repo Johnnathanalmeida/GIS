@@ -1,0 +1,111 @@
+﻿@using GISModel.Entidades
+
+@{
+    ViewBag.Title = "Listagem de Estabelecimentos";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">
+            Estabelecimentos
+            <a href="@Url.Action("Novo", "Estabelecimento")" class="btn btn-white btn-info btn-bold" style="float: right; margin-top: -2px;">
+                <i class="ace-icon fa fa-plus bigger-120 blue"></i>
+                Novo Estabelecimento
+            </a>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+
+        @{
+            Html.RenderPartial("_MensagensDeRetorno");
+        }
+
+        @if (ViewBag.Estabelecimentos != null && ViewBag.Estabelecimentos.Count > 0)
+        {
+            <div>
+                <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th class="hidden-480">Descrição</th>
+                            <th>Endereço</th>
+                            <th width="89px"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (Estabelecimento iEstabelecimento in ViewBag.Estabelecimentos)
+                        {
+                            <tr id="linha-@iEstabelecimento.UniqueKey">
+                                <td>@iEstabelecimento.Nome</td>
+                                <td>@iEstabelecimento.Descricao</td>
+                                <td class="hidden-480">@iEstabelecimento.Endereco</td>
+                                <td>
+                                    <div class="hidden-sm hidden-xs action-buttons center">
+                                        <a href='@Url.Action("Edicao", "Estabelecimento", new { id = @iEstabelecimento.UniqueKey })' class="green">
+                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                        </a>
+
+                                        <a class="red" href="#" onclick="DeletarEmpresa('@iEstabelecimento.UniqueKey', '@iEstabelecimento.Nome');">
+                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                            </button>
+
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href='@Url.Action("Edicao", "Estabelecimento", new { id = @iEstabelecimento.UniqueKey })' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" class="tooltip-error" onclick="DeletarEmpresa('@iEstabelecimento.UniqueKey', '@iEstabelecimento.Nome');" data-rel="tooltip" title="Delete">
+                                                        <span class="red">
+                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>
+                    <i class="ace-icon fa fa-meh-o"></i>
+                    Oops!
+                </strong>
+
+                No momento, nenhum estabelecimento encontrado.
+                <br>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jQ_dataTable")
+    <script src="~/Scripts/Custom/Estabelecimento/Listagem.js"></script>
+}

@@ -90,7 +90,6 @@
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\ContratoArquivo.cs" />
     <Compile Include="Entidades\ContratoGarantia.cs" />
-    <Compile Include="Entidades\EmpresaArquivo.cs" />
     <Compile Include="Entidades\Estabelecimento.cs" />
     <Compile Include="Entidades\EstabelecimentoContrato.cs" />
     <Compile Include="Entidades\Funcao.cs" />
@@ -103,7 +102,6 @@
     <Compile Include="Entidades\DepartamentoContrato.cs" />
     <Compile Include="Entidades\Empregado.cs" />
     <Compile Include="Entidades\Empresa.cs" />
-    <Compile Include="Entidades\EmpresaFornecedor.cs" />
     <Compile Include="Entidades\EntidadeBase.cs" />
     <Compile Include="Entidades\Fornecedor.cs" />
     <Compile Include="Entidades\Garantia.cs" />

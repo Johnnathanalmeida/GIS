@@ -12,6 +12,14 @@ namespace GISModel.Entidades
     public class Arquivo : EntidadeBase
     {
 
+        public string UKObjeto { get; set; }
+
+        public string UKCategoria { get; set; }
+
+        public string UKTipo { get; set; }
+
+
+
         public string NomeLocal { get; set; }
 
         public string NomeRemoto { get; set; }
@@ -19,10 +27,6 @@ namespace GISModel.Entidades
         public string Complemento { get; set; }
 
         public string Comentario { get; set; }
-
-        public string UKCategoria { get; set; }
-
-        public string UKTipo { get; set; }
 
     }
 }

@@ -36,9 +36,6 @@ namespace GISWeb.Controllers
             public IEmpresaBusiness EmpresaBusiness { get; set; }
 
             [Inject]
-            public IEmpresaFornecedorBusiness EmpresaFornecedorBusiness { get; set; }
-
-            [Inject]
             public IDepartamentoBusiness DepartamentoBusiness { get; set; }
 
             [Inject]

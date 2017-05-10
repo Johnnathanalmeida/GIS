@@ -31,8 +31,6 @@ namespace GISCore.Business.Concrete
             if (!File.Exists(sLocalFile))
                 throw new Exception("Não foi possível localizar o arquivo '" + pEmpresa.URL_LogoMarca + "'. Favor realizar novamente o upload do mesmo.");
 
-            pEmpresa.UniqueKey = Guid.NewGuid().ToString();
-
             base.Inserir(pEmpresa);
 
             string sDiretorio = ConfigurationManager.AppSettings["DiretorioRaiz"] + "\\Images\\Empresas\\" + pEmpresa.CNPJ.Replace("/", "").Replace(".", "").Replace("-", "");

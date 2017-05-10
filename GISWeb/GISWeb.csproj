@@ -211,6 +211,9 @@
     <Content Include="Scripts\Custom\Empresa\Edicao.js" />
     <Content Include="Scripts\Custom\Empresa\Listagem.js" />
     <Content Include="Scripts\Custom\Empresa\Novo.js" />
+    <Content Include="Scripts\Custom\Estabelecimento\Edicao.js" />
+    <Content Include="Scripts\Custom\Estabelecimento\Listagem.js" />
+    <Content Include="Scripts\Custom\Estabelecimento\Novo.js" />
     <Content Include="Scripts\Custom\Fornecedor\Edicao.js" />
     <Content Include="Scripts\Custom\Fornecedor\Listagem.js" />
     <Content Include="Scripts\Custom\Fornecedor\Novo.js" />
@@ -341,9 +344,11 @@
     <Content Include="Views\Admissao\Novo.cshtml" />
     <Content Include="Views\Contrato\_Upload.cshtml" />
     <Content Include="Views\Garantia\_Nova.cshtml" />
-    <Content Include="Views\Estabelecimento\_Novo.cshtml" />
+    <Content Include="Views\Estabelecimento\Novo.cshtml" />
     <Content Include="Views\CargoFuncAtiv\Index.cshtml" />
     <Content Include="Views\Estabelecimento\_Upload.cshtml" />
+    <Content Include="Views\Estabelecimento\Index.cshtml" />
+    <Content Include="Views\Estabelecimento\Edicao.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

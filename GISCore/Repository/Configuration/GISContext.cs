@@ -25,8 +25,6 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<Empresa> Empresa { get; set; }
 
-        public DbSet<EmpresaArquivo> EmpresaArquivo { get; set; }
-
         public DbSet<Departamento> Departamento { get; set; }
 
         public DbSet<Usuario> Usuario { get; set; }
@@ -52,8 +50,6 @@ namespace GISCore.Repository.Configuration
         public DbSet<DepartamentoContrato> DepartamentoContrato { get; set; }
 
         public DbSet<Empregado> Empregado { get; set; }
-
-        public DbSet<EmpresaFornecedor> EmpresaFornecedor { get; set; }
 
         public DbSet<Alocacao> Alocacao { get; set; }
 
