@@ -10,7 +10,6 @@
 
 });
 
-
 function btnNovoCargo() {
     var sHTML = "<table style='line-height: 2'>";
 
@@ -57,38 +56,6 @@ function btnNovoCargo() {
     });
 }
 
-function DeletarCargo(IDCargo, CargoNome) {
-    bootbox.confirm({
-        backdrop: true,
-        message: "Tem certeza que deseja excluir o cargo '" + CargoNome + "'?",
-        title: "Confirmação para excluir.",
-        buttons: {
-            confirm: {
-                label: "Sim",
-                className: "btn-success btn-sm",
-            },
-            cancel: {
-                label: "Não",
-                className: "btn-sm",
-            }
-        },
-        callback: function (result) {
-            $.ajax({
-                method: "POST",
-                url: "/CargoFuncAtiv/DeletarCargo",
-                data: { IDCargo: IDCargo },
-                error: function (erro) {
-                    ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
-                },
-                success: function (content) {
-                    TratarResultadoJSON(content.resultado);
-                }
-            });
-        }
-    });
-
-}
-
 function CadastrarFuncao(pIDCargo) {
     var sHTML = "<table style='line-height: 2'>";
 
@@ -132,5 +99,146 @@ function CadastrarFuncao(pIDCargo) {
                         }
                     }
                 }
+    });
+}
+
+function CadastrarAtividade(pUKFuncao) {
+    var sHTML = "<table style='line-height: 2'>";
+
+    sHTML += "<tr>";
+    sHTML += "<td width='150px'>Atividade:</td>";
+    sHTML += "<td width='136px' align='left'>";
+    sHTML += "  <input type='text' maxlength='64' id='txtAtividadeNome' value='' style='width: 450px;'/>";
+    sHTML += "</td>";
+    sHTML += "</tr>";
+    sHTML += "</table>";
+
+    bootbox.dialog({
+        title: "<span class='bigger-110'>Informe os dados da nova Atividade!</span>",
+        message: sHTML,
+        buttons:
+                {
+                    "success":
+                    {
+                        "label": "Cancelar",
+                        "className": "btn-sm btn-danger btnReprovar",
+                        "callback": function () {
+                        }
+                    },
+                    "danger":
+                    {
+                        "label": "Salvar",
+                        "className": "btn-sm btn-success btnAprovar",
+                        "callback": function () {
+                            var pAtividade = $("#txtAtividadeNome").val();
+                            $.ajax({
+                                method: "POST",
+                                url: "/CargoFuncAtiv/CadastrarAtividade",
+                                data: { UKFuncao: pUKFuncao, AtividadeNome: pAtividade },
+                                error: function (erro) {
+                                    ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+                                },
+                                success: function (content) {
+                                    TratarResultadoJSON(content.resultado);
+                                }
+                            });
+                        }
+                    }
+                }
+    });
+}
+
+function DeletarCargo(IDCargo, CargoNome) {
+    bootbox.confirm({
+        backdrop: true,
+        message: "Tem certeza que deseja excluir o cargo '" + CargoNome + "'?",
+        title: "Confirmação para excluir.",
+        buttons: {
+            confirm: {
+                label: "Sim",
+                className: "btn-success btn-sm",
+            },
+            cancel: {
+                label: "Não",
+                className: "btn-sm",
+            }
+        },
+        callback: function (result) {
+            $.ajax({
+                method: "POST",
+                url: "/CargoFuncAtiv/DeletarCargo",
+                data: { IDCargo: IDCargo },
+                error: function (erro) {
+                    ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+                },
+                success: function (content) {
+                    TratarResultadoJSON(content.resultado);
+                }
+            });
+        }
+    });
+}
+
+function DeletarFuncao(IDFuncao, FuncaoNome) {
+    bootbox.confirm({
+        backdrop: true,
+        message: "Tem certeza que deseja excluir a Função '" + FuncaoNome + "'?",
+        title: "Confirmação para excluir.",
+        buttons: {
+            confirm: {
+                label: "Sim",
+                className: "btn-success btn-sm",
+            },
+            cancel: {
+                label: "Não",
+                className: "btn-sm",
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                $.ajax({
+                    method: "POST",
+                    url: "/CargoFuncAtiv/DeletarFuncao",
+                    data: { IDFuncao: IDFuncao },
+                    error: function (erro) {
+                        ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+                    },
+                    success: function (content) {
+                        TratarResultadoJSON(content.resultado);
+                    }
+                });
+            }
+        }
+    });
+}
+
+function DeletarAtividade(IDAtividade, UKAtividade, AtividadeNome) {
+    bootbox.confirm({
+        backdrop: true,
+        message: "Tem certeza que deseja excluir a Atividade '" + AtividadeNome + "'?",
+        title: "Confirmação para excluir.",
+        buttons: {
+            confirm: {
+                label: "Sim",
+                className: "btn-success btn-sm",
+            },
+            cancel: {
+                label: "Não",
+                className: "btn-sm",
+            }
+        },
+        callback: function (result) {
+            $.ajax({
+                method: "POST",
+                url: "/CargoFuncAtiv/DeletarAtividade",
+                data: { IDAtividade: IDAtividade, UKAtividade: UKAtividade },
+                error: function (erro) {
+                    ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+                },
+                success: function (content) {
+                    TratarResultadoJSON(content.resultado);
+                }
+            });
+        }
     });
 }

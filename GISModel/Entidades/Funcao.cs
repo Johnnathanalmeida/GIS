@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
+using System.Collections.Generic;
 
 namespace GISModel.Entidades
 {
@@ -12,6 +13,8 @@ namespace GISModel.Entidades
 
         [Display(Name = "Função")]
         public string Func_Nome { get; set; }
+
+        public List<Atividade> Atividade { get; set; }
 
     }
 }

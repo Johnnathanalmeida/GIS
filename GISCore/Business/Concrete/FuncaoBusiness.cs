@@ -15,5 +15,10 @@ namespace GISCore.Business.Concrete
             funcao.UniqueKey = Guid.NewGuid().ToString();
             base.Inserir(funcao);
         }
+
+        public override void Excluir(Funcao funcao)
+        {
+            base.Alterar(funcao);
+        }
     }
 }

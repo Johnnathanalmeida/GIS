@@ -57,5 +57,9 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<Funcao> Funcao { get; set; }
 
+        public DbSet<Atividade> Atividade { get; set; }
+
+        public DbSet<FuncaoAtividade> FuncaoAtividade { get; set; }
+
     }
 }

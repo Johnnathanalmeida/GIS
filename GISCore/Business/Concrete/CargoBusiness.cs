@@ -15,5 +15,10 @@ namespace GISCore.Business.Concrete
             cargo.UniqueKey = Guid.NewGuid().ToString();
             base.Inserir(cargo);
         }
+
+        public override void Excluir(Cargo cargo)
+        {
+            base.Alterar(cargo);
+        }
     }
 }
