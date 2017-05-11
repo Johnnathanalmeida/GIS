@@ -57,9 +57,11 @@
     <Compile Include="Business\Abstract\IAdmissaoBusiness.cs" />
     <Compile Include="Business\Abstract\IAlocacaoBusiness.cs" />
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
+    <Compile Include="Business\Abstract\IAtividadeBusiness.cs" />
     <Compile Include="Business\Abstract\ICargoBusiness.cs" />
     <Compile Include="Business\Abstract\IContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoBusiness.cs" />
+    <Compile Include="Business\Abstract\IFuncaoAtividadeBusiness.cs" />
     <Compile Include="Business\Abstract\IDepartamentoContratoBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpregadoBusiness.cs" />
     <Compile Include="Business\Abstract\IEmpresaBusiness.cs" />
@@ -74,9 +76,11 @@
     <Compile Include="Business\Concrete\AdmissaoBusiness.cs" />
     <Compile Include="Business\Concrete\AlocacaoBusiness.cs" />
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
+    <Compile Include="Business\Concrete\AtividadeBusiness.cs" />
     <Compile Include="Business\Concrete\CargoBusiness.cs" />
     <Compile Include="Business\Concrete\ContratoBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoBusiness.cs" />
+    <Compile Include="Business\Concrete\FuncaoAtividadeBusiness.cs" />
     <Compile Include="Business\Concrete\DepartamentoContratoBusiness.cs" />
     <Compile Include="Business\Concrete\EmpregadoBusiness.cs" />
     <Compile Include="Business\Concrete\EmpresaBusiness.cs" />

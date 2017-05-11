@@ -22,50 +22,86 @@
         @{
             Html.RenderPartial("_MensagensDeRetorno");
         }
-
-        <div class="dd dd-draghandle" style="max-width:100%">
-            <ol class="dd-list">
-                @foreach (Cargo iCargo in ViewBag.Cargos)
-                {
-                    <li class="dd-item">
-                        <div class="dd-nodrag">
-                        </div>
-                        <div class="dd2-content">
-                            @iCargo.Carg_Nome
-                            <div class="pull-right action-buttons">
-                                <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
-                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>
-                                </a>
-                                <a class="blue" href="#" onclick="DeletarCargo('@iCargo.UniqueKey', '@iCargo.Carg_Nome')">
-                                    <i class="ace-icon fa fa-remove bigger-125"></i>
-                                </a>
+        @if (ViewBag.Cargos != null && ViewBag.Cargos.Count > 0)
+        {
+            <div class="dd dd-draghandle" style="max-width:100%">
+                <ol class="dd-list">
+                    @foreach (Cargo iCargo in ViewBag.Cargos)
+                    {
+                        <li class="dd-item">
+                            <div class="dd-nodrag">
                             </div>
-                        </div>
-                        @foreach (Funcao iFuncao in iCargo.Funcao)
-                        {
-                            <ol class="dd-list">
-                                <li class="dd-item">
-                                    <div class="dd-nodrag">
-                                    </div>
-                                    <div class="dd2-content">
-                                        @iFuncao.Func_Nome
-                                        <div class="pull-right action-buttons">
-                                            <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.UKCargo', '@iFuncao.UniqueKey')">
-                                                <i class="ace-icon fa fa-plus-circle bigger-125"></i>
-                                            </a>
-                                            <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.UKCargo', '@iFuncao.UniqueKey', '@iFuncao.Func_Nome')">
-                                                <i class="ace-icon fa fa-remove bigger-125"></i>
-                                            </a>
+                            <div class="dd2-content">
+                                @iCargo.Carg_Nome
+                                <div class="pull-right action-buttons">
+                                    <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
+                                        <i class="ace-icon fa fa-plus-circle bigger-125"></i>
+                                    </a>
+                                    @if (iCargo.Funcao.Count == 0)
+                                    {
+                                        <a class="blue" href="#" onclick="DeletarCargo('@iCargo.ID', '@iCargo.Carg_Nome')">
+                                            <i class="ace-icon fa fa-remove bigger-125"></i>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                            @foreach (Funcao iFuncao in iCargo.Funcao)
+                            {
+                                <ol class="dd-list">
+                                    <li class="dd-item">
+                                        <div class="dd-nodrag">
                                         </div>
-                                    </div>
-                                </li>
-                            </ol>
-                        }
+                                        <div class="dd2-content">
+                                            @iFuncao.Func_Nome
+                                            <div class="pull-right action-buttons">
+                                                <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.UniqueKey')">
+                                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>
+                                                </a>
+                                                @if (iFuncao.Atividade.Count == 0) { 
+                                                    <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.Func_Nome')">
+                                                        <i class="ace-icon fa fa-remove bigger-125"></i>
+                                                    </a>
+                                                }
+                                            </div>
+                                        </div>
+                                        @foreach (Atividade iAtividade in iFuncao.Atividade)
+                                        {
+                                            <ol class="dd-list">
+                                                <li class="dd-item">
+                                                    <div class="dd-nodrag">
+                                                    </div>
+                                                    <div class="dd2-content">
+                                                        @iAtividade.Ativ_Nome
+                                                        <div class="pull-right action-buttons">
+                                                            <a class="blue" href="#" onclick="DeletarAtividade('@iAtividade.ID', '@iAtividade.UniqueKey', '@iAtividade.Ativ_Nome')">
+                                                                <i class="ace-icon fa fa-remove bigger-125"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ol>
+                                        }
+                                    </li>
+                                </ol>
+                            }
 
-                    </li>
-                }
-            </ol>
-        </div>
+                        </li>
+                    }
+                </ol>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>
+                    <i class="ace-icon fa fa-meh-o"></i>
+                    Oops!
+                </strong>
+
+                No momento, não existe cargo cadastrado no sistema.
+                <br>
+            </div>
+        }
     </div>
 </div>
 
