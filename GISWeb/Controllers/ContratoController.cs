@@ -46,7 +46,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administracao/Contrato")]
+        [MenuAtivo(MenuAtivo = "Administracao/Contratos")]
         public ActionResult Index()
         {
             //ViewBag.Contratos = ContratoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
@@ -82,7 +82,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Contrato")]
+        [MenuAtivo(MenuAtivo = "Administracao/Contratos")]
         public ActionResult Novo()
         {
             return View();

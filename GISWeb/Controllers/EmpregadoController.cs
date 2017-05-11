@@ -38,26 +38,26 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empregados")]
         public ActionResult Index()
         {
             ViewBag.Empregados = EmpregadoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empregados")]
         public ActionResult Novo()
         {
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empregados")]
         public ActionResult Edicao(string id)
         {
             return View(EmpregadoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Empregado")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empregados")]
         public ActionResult Detalhes(string id)
         {
             List<Admissao> lAdmissao = AdmissaoBusiness.Consulta.Where(p => p.UKEmpregado.Equals(id) && string.IsNullOrEmpty(p.UKUsuarioDemissao)).ToList();

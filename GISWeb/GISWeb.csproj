@@ -198,6 +198,7 @@
     <Content Include="Content\Ace\FontAwesome\fonts\FontAwesome.otf" />
     <Content Include="Content\Ace\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Ace\fonts\fontawesome-webfont.eot" />
+    <None Include="Properties\PublishProfiles\PublishGISInStarsDev.pubxml" />
     <None Include="Scripts\jQuery\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\Custom\Departamento\Edicao.js" />
     <Content Include="Scripts\Custom\Departamento\Listagem.js" />

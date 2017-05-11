@@ -39,7 +39,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administracao/Permissões")]
+        [MenuAtivo(MenuAtivo = "Administracao/Gerenciar Permissões")]
         public ActionResult Index()
         {
             ViewBag.Empresas = new SelectList(EmpresaBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList(), "UniqueKey", "NomeFantasia");

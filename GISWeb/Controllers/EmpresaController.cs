@@ -29,7 +29,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administracao/Empresa")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empresas")]
         public ActionResult Index()
         {
 
@@ -65,13 +65,13 @@ namespace GISWeb.Controllers
 
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Empresa")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empresas")]
         public ActionResult Novo() 
         {
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Empresa")]
+        [MenuAtivo(MenuAtivo = "Administracao/Empresas")]
         public ActionResult Edicao(string id)
         {
             return View(EmpresaBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));

@@ -28,7 +28,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
+        [MenuAtivo(MenuAtivo = "Administracao/Perfis")]
         public ActionResult Index()
         {
             ViewBag.Perfis = PerfilBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList();
@@ -36,7 +36,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
+        [MenuAtivo(MenuAtivo = "Administracao/Perfis")]
         public ActionResult Novo()
         {
             return View();
@@ -76,7 +76,7 @@ namespace GISWeb.Controllers
             }
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Perfil")]
+        [MenuAtivo(MenuAtivo = "Administracao/Perfis")]
         public ActionResult Edicao(string id)
         {
             return View(PerfilBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.ID.Equals(id)));

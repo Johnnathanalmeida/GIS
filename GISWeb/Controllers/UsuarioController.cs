@@ -34,7 +34,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administracao/Usuario")]
+        [MenuAtivo(MenuAtivo = "Administracao/Usuarios")]
         public ActionResult Index()
         {
             //ViewBag.Usuarios = UsuarioBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).OrderBy(o => o.Nome).ToList();
@@ -55,7 +55,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Usuario")]
+        [MenuAtivo(MenuAtivo = "Administracao/Usuarios")]
         public ActionResult Novo()
         {
             ViewBag.Empresas = EmpresaBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList();
@@ -108,7 +108,7 @@ namespace GISWeb.Controllers
             }
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Usuario")]
+        [MenuAtivo(MenuAtivo = "Administracao/Usuarios")]
         public ActionResult Edicao(string id)
         {
             

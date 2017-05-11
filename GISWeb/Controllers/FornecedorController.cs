@@ -31,7 +31,7 @@ namespace GISWeb.Controllers
 
         #endregion
 
-        [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
+        [MenuAtivo(MenuAtivo = "Administracao/Fornecedores")]
         public ActionResult Index()
         {
             ViewBag.Fornecedores = FornecedorBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
@@ -39,7 +39,7 @@ namespace GISWeb.Controllers
             return View();
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
+        [MenuAtivo(MenuAtivo = "Administracao/Fornecedores")]
         public ActionResult Novo()
         {
             if (CustomAuthorizationProvider.UsuarioAutenticado.Perfis.Where(p => p.Nome.Equals("Super Administrador")).Count() > 0)
@@ -89,7 +89,7 @@ namespace GISWeb.Controllers
             }
         }
 
-        [MenuAtivo(MenuAtivo = "Administracao/Fornecedor")]
+        [MenuAtivo(MenuAtivo = "Administracao/Fornecedores")]
         public ActionResult Edicao(string id)
         {
             return View(FornecedorBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
