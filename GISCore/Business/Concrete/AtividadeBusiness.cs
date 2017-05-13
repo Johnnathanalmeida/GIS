@@ -10,9 +10,11 @@ namespace GISCore.Business.Concrete
 {
     public class AtividadeBusiness : BaseBusiness<Atividade>, IAtividadeBusiness
     {
-        public override void Excluir(Atividade atividade)
+        public override void Inserir(Atividade atividade)
         {
-            base.Alterar(atividade);
+            if (string.IsNullOrEmpty(atividade.UniqueKey))
+                atividade.UniqueKey = Guid.NewGuid().ToString();
+            base.Inserir(atividade);
         }
     }
 }
