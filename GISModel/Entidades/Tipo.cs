@@ -15,5 +15,13 @@ namespace GISModel.Entidades
 
         public string Nome { get; set; }
 
+        public bool Obrigatorio { get; set; }
+
+        public string MascaraParaNomeclatura { get; set; }
+
+        public string ExtensoesPermitidas { get; set; }
+
+        public int TamanhoMaximoEmMB { get; set; }
+
     }
 }
