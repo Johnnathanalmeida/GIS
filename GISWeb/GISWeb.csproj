@@ -354,7 +354,6 @@
     <Content Include="Views\Estabelecimento\_Upload.cshtml" />
     <Content Include="Views\Estabelecimento\Index.cshtml" />
     <Content Include="Views\Estabelecimento\Edicao.cshtml" />
-    <Content Include="Views\CategoriaDeDocumento\Index.cshtml" />
     <Content Include="Views\TipoDeDocumento\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -371,6 +370,7 @@
     <Folder Include="Scripts\Custom\Painel\" />
     <Folder Include="Scripts\Custom\Proposito\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\CategoriaDeDocumento\" />
     <Folder Include="Views\Obra\" />
     <Folder Include="Views\Proposito\" />
   </ItemGroup>
