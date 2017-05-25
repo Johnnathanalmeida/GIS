@@ -97,10 +97,9 @@ namespace GISWeb.Controllers
                 }
                 else
                 {
-
-                    oEstabelecimento.DataExclusao = DateTime.Now;
+                    
                     oEstabelecimento.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
-                    EstabelecimentoBusiness.Alterar(oEstabelecimento);
+                    EstabelecimentoBusiness.Terminar(oEstabelecimento);
 
                     return Json(new { resultado = new RetornoJSON() { Sucesso = "O estabelecimento '" + oEstabelecimento.Nome + "' foi excluído com sucesso." } });
                 }
@@ -167,11 +166,12 @@ namespace GISWeb.Controllers
             {
                 try
                 {
+                    entidade.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     EstabelecimentoBusiness.Alterar(entidade);
 
                     TempData["MensagemSucesso"] = "O estabelecimento '" + entidade.Nome + "' foi atualizado com sucesso.";
 
-                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Empresa") } });
+                    return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "Estabelecimento") } });
                 }
                 catch (Exception ex)
                 {

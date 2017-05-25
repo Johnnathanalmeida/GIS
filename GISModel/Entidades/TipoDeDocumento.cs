@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("GDOBJTipo")]
-    public class Tipo : EntidadeBase
+    [Table("GDOBJTipoDeDocumento")]
+    public class TipoDeDocumento : EntidadeBase
     {
 
-        public string UKCategoria { get; set; }
+        public string UKCategoriaDeDocumento { get; set; }
 
         public string Nome { get; set; }
 

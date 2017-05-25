@@ -88,8 +88,8 @@
     <Compile Include="Entidades\Arquivo.cs" />
     <Compile Include="Entidades\Atividade.cs" />
     <Compile Include="Entidades\Cargo.cs" />
-    <Compile Include="Entidades\Categoria.cs" />
-    <Compile Include="Entidades\ContratoArquivo.cs" />
+    <Compile Include="Entidades\CategoriaDeDocumento.cs" />
+    <Compile Include="Entidades\ObjetoArquivo.cs" />
     <Compile Include="Entidades\ContratoGarantia.cs" />
     <Compile Include="Entidades\FuncaoAtividade.cs" />
     <Compile Include="Entidades\Estabelecimento.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="Entidades\Menu.cs" />
     <Compile Include="Entidades\Perfil.cs" />
     <Compile Include="Entidades\PerfilMenu.cs" />
-    <Compile Include="Entidades\Tipo.cs" />
+    <Compile Include="Entidades\TipoDeDocumento.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\UsuarioPerfil.cs" />
     <Compile Include="Enums\Intervalo.cs" />

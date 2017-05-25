@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace GISModel.Entidades
 {
-    [Table("RELContratoArquivo")]
-    public class ContratoArquivo : EntidadeBase
+    [Table("RELObjetoArquivo")]
+    public class ObjetoArquivo : EntidadeBase
     {
 
-        public virtual Contrato Contrato { get; set; }
+        public virtual Object Objeto { get; set; }
 
-        [Display(Name = "Contrato")]
-        [Required(ErrorMessage = "Selecione um Contrato")]
-        public string UKContrato { get; set; }
+        [Display(Name = "Objeto")]
+        [Required(ErrorMessage = "Selecione um Objeto")]
+        public string UKObjeto { get; set; }
 
 
 

@@ -185,6 +185,7 @@
     <Content Include="Scripts\Ace\respond.js" />
     <Content Include="Scripts\Custom\Admissao\Novo.js" />
     <Content Include="Scripts\Custom\CargoFuncAtiv\Listagem.js" />
+    <Content Include="Scripts\Custom\CategoriaDeDocumento\Listagem.js" />
     <Content Include="Scripts\Custom\Conta\NovaSenha.js" />
     <Content Include="Scripts\Custom\Contrato\Listagem.js" />
     <Content Include="Scripts\Custom\Contrato\Novo.js" />
@@ -224,6 +225,7 @@
     <Content Include="Scripts\Custom\Perfil\Edicao.js" />
     <Content Include="Scripts\Custom\Perfil\Listagem.js" />
     <Content Include="Scripts\Custom\Perfil\Novo.js" />
+    <Content Include="Scripts\Custom\TipoDeDocumento\Listagem.js" />
     <Content Include="Scripts\Custom\UsuarioPerfil\Admin.js" />
     <Content Include="Scripts\Custom\Usuario\Edicao.js" />
     <Content Include="Scripts\Custom\Usuario\Listagem.js" />
@@ -251,6 +253,7 @@
     <Compile Include="Controllers\ArquivoController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CargoFuncAtivController.cs" />
+    <Compile Include="Controllers\CategoriaDeDocumentoController.cs" />
     <Compile Include="Controllers\ContaController.cs" />
     <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\DepartamentoController.cs" />
@@ -266,6 +269,7 @@
     <Compile Include="Controllers\PerfilMenuController.cs" />
     <Compile Include="Controllers\PermissoesController.cs" />
     <Compile Include="Controllers\PropositoController.cs" />
+    <Compile Include="Controllers\TipoDeDocumentoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -350,6 +354,8 @@
     <Content Include="Views\Estabelecimento\_Upload.cshtml" />
     <Content Include="Views\Estabelecimento\Index.cshtml" />
     <Content Include="Views\Estabelecimento\Edicao.cshtml" />
+    <Content Include="Views\CategoriaDeDocumento\Index.cshtml" />
+    <Content Include="Views\TipoDeDocumento\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

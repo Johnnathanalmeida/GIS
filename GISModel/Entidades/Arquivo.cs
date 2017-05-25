@@ -14,9 +14,7 @@ namespace GISModel.Entidades
 
         public string UKObjeto { get; set; }
 
-        public string UKCategoria { get; set; }
-
-        public string UKTipo { get; set; }
+        public string UKTipoDeDocumento { get; set; }
 
 
 

@@ -14,6 +14,8 @@ namespace GISCore.Business.Abstract
 
         void Alterar(T entidade);
 
+        void Terminar(T entidade);
+
         void Excluir(T entidade);
 
         IQueryable<T> Consulta { get; }

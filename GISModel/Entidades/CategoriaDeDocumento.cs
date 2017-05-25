@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace GISModel.Entidades
 {
 
-    [Table("GDOBJCategoria")]
-    public class Categoria : EntidadeBase
+    [Table("GDOBJCategoriaDeDocumento")]
+    public class CategoriaDeDocumento : EntidadeBase
     {
 
         public string Nome { get; set; }

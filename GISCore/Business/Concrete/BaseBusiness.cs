@@ -22,6 +22,37 @@ namespace GISCore.Business.Concrete
             Repository.Inserir(entidade);
         }
 
+        public virtual void AlterarComHistorico(T entidade)
+        {
+            T tempObjeto = null;
+
+            if (!string.IsNullOrEmpty(entidade.ID))
+                tempObjeto = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(entidade.ID));
+            else if (!string.IsNullOrEmpty(entidade.UniqueKey))
+                tempObjeto = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(entidade.UniqueKey));
+
+            if (tempObjeto == null)
+            {
+                throw new Exception("Não foi possível encontra o objeto a ser atualizado através de sua identifação.");
+            }
+            else
+            {
+                tempObjeto.DataExclusao = DateTime.Now;
+                tempObjeto.UsuarioExclusao = entidade.UsuarioExclusao;
+                Repository.Alterar(tempObjeto);
+
+                entidade.UniqueKey = tempObjeto.UniqueKey;
+                entidade.UsuarioExclusao = string.Empty;
+                Repository.Inserir(entidade);
+            }
+        }
+
+        public virtual void Terminar(T entidade)
+        {
+            entidade.DataExclusao = DateTime.Now;
+            Repository.Alterar(entidade);
+        }
+
         public virtual void Alterar(T entidade)
         {
             Repository.Alterar(entidade);
