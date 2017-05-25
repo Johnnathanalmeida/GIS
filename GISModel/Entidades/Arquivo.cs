@@ -26,5 +26,7 @@ namespace GISModel.Entidades
 
         public string Comentario { get; set; }
 
+        public DateTime DataArquivo { get; set; }
+
     }
 }

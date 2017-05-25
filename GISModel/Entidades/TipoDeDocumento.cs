@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GISModel.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -22,6 +23,10 @@ namespace GISModel.Entidades
         public string ExtensoesPermitidas { get; set; }
 
         public int TamanhoMaximoEmMB { get; set; }
+
+        public Intervalo IntervaloVencimento { get; set; }
+
+        public int PrazoVencimento { get; set; }
 
     }
 }
