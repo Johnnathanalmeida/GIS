@@ -14,5 +14,7 @@ namespace GISModel.Entidades
 
         public string Nome { get; set; }
 
+        public List<TipoDeDocumento> Tipos { get; set; }
+
     }
 }

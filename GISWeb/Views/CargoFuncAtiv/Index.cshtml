@@ -34,7 +34,7 @@
                                 <span class="badge badge-grey">@iCargo.Funcao.Count()</span>
                                 <div class="pull-right action-buttons">
                                     <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
-                                        <i class="ace-icon fa fa-plus-circle bigger-125"></i>
+                                        <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
                                     </a>
                                     <a class="blue" href="#" onclick="AlterarCargo('@iCargo.UniqueKey', '@iCargo.Carg_Nome')">
                                         <i class="ace-icon fa fa-edit bigger-125"></i>
@@ -42,13 +42,13 @@
                                     @if (iCargo.Funcao.Count == 0)
                                     {
                                         <a class="blue" href="#" onclick="DeletarCargo('@iCargo.ID', '@iCargo.Carg_Nome')">
-                                            <i class="ace-icon fa fa-remove bigger-125"></i>
+                                            <i class="ace-icon fa fa-trash red bigger-125"></i>
                                         </a>
                                     }
                                     else
                                     {
                                         <a class="light-grey" href="#">
-                                            <i class="ace-icon fa fa-remove bigger-125"></i>
+                                            <i class="ace-icon fa fa-trash bigger-125"></i>
                                         </a>
                                     }
                                 </div>
@@ -62,7 +62,7 @@
                                             <span class="badge badge-grey">@iFuncao.Atividade.Count()</span>
                                             <div class="pull-right action-buttons">
                                                 <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.UniqueKey')">
-                                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>
+                                                    <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
                                                 </a>
                                                 <a class="blue" href="#" onclick="AlterarFuncao('@iFuncao.UniqueKey', '@iFuncao.Func_Nome')">
                                                     <i class="ace-icon fa fa-edit bigger-125"></i>
@@ -70,13 +70,13 @@
                                                 @if (iFuncao.Atividade.Count == 0)
                                                 {
                                                     <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.Func_Nome')">
-                                                        <i class="ace-icon fa fa-remove bigger-125"></i>
+                                                        <i class="ace-icon fa fa-trash red bigger-125"></i>
                                                     </a>
                                                 }
                                                 else
                                                 {
                                                     <a class="light-grey" href="#">
-                                                        <i class="ace-icon fa fa-remove bigger-125"></i>
+                                                        <i class="ace-icon fa fa-trash bigger-125"></i>
                                                     </a>
                                                 }
                                             </div>
@@ -92,7 +92,7 @@
                                                                 <i class="ace-icon fa fa-edit bigger-125"></i>
                                                             </a>
                                                             <a class="blue" href="#" onclick="DeletarAtividade('@iAtividade.ID', '@iAtividade.UniqueKey', '@iAtividade.Ativ_Nome')">
-                                                                <i class="ace-icon fa fa-remove bigger-125"></i>
+                                                                <i class="ace-icon fa fa-trash red bigger-125"></i>
                                                             </a>
                                                         </div>
                                                     </div>

@@ -19,13 +19,31 @@ namespace GISWeb.Controllers
         public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
         [Inject]
-        public IBaseBusiness<TipoDeDocumento> CategoriaDeDocumentoBusiness { get; set; }
-
+        public IBaseBusiness<TipoDeDocumento> TipoDeDocumentoBusiness { get; set; }
+        
         #endregion
 
         public ActionResult Index()
         {
             return View();
+        }
+
+
+        public ActionResult Novo(string UKCategoria)
+        {
+            try
+            {
+                TipoDeDocumento objTipo = new TipoDeDocumento();
+                objTipo.UKCategoriaDeDocumento = UKCategoria;
+                ViewBag.Intervalos = TipoDeDocumentoBusiness.GetTodosEnumsIntervalo();
+
+                return PartialView("Novo", objTipo);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return Content(ex.Message, "text/html");
+            }
         }
 
 	}
