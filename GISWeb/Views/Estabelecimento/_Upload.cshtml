@@ -1,9 +1,60 @@
-﻿@using (Html.BeginForm("Upload", "Estabelecimento", FormMethod.Post, new
-{
-    @id = "formUpload",
-    @class = "dropzone",
-    @enctype = "multipart/form-data"
-}))
+﻿@using GISModel.Entidades
+@model TipoDeDocumento
+
+@{
+    var strExtensoes = string.Empty;
+
+    if (Model.ExtensoesPermitidas != null && !string.IsNullOrEmpty(Model.ExtensoesPermitidas))
+    {
+        if (Model.ExtensoesPermitidas.Contains(" "))
+        {
+            foreach (string extensao in Model.ExtensoesPermitidas.Split(' '))
+            {
+                if (!string.IsNullOrWhiteSpace(extensao))
+                {
+                    strExtensoes += "." + extensao + ",";    
+                }
+            }
+
+            strExtensoes = strExtensoes.Remove(strExtensoes.Length - 1);    
+        }
+        else
+        {
+            strExtensoes = Model.ExtensoesPermitidas.Replace(".", "");
+        }
+    }
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <h5 class="widget-title lighter smaller" style="vertical-align: top">
+            <i class="ace-icon fa fa-qrcode blue"></i>
+            Tipo do Anexo: <span class="blue" style="font-weight: 600; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15)">@Model.Nome</span>
+        </h5>
+
+        @if (!string.IsNullOrEmpty(strExtensoes))
+        {
+            <h6 class="widget-title lighter smaller" style="margin-left: 20px; line-height: 10px">
+                <i class="ace-icon fa fa-files-o blue"></i>
+                Extensões permitidas: <span style="font-weight: 500">@strExtensoes.Replace(",", ", ")</span>
+            </h6>    
+        }
+    </div>
+</div>
+
+<div class="hr hr-dotted"></div>
+<div class="space-10"></div>
+
+@{
+//    @id = "formUpload",
+//    @class = "dropzone",
+//    @enctype = "multipart/form-data",
+//    @data_extensoes = strExtensoes,
+//    @data_uploadmultiplo = Model.PermiteMultiplosArquivos
+//}))
+}
+
+@using (Ajax.BeginForm("Upload", "Estabelecimento", null, new AjaxOptions { HttpMethod = "POST" }, new { @id = "formUpload", @class = "dropzone", @enctype = "multipart/form-data", @data_extensoes = strExtensoes, @data_uploadmultiplo = Model.PermiteMultiplosArquivos }))
 {
     @Html.AntiForgeryToken()
 
@@ -11,6 +62,21 @@
         <input name="file" style="border: 1px solid red;" type="file" multiple="" />
     </div>
 }
+
+@*@using (Html.BeginForm("Upload", "Estabelecimento", FormMethod.Post, new
+{
+    @id = "formUpload",
+    @class = "dropzone",
+    @enctype = "multipart/form-data",
+    @data_extensoes = strExtensoes,
+    @data_uploadmultiplo = Model.PermiteMultiplosArquivos }))
+{ 
+    @Html.AntiForgeryToken()
+
+    <div class="fallback" style="border: 1px solid red;">
+        <input name="file" style="border: 1px solid red;" type="file" multiple="" />
+    </div>
+}*@
 
 
 

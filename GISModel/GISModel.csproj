@@ -84,7 +84,9 @@
     <Compile Include="DTO\Menu\PerfilMenuViewModel.cs" />
     <Compile Include="DTO\Permissoes\UsuarioPerfilViewModel.cs" />
     <Compile Include="DTO\Shared\RetornoJSON.cs" />
+    <Compile Include="DTO\TipoDeDocumento\TipoDeDocumentoComArquivosViewModel.cs" />
     <Compile Include="DTO\Usuario\UsuarioPerfisMenusViewModel.cs" />
+    <Compile Include="Entidades\Acesso.cs" />
     <Compile Include="Entidades\Arquivo.cs" />
     <Compile Include="Entidades\Atividade.cs" />
     <Compile Include="Entidades\Cargo.cs" />

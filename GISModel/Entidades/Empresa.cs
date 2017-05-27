@@ -38,9 +38,7 @@ namespace GISModel.Entidades
         [Display(Name = "URL do AD na Intranet")]
         public string URL_AD { get; set; }
 
-        public string UKArquivo150x20 { get; set; }
-
-        public string UKArquivo230x50 { get; set; }
+        public string ConnectionString { get; set; }
 
     }
 }

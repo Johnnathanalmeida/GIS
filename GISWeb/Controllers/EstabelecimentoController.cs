@@ -1,5 +1,6 @@
 ﻿using GISCore.Business.Abstract;
 using GISModel.DTO.Shared;
+using GISModel.DTO.TipoDeDocumento;
 using GISModel.Entidades;
 using GISWeb.Infraestrutura.Filters;
 using GISWeb.Infraestrutura.Provider.Abstract;
@@ -33,6 +34,9 @@ namespace GISWeb.Controllers
             [Inject]
             public IBaseBusiness<TipoDeDocumento> TipoDeDocumentoBusiness { get; set; }
 
+            [Inject]
+            public IBaseBusiness<Arquivo> ArquivoBusiness { get; set; }
+
         #endregion
 
         [MenuAtivo(MenuAtivo = "Administracao/Estabelecimentos")]
@@ -46,9 +50,10 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Estabelecimentos")]
         public ActionResult Novo()
         {
+
             ViewBag.TiposDeDocumento = (from cat in CategoriaDeDocumentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.Nome.Equals("Estabelecimento")).ToList()
                                         join tip in TipoDeDocumentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on cat.UniqueKey equals tip.UKCategoriaDeDocumento
-                                        select new TipoDeDocumento()
+                                        select new TipoDeDocumentoComArquivosViewModel()
                                         {
                                             UniqueKey = tip.UniqueKey,
                                             Nome = tip.Nome,
@@ -57,6 +62,7 @@ namespace GISWeb.Controllers
                                             TamanhoMaximoEmMB = tip.TamanhoMaximoEmMB,
                                             MascaraParaNomeclatura = tip.MascaraParaNomeclatura
                                         }).ToList();
+
             return View();
         }
 
@@ -210,11 +216,12 @@ namespace GISWeb.Controllers
         }
 
         [RestritoAAjax]
-        public ActionResult _Upload()
+        public ActionResult _Upload(string UKTipoDeDocumento)
         {
             try
             {
-                return PartialView("_Upload");
+                TipoDeDocumento oTipo = TipoDeDocumentoBusiness.Consulta.FirstOrDefault(a => string.IsNullOrEmpty(a.UsuarioExclusao) && a.UniqueKey.Equals(UKTipoDeDocumento));
+                return PartialView("_Upload", oTipo);
             }
             catch (Exception ex)
             {
@@ -231,6 +238,7 @@ namespace GISWeb.Controllers
             try
             {
                 string fName = string.Empty;
+                List<string> Arquivos = new List<string>();
                 string msgErro = string.Empty;
                 foreach (string fileName in Request.Files.AllKeys)
                 {
@@ -238,43 +246,22 @@ namespace GISWeb.Controllers
                     fName = oFile.FileName;
                     if (oFile != null)
                     {
-                        string sExtensao = oFile.FileName.Substring(oFile.FileName.LastIndexOf("."));
-                        if (sExtensao.ToUpper().Contains("JPG") || sExtensao.ToUpper().Contains("JPEG") || sExtensao.ToUpper().Contains("PNG") || sExtensao.ToUpper().Contains("GIF"))
-                        {
-                            //Após a autenticação está totalmente concluída, mudar para incluir uma pasta com o Login do usuário
-                            string sLocalFile = Path.Combine(Path.GetTempPath(), ConfigurationManager.AppSettings["Web:NomeModulo"]);
-                            sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
-                            sLocalFile = Path.Combine(sLocalFile, "Estabelecimento");
-                            sLocalFile = Path.Combine(sLocalFile, CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login);
+                        string sLocalFile = Path.Combine(Path.GetTempPath(), ConfigurationManager.AppSettings["Web:NomeModulo"]);
+                        sLocalFile = Path.Combine(sLocalFile, DateTime.Now.ToString("yyyyMMdd"));
+                        sLocalFile = Path.Combine(sLocalFile, "Estabelecimento");
+                        sLocalFile = Path.Combine(sLocalFile, CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login);
+                        sLocalFile = Path.Combine(sLocalFile, Guid.NewGuid().ToString());
 
-                            if (!System.IO.Directory.Exists(sLocalFile))
-                                Directory.CreateDirectory(sLocalFile);
-                            else
-                            {
-                                //Tratamento de limpar arquivos da pasta, pois o usuário pode estar apenas alterando o arquivo.
-                                //Limpar para não ficar lixo.
-                                //O arquivo que for salvo abaixo será limpado após o cadastro.
-                                //Se o usuário cancelar o cadastro, a rotina de limpar diretórios ficará responsável por limpá-lo.
-                                foreach (string iFile in System.IO.Directory.GetFiles(sLocalFile))
-                                {
-                                    System.IO.File.Delete(iFile);
-                                }
-                            }
+                        if (!System.IO.Directory.Exists(sLocalFile))
+                            Directory.CreateDirectory(sLocalFile);
 
-                            sLocalFile = Path.Combine(sLocalFile, oFile.FileName);
+                        Arquivos.Add(Path.Combine(sLocalFile, oFile.FileName));
 
-                            oFile.SaveAs(sLocalFile);
-
-                        }
-                        else
-                        {
-                            throw new Exception("Extensão do arquivo não permitida.");
-                        }
-
+                        oFile.SaveAs(Path.Combine(sLocalFile, oFile.FileName));
                     }
                 }
                 if (string.IsNullOrEmpty(msgErro))
-                    return Json(new { sucesso = "O upload do arquivo '" + fName + "' foi realizado com êxito.", arquivo = fName, erro = msgErro });
+                    return Json(new { sucesso = "O upload do arquivo '" + fName + "' foi realizado com êxito.", arquivos = Arquivos, erro = msgErro });
                 else
                     return Json(new { erro = msgErro });
             }
