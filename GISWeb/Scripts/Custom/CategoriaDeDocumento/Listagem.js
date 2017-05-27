@@ -81,6 +81,9 @@ function CadastrarTipo(pUKCategoria) {
         },
         success: function (content) {
             $('#modalTipoDeDocumentoCorpo').html(content);
+            $("#cbObrigatorio").css("opacity", "1");
+            $("#cbObrigatorio").css("position", "initial");
+            $("#cbObrigatorio").css("margin-top", "8px");
         },
     });
 };

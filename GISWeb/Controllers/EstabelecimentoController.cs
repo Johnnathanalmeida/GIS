@@ -27,6 +27,12 @@ namespace GISWeb.Controllers
             [Inject]
             public IEstabelecimentoBusiness EstabelecimentoBusiness { get; set; }
 
+            [Inject]
+            public IBaseBusiness<CategoriaDeDocumento> CategoriaDeDocumentoBusiness { get; set; }
+
+            [Inject]
+            public IBaseBusiness<TipoDeDocumento> TipoDeDocumentoBusiness { get; set; }
+
         #endregion
 
         [MenuAtivo(MenuAtivo = "Administracao/Estabelecimentos")]
@@ -40,6 +46,17 @@ namespace GISWeb.Controllers
         [MenuAtivo(MenuAtivo = "Administracao/Estabelecimentos")]
         public ActionResult Novo()
         {
+            ViewBag.TiposDeDocumento = (from cat in CategoriaDeDocumentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.Nome.Equals("Estabelecimento")).ToList()
+                                        join tip in TipoDeDocumentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on cat.UniqueKey equals tip.UKCategoriaDeDocumento
+                                        select new TipoDeDocumento()
+                                        {
+                                            UniqueKey = tip.UniqueKey,
+                                            Nome = tip.Nome,
+                                            Obrigatorio = tip.Obrigatorio,
+                                            ExtensoesPermitidas = tip.ExtensoesPermitidas,
+                                            TamanhoMaximoEmMB = tip.TamanhoMaximoEmMB,
+                                            MascaraParaNomeclatura = tip.MascaraParaNomeclatura
+                                        }).ToList();
             return View();
         }
 
