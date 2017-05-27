@@ -8,7 +8,9 @@
 
     $('[data-rel="tooltip"]').tooltip();
 
-    
+    $("#modalTipoDeDocumentoProsseguir").on("click", function () {
+        $("#formCadastroTipoDeDocumento").submit();
+    });
 
 });
 
@@ -82,3 +84,20 @@ function CadastrarTipo(pUKCategoria) {
         },
     });
 };
+
+function OnSuccessCadastrarTipoDeDocumento(data) {
+    $('#modalTipoDeDocumento').hide();
+    TratarResultadoJSON(data.resultado);
+}
+
+function OnBeginCadastrarTipoDeDocumento() {
+    $('#modalTipoDeDocumento').modal('show');
+    $('#modalTipoDeDocumentoX').hide();
+    $('#modalTipoDeDocumentoFechar').addClass('disabled');
+    $('#modalTipoDeDocumentoFechar').attr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoProsseguir').addClass('disabled');
+    $('#modalTipoDeDocumentoProsseguir').attr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoCorpo').hide();
+    $('#modalTipoDeDocumentoCorpoConfirmar').hide();
+    $('#modalTipoDeDocumentoCorpoLoading').show();
+}

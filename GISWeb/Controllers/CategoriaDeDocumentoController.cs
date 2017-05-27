@@ -43,21 +43,21 @@ namespace GISWeb.Controllers
                                           Tipos = new List<TipoDeDocumento>()
                                       }).ToList();
 
-            //foreach (CategoriaDeDocumento item in listCategorias)
-            //{
+            foreach (CategoriaDeDocumento item in listCategorias)
+            {
+                item.Tipos = (from tipo in TipoDeDocumentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
+                              where tipo.UKCategoriaDeDocumento.Equals(item.UniqueKey)
+                              orderby tipo.Nome
+                              select new TipoDeDocumento()
+                              {
+                                  ID = tipo.ID,
+                                  UKCategoriaDeDocumento = tipo.UKCategoriaDeDocumento,
+                                  UniqueKey = tipo.UniqueKey,
+                                  Nome = tipo.Nome
+                              }
+                                ).ToList();
+            }
 
-            //    item.Tipos = (from tipo in TipoDeDocumentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
-            //                   where tipo.UKCategoriaDeDocumento.Equals(item.UniqueKey)
-            //                   orderby tipo.Nome
-            //                   select new TipoDeDocumento()
-            //                   {
-            //                       ID = tipo.ID,
-            //                       UKCategoriaDeDocumento = tipo.UKCategoriaDeDocumento,
-            //                       UniqueKey = tipo.UniqueKey,
-            //                       Nome = tipo.Nome
-            //                   }
-            //                    ).ToList();
-            //}
             ViewBag.Categorias = listCategorias;
             return View();
         }
