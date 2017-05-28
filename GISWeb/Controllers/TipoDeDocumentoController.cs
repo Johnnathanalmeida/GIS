@@ -47,6 +47,22 @@ namespace GISWeb.Controllers
             }
         }
 
+        public ActionResult Detalhes(string UKTipo)
+        {
+            try
+            {
+                TipoDeDocumento objTipo = TipoDeDocumentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(UKTipo));
+                ViewBag.Intervalos = TipoDeDocumentoBusiness.GetTodosEnumsIntervalo();
+
+                return PartialView("_Detalhes", objTipo);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return Content(ex.Message, "text/html");
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Cadastrar(TipoDeDocumento oTipo)

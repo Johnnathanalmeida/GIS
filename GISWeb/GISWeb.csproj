@@ -358,6 +358,7 @@
     <Content Include="Views\TipoDeDocumento\Novo.cshtml" />
     <Content Include="Views\Estabelecimento\_ArquivoWidget.cshtml" />
     <Content Include="Views\Estabelecimento\_ArquivoWidgetMultiplo.cshtml" />
+    <Content Include="Views\TipoDeDocumento\_Detalhes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

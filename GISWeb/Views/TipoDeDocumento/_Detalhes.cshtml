@@ -1,0 +1,85 @@
+﻿@model GISModel.Entidades.TipoDeDocumento
+
+@{
+    ViewBag.Title = "Detalhes Tipo de Documento";
+}
+
+<div>
+    @using (Ajax.BeginForm("Detalhes", "TipoDeDocumento", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginCadastrarTipoDeDocumento", OnSuccess = "OnSuccessCadastrarTipoDeDocumento", }, new { @id = "formCadastroTipoDeDocumento", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-9">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Nome, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.DisplayFor(d => d.Nome, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtTipoNome" } })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Obrigatorio, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">                        
+                        @Html.DisplayFor(d => d.Obrigatorio, new { @class = "ace ace-checkbox-2", @id = "cbObrigatorio" })                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.MascaraParaNomeclatura, new { @class = "form-field-select-3 col-xs-12 col-sm-12 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.DisplayFor(d => d.MascaraParaNomeclatura, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtTipoMascara" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.ExtensoesPermitidas, new { @class = "form-field-select-3 col-xs-12 col-sm-12 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.DisplayFor(d => d.ExtensoesPermitidas, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtTipoExtensao" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(d => d.TamanhoMaximoEmMB, new { @class = "form-field-select-3 col-xs-12 col-sm-12 no-padding-right" })
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DisplayFor(d => d.TamanhoMaximoEmMB, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtTipoArquivo" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(d => d.PrazoVencimento, new { @class = "form-field-select-3 col-xs-12 col-sm-12 no-padding-right" })
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DisplayFor(d => d.PrazoVencimento, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "txtTipoPrazo" } })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(d => d.IntervaloVencimento, new { @class = "form-field-select-3 col-xs-12 col-sm-12 no-padding-right" })
+                <div class="col-xs-12 col-sm-12">
+                    @Html.DisplayFor(d => d.IntervaloVencimento, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12", @id = "ddlTipoIntervalo", @autocomplete = "on" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+        </div>
+
+@section Scripts {
+
+}

@@ -14,6 +14,8 @@ namespace GISCore.Business.Abstract
 
         void Alterar(T entidade);
 
+        void AlterarComHistorico(T entidade);
+
         void Terminar(T entidade);
 
         void Excluir(T entidade);
