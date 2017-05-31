@@ -27,7 +27,7 @@ namespace GISCore.Business.Concrete
             T tempObjeto = null;
 
             if (!string.IsNullOrEmpty(entidade.ID))
-                tempObjeto = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(entidade.ID));
+                tempObjeto = Consulta.FirstOrDefault(p => p.ID.Equals(entidade.ID));
             else if (!string.IsNullOrEmpty(entidade.UniqueKey))
                 tempObjeto = Consulta.FirstOrDefault(p => p.UniqueKey.Equals(entidade.UniqueKey));
 

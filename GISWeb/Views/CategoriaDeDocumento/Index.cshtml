@@ -31,7 +31,7 @@
                         <li class="dd-item">
                             <div class="dd2-content" style="border-left-color: #e8b110;">
                                 @iCategorias.Nome
-                                <span class="badge badge-grey">@iCategorias.Tipos.Count()</span>
+                                <span class="badge badge-grey">@iCategorias.Tipos.Count() Tipos</span>
                                 <div class="pull-right action-buttons">
                                     <a class="blue" href="#" onclick="CadastrarTipo('@iCategorias.UniqueKey')">
                                         <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
@@ -59,13 +59,17 @@
                                     <li class="dd-item">
                                         <div class="dd2-content" style="border-left-color: #3983c2;">
                                             @iTipo.Nome
+                                            <span class="badge badge-grey">0 Arquivo(s)</span>
                                             <div class="pull-right action-buttons">
-                                                <a class="blue" href="#" onclick="AlterarTipo('@iTipo.UniqueKey', '@iTipo.Nome')">
+                                                <a class="blue" href="#" onclick="DetalharTipo('@iTipo.UniqueKey')">
+                                                    <i class="ace-icon fa fa-info-circle bigger-125"></i>
+                                                </a>
+                                                @*<a class="blue" href="#" onclick="AlterarTipo('@iTipo.UniqueKey', '@iTipo.Nome')">
                                                     <i class="ace-icon fa fa-edit bigger-125"></i>
                                                 </a>
-                                                <a class="blue" href="#" onclick="DeletarTipo('@iTipo.ID', '@iTipo.Nome')">
-                                                    <i class="ace-icon fa fa-trash red bigger-125"></i>
-                                                </a>
+                                                <a class="red" href="#" onclick="DeletarTipo('@iTipo.ID', '@iTipo.Nome')">
+                                                    <i class="ace-icon fa fa-trash bigger-125"></i>
+                                                </a>*@
                                             </div>
                                         </div>
                                     </li>
