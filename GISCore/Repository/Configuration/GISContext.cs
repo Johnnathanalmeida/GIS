@@ -51,9 +51,13 @@ namespace GISCore.Repository.Configuration
 
         public DbSet<FuncaoAtividade> FuncaoAtividade { get; set; }
 
+        public DbSet<FuncaoDepartamento> FuncaoDepartamento { get; set; }
+
         public DbSet<Garantia> Garantia { get; set; }
 
         public DbSet<Menu> Menu { get; set; }
+
+        public DbSet<ObjetoTipoDeDocumento> ObjetoTipoDeDocumento { get; set; }
 
         public DbSet<Perfil> Perfil { get; set; }
 

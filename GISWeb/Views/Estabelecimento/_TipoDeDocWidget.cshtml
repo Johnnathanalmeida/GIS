@@ -1,0 +1,73 @@
+﻿@using GISModel.Entidades
+@using GISModel.DTO.TipoDeDocumento
+@model List<TipoDeDocumentoComArquivosViewModel>
+
+@foreach (TipoDeDocumentoComArquivosViewModel iTipoDoc in Model)
+{
+
+    <div class="timeline-item clearfix @iTipoDoc.UniqueKey" data-uniquekey="@iTipoDoc.UniqueKey">
+        
+        @if (iTipoDoc.Arquivos != null && iTipoDoc.Arquivos.Count > 0)
+        {
+            <div class="timeline-info CustomTooltip" data-rel="tooltip" title="Arquivos anexados">
+                <i class="timeline-indicator ace-icon fa fa-plus-square btn btn-grey no-hover"></i>
+            </div>
+        }
+        else
+        {
+            <div class="timeline-info CustomTooltip" data-rel="tooltip" title="Nenhum anexado">
+                <i class="timeline-indicator ace-icon fa fa-minus-square btn btn-grey no-hover"></i>
+            </div>
+        }
+        
+        <div class="widget-box transparent collapsed">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title smaller grey TipoDeDocumento">
+                    @iTipoDoc.Nome.ToUpper()
+                </h5>
+
+                <span class="widget-toolbar no-border action-buttons">
+                    <a href="#" class="lnkUploadArquivo CustomTooltip" data-rel="tooltip" data-target="#modalArquivo" data-toggle="modal" data-backdrop="static" data-keyboard="false" title="Upload Novo Arquivo">
+                        <i class="ace-icon fa fa-cloud-upload bigger-125 fa-cloud-down"></i>
+                    </a>
+
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa bigger-125 fa-chevron-down"></i>
+                    </a>
+                </span>
+            </div>
+
+            <div class="widget-body" style="display: none;">
+                <div class="widget-main" id="Container-@iTipoDoc.UniqueKey">
+
+
+                    @if (iTipoDoc.Arquivos != null && iTipoDoc.Arquivos.Count > 0)
+                    {
+                        <div class="timeline-container">
+                            <div class="timeline-items">
+                                @foreach (Arquivo arquivo in iTipoDoc.Arquivos)
+                                {
+                                    Html.RenderPartial("_ArquivoWidget", arquivo);
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="widget-toolbox clearfix nenhumArquivoIncluido">
+                            <div class="pull-left" style="font-size: 11px">
+                                <i class="ace-icon fa fa-clock-o bigger-110 grey"></i>
+                                Nenhum arquivo incluído até o momento
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+

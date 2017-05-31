@@ -1,22 +1,23 @@
 ﻿@using GISModel.Entidades
 @using GISModel.DTO.TipoDeDocumento
-@model TipoDeDocumentoComArquivosViewModel
+@model Arquivo
 
 <div class="timeline-item clearfix" data-uniquekey="@Model.UniqueKey">
     <div class="timeline-info CustomTooltip" data-rel="tooltip" title="Nenhum anexado">
-        <i class="timeline-indicator ace-icon fa fa-minus-square btn btn-grey no-hover"></i>
+        <i class="timeline-indicator ace-icon fa fa-check-square-o btn btn-grey no-hover"></i>
     </div>
-
 
     <div class="widget-box transparent collapsed">
         <div class="widget-header widget-header-small">
             <h5 class="widget-title smaller grey">
-                @Model.Nome.ToUpper()
+                <a href="#" class="lnkVisualizarArquivo CustomTooltip" data-NomeRemoto="@Model.NomeRemoto" data-rel="tooltip" title="Visualizar">
+                    @Model.NomeLocal
+                </a>
             </h5>
 
             <span class="widget-toolbar no-border action-buttons">
-                <a href="#" class="lnkUploadArquivo CustomTooltip" data-rel="tooltip" data-target="#modalArquivo" data-toggle="modal" data-backdrop="static" data-keyboard="false" title="Upload Novo Arquivo">
-                    <i class="ace-icon fa fa-cloud-upload bigger-125 fa-cloud-down"></i>
+                <a href="#" class="red2 lnkExcluirArquivo CustomTooltip" data-rel="tooltip" title="Excluir">
+                    <i class="ace-icon fa fa-remove bigger-125"></i>
                 </a>
 
                 <a href="#" data-action="collapse">
@@ -27,12 +28,14 @@
 
         <div class="widget-body" style="display: none;">
             <div class="widget-main">
-                <div class="widget-toolbox clearfix">
+
+                <div class="widget-toolbox clearfix nenhumArquivoIncluido">
                     <div class="pull-left" style="font-size: 11px">
                         <i class="ace-icon fa fa-clock-o bigger-110 grey"></i>
-                        Nenhum arquivo incluído até o momento
+                        Infos
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

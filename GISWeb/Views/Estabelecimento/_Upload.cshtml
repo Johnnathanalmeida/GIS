@@ -45,16 +45,7 @@
 <div class="hr hr-dotted"></div>
 <div class="space-10"></div>
 
-@{
-//    @id = "formUpload",
-//    @class = "dropzone",
-//    @enctype = "multipart/form-data",
-//    @data_extensoes = strExtensoes,
-//    @data_uploadmultiplo = Model.PermiteMultiplosArquivos
-//}))
-}
-
-@using (Ajax.BeginForm("Upload", "Estabelecimento", null, new AjaxOptions { HttpMethod = "POST" }, new { @id = "formUpload", @class = "dropzone", @enctype = "multipart/form-data", @data_extensoes = strExtensoes, @data_uploadmultiplo = Model.PermiteMultiplosArquivos }))
+@using (Ajax.BeginForm("Upload", "Estabelecimento", new { UKTipoDeDocumento = Model.UniqueKey, NomeTipoDeDocumento = Model.Nome }, new AjaxOptions { HttpMethod = "POST" }, new { @id = "formUpload", @class = "dropzone", @enctype = "multipart/form-data", @data_extensoes = strExtensoes, @data_uploadmultiplo = Model.PermiteMultiplosArquivos }))
 {
     @Html.AntiForgeryToken()
 
@@ -62,21 +53,3 @@
         <input name="file" style="border: 1px solid red;" type="file" multiple="" />
     </div>
 }
-
-@*@using (Html.BeginForm("Upload", "Estabelecimento", FormMethod.Post, new
-{
-    @id = "formUpload",
-    @class = "dropzone",
-    @enctype = "multipart/form-data",
-    @data_extensoes = strExtensoes,
-    @data_uploadmultiplo = Model.PermiteMultiplosArquivos }))
-{ 
-    @Html.AntiForgeryToken()
-
-    <div class="fallback" style="border: 1px solid red;">
-        <input name="file" style="border: 1px solid red;" type="file" multiple="" />
-    </div>
-}*@
-
-
-

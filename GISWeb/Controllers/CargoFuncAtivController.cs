@@ -51,13 +51,13 @@ namespace GISWeb.Controllers
 
                 item.Funcao = (from funcao in FuncaoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
                                where funcao.UKCargo.Equals(item.UniqueKey)
-                               orderby funcao.Func_Nome
+                               orderby funcao.Nome
                                 select new Funcao()
                                 {
                                     ID = funcao.ID,
                                     UKCargo = funcao.UKCargo,
                                     UniqueKey = funcao.UniqueKey,
-                                    Func_Nome = funcao.Func_Nome
+                                    Nome = funcao.Nome
                                 }
                                 ).ToList();
 
@@ -122,7 +122,7 @@ namespace GISWeb.Controllers
         {
             try
             {
-                Funcao tempFuncao = FuncaoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKCargo.Equals(UKCargo) && p.Func_Nome.Equals(FuncaoNome));
+                Funcao tempFuncao = FuncaoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKCargo.Equals(UKCargo) && p.Nome.Equals(FuncaoNome));
                 if (tempFuncao != null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "A função '" + FuncaoNome + "' já existe, favor informar outra função." } });
@@ -130,7 +130,7 @@ namespace GISWeb.Controllers
 
                 Funcao oFuncao = new Funcao ();
                 oFuncao.UKCargo = UKCargo;
-                oFuncao.Func_Nome = FuncaoNome;
+                oFuncao.Nome = FuncaoNome;
                 oFuncao.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                 FuncaoBusiness.Inserir(oFuncao);
 
@@ -269,7 +269,7 @@ namespace GISWeb.Controllers
                     
                     Funcao nFuncao = new Funcao()
                     {
-                        Func_Nome = FuncaoNome,
+                        Nome = FuncaoNome,
                         UniqueKey = oFuncao.UniqueKey,
                         UKCargo = oFuncao.UKCargo,
                         UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
@@ -278,7 +278,7 @@ namespace GISWeb.Controllers
                     FuncaoBusiness.Alterar(oFuncao);
                     FuncaoBusiness.Inserir(nFuncao);
 
-                    TempData["MensagemSucesso"] = "A Função '" + oFuncao.Func_Nome + "' foi atualizada para '" + FuncaoNome + "' com sucesso.";
+                    TempData["MensagemSucesso"] = "A Função '" + oFuncao.Nome + "' foi atualizada para '" + FuncaoNome + "' com sucesso.";
 
                     return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
                 }
@@ -389,7 +389,7 @@ namespace GISWeb.Controllers
                     oFuncao.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     FuncaoBusiness.Alterar(oFuncao);
 
-                    TempData["MensagemAlerta"] = "A Função '" + oFuncao.Func_Nome + "' foi excluída com sucesso.";
+                    TempData["MensagemAlerta"] = "A Função '" + oFuncao.Nome + "' foi excluída com sucesso.";
 
                     return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
                 }

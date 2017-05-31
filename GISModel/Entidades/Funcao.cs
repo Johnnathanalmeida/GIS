@@ -12,7 +12,9 @@ namespace GISModel.Entidades
         public string UKCargo { get; set; }
 
         [Display(Name = "Função")]
-        public string Func_Nome { get; set; }
+        public string Nome { get; set; }
+
+        public string NomeDeExibicao { get; set; }
 
         public List<Atividade> Atividade { get; set; }
 
