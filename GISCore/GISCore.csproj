@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Business\Abstract\IAdmissaoBusiness.cs" />
     <Compile Include="Business\Abstract\IAlocacaoBusiness.cs" />
+    <Compile Include="Business\Abstract\IArquivoBusiness.cs" />
     <Compile Include="Business\Abstract\IBaseBusiness.cs" />
     <Compile Include="Business\Abstract\IAtividadeBusiness.cs" />
     <Compile Include="Business\Abstract\ICargoBusiness.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Business\Abstract\IUsuarioPerfilBusiness.cs" />
     <Compile Include="Business\Concrete\AdmissaoBusiness.cs" />
     <Compile Include="Business\Concrete\AlocacaoBusiness.cs" />
+    <Compile Include="Business\Concrete\ArquivoBusiness.cs" />
     <Compile Include="Business\Concrete\BaseBusiness.cs" />
     <Compile Include="Business\Concrete\AtividadeBusiness.cs" />
     <Compile Include="Business\Concrete\CargoBusiness.cs" />
@@ -94,10 +96,6 @@
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
     <Compile Include="Infraestrutura\Comparer\UsuarioComparer.cs" />
-    <Compile Include="Migrations\201705271331056_rw.cs" />
-    <Compile Include="Migrations\201705271331056_rw.Designer.cs">
-      <DependentUpon>201705271331056_rw.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstract\IBaseRepository.cs" />
@@ -118,11 +116,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705271331056_rw.resx">
-      <DependentUpon>201705271331056_rw.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

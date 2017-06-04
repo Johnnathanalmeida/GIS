@@ -1,0 +1,181 @@
+﻿@using GISModel.Entidades
+@using GISModel.DTO.TipoDeDocumento
+@model Estabelecimento
+@{
+    ViewBag.Title = "Cadastro de Estabelecimento";
+}
+
+<div id="formCadEstabelecimento">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 widget-container-col ui-sortable">
+            <div class="page-header">
+                <h1>
+                    Cadastro de Estabelecimento
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    @using (Ajax.BeginForm("Cadastrar", "Estabelecimento", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginCadastrarEstabelecimento", OnSuccess = "OnSuccessCadastrarEstabelecimento" }, new { @id = "formCadastroEstabelecimento", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Nome, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EditorFor(d => d.Nome, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        @Html.ValidationMessageFor(d => d.Nome, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Endereco, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.EditorFor(d => d.Endereco, new { htmlAttributes = new { @class = "col-xs-12 col-sm-12" } })
+                        @Html.ValidationMessageFor(d => d.Endereco, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Descricao, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
+                    <div class="col-xs-12 col-sm-12">
+                        @Html.TextAreaFor(d => d.Descricao, new { style = "min-width: 100%; max-width: 100%; resize: none;", rows = "3", id = "txtEstabDescricao" })
+                        @Html.ValidationMessageFor(d => d.Descricao, string.Empty, new { @style = "font-size: 10px; color: #a94442;" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-flat" style="border-bottom: 1px solid #ddd; color: #307DB8;">
+                        <h4 class="widget-title">
+                            <i class="ace-icon fa fa-cloud"></i>
+                            Arquivos Obrigatórios
+                        </h4>
+
+                        <div class="widget-toolbar action-buttons">
+                                                
+
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up bigger-125"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+				        <div class="widget-main no-padding">
+                            <div class="timeline-container">
+                                @if (((List<TipoDeDocumentoComArquivosViewModel>)ViewBag.TiposDeDocumento).Where(p => p.Obrigatorio).Count() > 0)
+                                {
+                                    Html.RenderPartial("_TipoDeDocWidget", ((List<TipoDeDocumentoComArquivosViewModel>)ViewBag.TiposDeDocumento).Where(p => p.Obrigatorio).ToList());
+                                }
+                                else
+                                {
+                                    <div class="timeline-item clearfix">
+                                        <div class="timeline-info">
+                                            <i class="timeline-indicator ace-icon fa fa-exclamation-triangle btn btn-warning no-hover"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-warning smaller-90">
+                                                <strong>
+                                                    Não existem tipos de anexos opicionais cadastrados para este formulário.
+                                                </strong>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                }                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-flat" style="border-bottom: 1px solid #ddd; color: #7AA7C5;">
+                        <h4 class="widget-title yellow">
+                            <i class="ace-icon fa fa-cloud"></i>
+                            Arquivos Opcionais
+                        </h4>
+
+                        <div class="widget-toolbar action-buttons">                        
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up bigger-125"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main no-padding">
+                            <div class="timeline-container">
+                                @if (((List<TipoDeDocumentoComArquivosViewModel>)ViewBag.TiposDeDocumento).Where(p => !p.Obrigatorio).Count() > 0)
+                                {
+                                    Html.RenderPartial("_TipoDeDocWidget", ((List<TipoDeDocumentoComArquivosViewModel>)ViewBag.TiposDeDocumento).Where(p => !p.Obrigatorio).ToList());
+                                }
+                                else
+                                {
+                                    <div class="timeline-item clearfix">
+                                        <div class="timeline-info">
+                                            <i class="timeline-indicator ace-icon fa fa-exclamation-triangle btn btn-warning no-hover"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-warning smaller-90">                                                
+                                                <strong>
+                                                    Não existem tipos de anexos opicionais cadastrados para este formulário.
+                                                </strong>
+                                            </h5>
+                                        </div>                                        
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3 align-center">
+                <button class="btn btn-info" id="btnSalvar" type="submit">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    Salvar
+                </button>
+                &nbsp;
+                <button class="btn btn-warning" type="reset">
+                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                    Limpar
+                </button>
+                &nbsp;
+                <a class="btn" href="javascript:history.back()">
+                    <i class="ace-icon fa fa-arrow-left"></i>
+                    Voltar
+                </a>
+            </div>
+        </div>
+    }
+
+</div> <!-- Fim FormQuery -->
+
+
+
+@section Scripts {
+    <script src="~/Scripts/Ace/ace.widget-box.js"></script>
+    @Scripts.Render("~/bundles/ace_js_fileUpload")
+    <script src="~/Scripts/Custom/Estabelecimento/Novo.js"></script>
+}
+
+@section Stylesheets {
+    @Styles.Render("~/bundles/ace_css_fileUpload")
+}

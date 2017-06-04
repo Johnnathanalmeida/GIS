@@ -35,7 +35,7 @@ namespace GISWeb.Controllers
             public IBaseBusiness<TipoDeDocumento> TipoDeDocumentoBusiness { get; set; }
 
             [Inject]
-            public IBaseBusiness<Arquivo> ArquivoBusiness { get; set; }
+            public IArquivoBusiness ArquivoBusiness { get; set; }
 
         #endregion
 
@@ -72,15 +72,12 @@ namespace GISWeb.Controllers
             return View(EstabelecimentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(id)));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Cadastrar(Estabelecimento entidade)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-
                     entidade.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     EstabelecimentoBusiness.Inserir(entidade);
 
@@ -233,13 +230,21 @@ namespace GISWeb.Controllers
         [HttpPost]
         [RestritoAAjax]
         [ValidateAntiForgeryToken]
-        public ActionResult Upload()
+        public ActionResult Upload(string UKTipoDeDocumento, string NomeTipoDeDocumento)
         {
             try
             {
                 string fName = string.Empty;
+
+                List<TipoDeDocumentoComArquivosViewModel> lista = new List<TipoDeDocumentoComArquivosViewModel>();
+
+                TipoDeDocumentoComArquivosViewModel DTOTipoDeDocumento = new TipoDeDocumentoComArquivosViewModel();
+                DTOTipoDeDocumento.UniqueKey = UKTipoDeDocumento;
+                DTOTipoDeDocumento.Nome = NomeTipoDeDocumento;
+                DTOTipoDeDocumento.Arquivos = new List<Arquivo>();
+
                 List<string> Arquivos = new List<string>();
-                string msgErro = string.Empty;
+                
                 foreach (string fileName in Request.Files.AllKeys)
                 {
                     HttpPostedFileBase oFile = Request.Files[fileName];
@@ -260,10 +265,19 @@ namespace GISWeb.Controllers
                         oFile.SaveAs(Path.Combine(sLocalFile, oFile.FileName));
                     }
                 }
-                if (string.IsNullOrEmpty(msgErro))
-                    return Json(new { sucesso = "O upload do arquivo '" + fName + "' foi realizado com êxito.", arquivos = Arquivos, erro = msgErro });
-                else
-                    return Json(new { erro = msgErro });
+
+                foreach (string iArq in Arquivos) {
+                    DTOTipoDeDocumento.Arquivos.Add(new Arquivo()
+                    {
+                        NomeRemoto = iArq,
+                        NomeLocal = iArq.Substring(iArq.LastIndexOf(@"\") + 1)
+                    });
+                }
+
+                lista.Add(DTOTipoDeDocumento);
+
+                return Json(new { sucesso = "O upload do arquivo '" + fName + "' foi realizado com êxito.", UKTipoDeDocumento = UKTipoDeDocumento, data = RenderRazorViewToString("_TipoDeDocWidget", lista) });
+                
             }
             catch (Exception ex)
             {

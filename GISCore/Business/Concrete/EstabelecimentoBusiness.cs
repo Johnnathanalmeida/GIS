@@ -14,7 +14,7 @@ namespace GISCore.Business.Concrete
         public override void Inserir(Estabelecimento entidade)
         {
             if (Consulta.Any(u => string.IsNullOrEmpty(u.UsuarioExclusao) && u.Nome.ToUpper().Trim().Equals(entidade.Nome.ToUpper().Trim())))
-                throw new InvalidOperationException("Não é possível inserir o estabelecimento, pois o nome informado já está sendo utilizado por outro estabelecimento.");
+                throw new InvalidOperationException("Não é possível inserir o estabelecimento, pois o nome informado já existe no banco de dados.");
 
             base.Inserir(entidade);
         }
