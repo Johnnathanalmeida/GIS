@@ -8,10 +8,13 @@
 
     $('[data-rel="tooltip"]').tooltip();
 
-    $("#modalTipoDeDocumentoProsseguir").on("click", function () {
+    $("#modalTipoDeDocumentoCadastrar").on("click", function () {
         $("#formCadastroTipoDeDocumento").submit();
     });
 
+    $("#modalTipoDeDocumentoAtualizar").on("click", function () {
+        $("#formEdicaoTipoDeDocumento").submit();
+    });
 });
 
 function btnNovaCategoria() {
@@ -142,8 +145,9 @@ function CadastrarTipo(pUKCategoria) {
     $('#modalTipoDeDocumentoX').hide();
     $('#modalTipoDeDocumentoFechar').removeClass('disabled');
     $('#modalTipoDeDocumentoFechar').removeAttr('disabled', 'disabled');
-    $('#modalTipoDeDocumentoProsseguir').removeClass('disabled');
-    $('#modalTipoDeDocumentoProsseguir').removeAttr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoCadastrar').removeClass('disabled');
+    $('#modalTipoDeDocumentoCadastrar').removeAttr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoAtualizar').hide();
     $('#modalTipoDeDocumentoCorpo').html('');
     $('#modalTipoDeDocumentoCorpoConfirmar').hide();
     $('#modalTipoDeDocumentoCorpoLoading').hide();
@@ -152,6 +156,35 @@ function CadastrarTipo(pUKCategoria) {
         method: "GET",
         url: "/TipoDeDocumento/Novo",
         data: { UKCategoria: pUKCategoria },
+        error: function (erro) {
+            $('#modalTipoDeDocumento').modal('hide');
+            ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+        },
+        success: function (content) {
+            $('#modalTipoDeDocumentoCorpo').html(content);
+            $("#cbObrigatorio").css("opacity", "1");
+            $("#cbObrigatorio").css("position", "initial");
+            $("#cbObrigatorio").css("margin-top", "8px");
+        },
+    });
+};
+
+function AtualizarTipo(pUKTipo) {
+    $('#modalTipoDeDocumento').modal('show');
+    $('#modalTipoDeDocumentoX').hide();
+    $('#modalTipoDeDocumentoFechar').removeClass('disabled');
+    $('#modalTipoDeDocumentoFechar').removeAttr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoCadastrar').hide();
+    $('#modalTipoDeDocumentoAtualizar').removeClass('disabled');
+    $('#modalTipoDeDocumentoAtualizar').removeAttr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoCorpo').html('');
+    $('#modalTipoDeDocumentoCorpoConfirmar').hide();
+    $('#modalTipoDeDocumentoCorpoLoading').hide();
+
+    $.ajax({
+        method: "GET",
+        url: "/TipoDeDocumento/Edicao",
+        data: { UKTipo: pUKTipo },
         error: function (erro) {
             $('#modalTipoDeDocumento').modal('hide');
             ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
@@ -192,6 +225,37 @@ function DetalharTipo(pUKTipo) {
     });
 };
 
+function DeletarTipo(IDTipo, TipoNome) {
+    bootbox.confirm({
+        backdrop: true,
+        message: "Tem certeza que deseja excluir o Tipo '" + TipoNome + "'?",
+        title: "Confirmação para excluir.",
+        buttons: {
+            confirm: {
+                label: "Sim",
+                className: "btn-success btn-sm",
+            },
+            cancel: {
+                label: "Não",
+                className: "btn-sm",
+            }
+        },
+        callback: function (result) {
+            $.ajax({
+                method: "POST",
+                url: "/TipoDeDocumento/DeletarTipo",
+                data: { IDTipo: IDTipo },
+                error: function (erro) {
+                    ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+                },
+                success: function (content) {
+                    TratarResultadoJSON(content.resultado);
+                }
+            });
+        }
+    });
+}
+
 function OnSuccessCadastrarTipoDeDocumento(data) {
     $('#modalTipoDeDocumento').hide();
     TratarResultadoJSON(data.resultado);
@@ -202,8 +266,27 @@ function OnBeginCadastrarTipoDeDocumento() {
     $('#modalTipoDeDocumentoX').hide();
     $('#modalTipoDeDocumentoFechar').addClass('disabled');
     $('#modalTipoDeDocumentoFechar').attr('disabled', 'disabled');
-    $('#modalTipoDeDocumentoProsseguir').addClass('disabled');
-    $('#modalTipoDeDocumentoProsseguir').attr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoCadastrar').addClass('disabled');
+    $('#modalTipoDeDocumentoCadastrar').attr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoAtualizar').hide();
+    $('#modalTipoDeDocumentoCorpo').hide();
+    $('#modalTipoDeDocumentoCorpoConfirmar').hide();
+    $('#modalTipoDeDocumentoCorpoLoading').show();
+}
+
+function OnSuccessAtualizarTipoDeDocumento(data) {
+    $('#modalTipoDeDocumento').hide();
+    TratarResultadoJSON(data.resultado);
+}
+
+function OnBeginAtualizarTipoDeDocumento() {
+    $('#modalTipoDeDocumento').modal('show');
+    $('#modalTipoDeDocumentoX').hide();
+    $('#modalTipoDeDocumentoFechar').addClass('disabled');
+    $('#modalTipoDeDocumentoFechar').attr('disabled', 'disabled');
+    $('#modalTipoDeDocumentoCadastrar').hide();
+    $('#modalTipoDeDocumentoAtualizar').addClass('disabled');
+    $('#modalTipoDeDocumentoAtualizar').attr('disabled', 'disabled');    
     $('#modalTipoDeDocumentoCorpo').hide();
     $('#modalTipoDeDocumentoCorpoConfirmar').hide();
     $('#modalTipoDeDocumentoCorpoLoading').show();

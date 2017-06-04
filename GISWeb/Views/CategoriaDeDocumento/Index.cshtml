@@ -61,15 +61,15 @@
                                             @iTipo.Nome
                                             <span class="badge badge-grey">0 Arquivo(s)</span>
                                             <div class="pull-right action-buttons">
-                                                <a class="blue" href="#" onclick="DetalharTipo('@iTipo.UniqueKey')">
+                                                <a class="blue" href="#" onclick="DetalharTipo('@iTipo.UniqueKey')" title="Informações">
                                                     <i class="ace-icon fa fa-info-circle bigger-125"></i>
                                                 </a>
-                                                @*<a class="blue" href="#" onclick="AlterarTipo('@iTipo.UniqueKey', '@iTipo.Nome')">
+                                                <a class="blue" href="#" onclick="AtualizarTipo('@iTipo.UniqueKey', '@iTipo.Nome')" title="Editar Tipo">
                                                     <i class="ace-icon fa fa-edit bigger-125"></i>
                                                 </a>
                                                 <a class="red" href="#" onclick="DeletarTipo('@iTipo.ID', '@iTipo.Nome')">
                                                     <i class="ace-icon fa fa-trash bigger-125"></i>
-                                                </a>*@
+                                                </a>
                                             </div>
                                         </div>
                                     </li>
@@ -128,9 +128,14 @@
                             Cancelar
                         </button>
 
-                        <button id="modalTipoDeDocumentoProsseguir" class="btn btn-sm btn-info" style="right: 5px; left: auto">
+                        <button id="modalTipoDeDocumentoCadastrar" class="btn btn-sm btn-info" style="right: 5px; left: auto">
                             <i class="ace-icon fa fa-check"></i>
                             Salvar
+                        </button>
+
+                        <button id="modalTipoDeDocumentoAtualizar" class="btn btn-sm btn-info" style="right: 5px; left: auto">
+                            <i class="ace-icon fa fa-check"></i>
+                            Atualizar
                         </button>
                     </div>
                 </div>
