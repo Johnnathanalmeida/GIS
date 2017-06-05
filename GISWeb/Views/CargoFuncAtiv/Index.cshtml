@@ -58,18 +58,18 @@
                                 <ol class="dd-list">
                                     <li class="dd-item">
                                         <div class="dd2-content" style="border-left-color: #3983c2;">
-                                            @iFuncao.Func_Nome
+                                            @iFuncao.Nome
                                             <span class="badge badge-grey">@iFuncao.Atividade.Count()</span>
                                             <div class="pull-right action-buttons">
                                                 <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.UniqueKey')">
                                                     <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
                                                 </a>
-                                                <a class="blue" href="#" onclick="AlterarFuncao('@iFuncao.UniqueKey', '@iFuncao.Func_Nome')">
+                                                <a class="blue" href="#" onclick="AlterarFuncao('@iFuncao.UniqueKey', '@iFuncao.Nome')">
                                                     <i class="ace-icon fa fa-edit bigger-125"></i>
                                                 </a>
                                                 @if (iFuncao.Atividade.Count == 0)
                                                 {
-                                                    <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.Func_Nome')">
+                                                    <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.Nome')">
                                                         <i class="ace-icon fa fa-trash red bigger-125"></i>
                                                     </a>
                                                 }
