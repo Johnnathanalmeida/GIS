@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace GISWeb.Controllers
 {
@@ -170,6 +171,19 @@ namespace GISWeb.Controllers
                 }
             }
 
+        }
+
+        [HttpPost]
+        public JsonResult CarregarDepartamentos(string UKEmpresa)
+        {
+            var jsonSerialiser = new JavaScriptSerializer();
+            var json = jsonSerialiser.Serialize(
+                (from dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                                    join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on dep.UKEmpresa equals UKEmpresa
+                                    select new Departamento { UniqueKey = dep.UniqueKey, Codigo = dep.Codigo, Sigla = dep.Sigla }).ToList()
+                );
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 	}
 }

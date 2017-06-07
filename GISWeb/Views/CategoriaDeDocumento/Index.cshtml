@@ -1,4 +1,5 @@
-﻿@using GISModel.Entidades
+﻿@model GISModel.Entidades.Empresa
+@using GISModel.Entidades
 
 @{
     ViewBag.Title = "Listagem de Tipos";
@@ -18,7 +19,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-
+       
         @{
             Html.RenderPartial("_MensagensDeRetorno");
         }
@@ -61,11 +62,14 @@
                                             @iTipo.Nome
                                             <span class="badge badge-grey">0 Arquivo(s)</span>
                                             <div class="pull-right action-buttons">
+                                                <a class="orange" href="#" onclick="GerenciarDepartamentos('@iTipo.UniqueKey','@ViewBag.UKEmpresa')" title="Departamentos">
+                                                    <i class="ace-icon fa fa-cubes bigger-125"></i>
+                                                </a>
                                                 <a class="blue" href="#" onclick="DetalharTipo('@iTipo.UniqueKey')" title="Informações">
                                                     <i class="ace-icon fa fa-info-circle bigger-125"></i>
                                                 </a>
                                                 <a class="blue" href="#" onclick="AtualizarTipo('@iTipo.UniqueKey', '@iTipo.Nome')" title="Editar Tipo">
-                                                    <i class="ace-icon fa fa-edit bigger-125"></i>
+                                                    <i class="ace-icon fa fa-pencil bigger-125"></i>
                                                 </a>
                                                 <a class="red" href="#" onclick="DeletarTipo('@iTipo.ID', '@iTipo.Nome')">
                                                     <i class="ace-icon fa fa-trash bigger-125"></i>
@@ -101,7 +105,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button id="modalTipoDeDocumentoX" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="smaller lighter grey no-margin"><i class="ace-icon fa fa-legal green"></i> Cadastro de Tipo de Documento...</h3>
+                <h3 id="modalTipoDeDocumentoHeader" class="smaller lighter grey no-margin"><i class="ace-icon fa fa-legal green"></i> Cadastro de Tipo de Documento...</h3>
             </div>
 
             <div class="modal-body">
@@ -151,7 +155,12 @@
     <script src="~/Scripts/Ace/dataTables/dataTables.tableTools.js"></script>
     <script src="~/Scripts/Ace/dataTables/dataTables.colVis.js"></script>
 
-    <script src="~/Scripts/Custom/CategoriaDeDocumento/Listagem.js"></script>
     <script src="~/Scripts/Ace/jQ/jquery.nestable.js"></script>
+    <script src="~/Scripts/Ace/chosen.jquery.js"></script>
+    <script src="~/Scripts/Ace/jquery.bootstrap-duallistbox.js"></script>
+    <script src="~/Scripts/Custom/CategoriaDeDocumento/Listagem.js"></script>
 }
 
+@section Stylesheets {
+    <link href="~/Content/Ace/css/chosen.css" rel="stylesheet" />
+}

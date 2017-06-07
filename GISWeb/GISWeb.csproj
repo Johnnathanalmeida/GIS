@@ -172,6 +172,7 @@
     <Content Include="Scripts\Ace\elements.typeahead.js" />
     <Content Include="Scripts\Ace\excanvas.js" />
     <Content Include="Scripts\Ace\html5shiv.js" />
+    <Content Include="Scripts\Ace\jquery.bootstrap-duallistbox.js" />
     <Content Include="Scripts\Ace\jQ\jquery-2.1.1.js" />
     <Content Include="Scripts\Ace\jQ\jquery-ui.custom.js" />
     <Content Include="Scripts\Ace\jQ\jquery-ui.js" />
@@ -225,7 +226,7 @@
     <Content Include="Scripts\Custom\Perfil\Edicao.js" />
     <Content Include="Scripts\Custom\Perfil\Listagem.js" />
     <Content Include="Scripts\Custom\Perfil\Novo.js" />
-    <Content Include="Scripts\Custom\TipoDeDocumento\Listagem.js" />
+    <Content Include="Scripts\Custom\TipoDeDocumento\Departamentos.js" />
     <Content Include="Scripts\Custom\UsuarioPerfil\Admin.js" />
     <Content Include="Scripts\Custom\Usuario\Edicao.js" />
     <Content Include="Scripts\Custom\Usuario\Listagem.js" />
@@ -361,6 +362,7 @@
     <Content Include="Views\Estabelecimento\_TipoDeDocWidget.cshtml" />
     <Content Include="Views\TipoDeDocumento\_Detalhes.cshtml" />
     <Content Include="Views\TipoDeDocumento\Edicao.cshtml" />
+    <Content Include="Views\TipoDeDocumento\_Departamentos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

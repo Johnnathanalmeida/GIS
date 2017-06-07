@@ -1,0 +1,34 @@
+﻿@model GISModel.Entidades.Departamento
+
+@{
+    ViewBag.Title = "Departamentos";
+}
+
+<div>
+    @using (Ajax.BeginForm("GerenciarDpto", "TipoDeDocumento", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginGerenciarDpto", OnSuccess = "OnSuccessGerenciarDpto", }, new { @id = "formDepartamentoTipoDeDocumento", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-sm-12">
+            <select multiple="multiple" size="10" name="duallistbox_demo1[]" id="duallist" />
+        </div>
+    </div>
+
+    }
+</div>
+
+<script type="text/javascript">
+	jQuery(function($){
+		var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({infoTextFiltered: '<span class="label label-purple label-lg">Filtrados</span>'});
+		var container1 = demo1.bootstrapDualListbox('getContainer');
+		container1.find('.btn').addClass('btn-white btn-info btn-bold');
+
+		$(document).one('ajaxloadstart.page', function(e) {
+			$('select[name="duallistbox_demo1[]"]').bootstrapDualListbox('destroy');
+		});			
+	});
+</script>
+
+@section Stylesheets {
+    <link href="~/Content/Ace/css/chosen.css" rel="stylesheet" />
+}

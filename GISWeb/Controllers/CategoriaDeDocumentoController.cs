@@ -59,6 +59,7 @@ namespace GISWeb.Controllers
             }
 
             ViewBag.Categorias = listCategorias;
+            ViewBag.UKEmpresa = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa;
             return View();
         }
         
