@@ -83,7 +83,7 @@
                                     </a>
                                     <b class="arrow"></b>
                                     <ul class="submenu">
-                                        @foreach (GISModel.Entidades.Menu iSubMenu in ListaSubMenus.OrderBy(p => p.Ordem))
+                                        @foreach (GISModel.Entidades.Menu iSubMenu in ListaSubMenus.OrderBy(p => double.Parse(p.Ordem)))
                                         {
                                             sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_") + GISHelpers.Utils.Severino.RemoveAcentos(iMenu.Nome).Replace(" ", "_") + GISHelpers.Utils.Severino.RemoveAcentos(iSubMenu.Nome).Replace(" ", "_");
                                             <li id="@sIDMenu">
