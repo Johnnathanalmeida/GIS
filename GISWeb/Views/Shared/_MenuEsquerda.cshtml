@@ -1,4 +1,37 @@
 ﻿
+<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+        <button class="btn btn-success">
+            <i class="ace-icon fa fa-signal"></i>
+        </button>
+
+        <button class="btn btn-info">
+            <i class="ace-icon fa fa-pencil"></i>
+        </button>
+
+        <!-- #section:basics/sidebar.layout.shortcuts -->
+        <button class="btn btn-warning">
+            <i class="ace-icon fa fa-users"></i>
+        </button>
+
+        <button class="btn btn-danger">
+            <i class="ace-icon fa fa-cogs"></i>
+        </button>
+
+        <!-- /section:basics/sidebar.layout.shortcuts -->
+    </div>
+
+    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+        <span class="btn btn-success"></span>
+
+        <span class="btn btn-info"></span>
+
+        <span class="btn btn-warning"></span>
+
+        <span class="btn btn-danger"></span>
+    </div>
+</div><!-- /.sidebar-shortcuts -->
+
 <ul id="ulMenuLateral" class="nav nav-list" data-menuativo="@ViewBag.MenuAtivo">
 
     @if (ViewBag.MenusUsuario != null && ViewBag.MenusUsuario is List<GISModel.Entidades.Menu>)
@@ -8,7 +41,7 @@
         {
             string sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_");
         
-            <li id='@sIDMenu'>
+            <li id='@sIDMenu' class="hover">
                 <a href="#" class="dropdown-toggle">
                     @if (!string.IsNullOrEmpty(iMenuRaiz.Icone))
                     {
@@ -19,7 +52,7 @@
                         <i class="menu-icon fa fa-caret-right"></i>
                     }
 
-                    <span class="menu-text" style="font-weight: bold;">
+                    <span class="menu-text">
                         @iMenuRaiz.Nome
                     </span>
                     <b class="arrow fa fa-angle-down"></b>
@@ -27,11 +60,11 @@
                 <b class="arrow"></b>
                 <ul class="submenu">
 
-                    @foreach (GISModel.Entidades.Menu iMenu in ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.UniqueKey.Equals(iMenuRaiz.UniqueKey)).OrderBy(p => p.Ordem))
+                    @foreach (GISModel.Entidades.Menu iMenu in ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.UniqueKey.Equals(iMenuRaiz.UniqueKey)).OrderBy(p => double.Parse(p.Ordem)))
                     {
                         sIDMenu = "ml" + GISHelpers.Utils.Severino.RemoveAcentos(iMenuRaiz.Nome).Replace(" ", "_") + GISHelpers.Utils.Severino.RemoveAcentos(iMenu.Nome).Replace(" ", "_");
                     
-                        <li id="@sIDMenu">
+                        <li id="@sIDMenu" class="hover">
                             @{
                         List<GISModel.Entidades.Menu> ListaSubMenus = ListaMenus.Where(p => p.MenuSuperior != null && p.MenuSuperior.UniqueKey.Equals(iMenu.UniqueKey)).ToList();
                                 if (ListaSubMenus.Count > 0)
