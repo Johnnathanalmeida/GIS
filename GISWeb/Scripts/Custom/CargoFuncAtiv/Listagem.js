@@ -60,9 +60,15 @@ function CadastrarFuncao(pUKCargo) {
     var sHTML = "<table style='line-height: 2'>";
 
     sHTML += "<tr>";
-    sHTML += "<td width='150px'>Função:</td>";
+    sHTML += "<td width='150px'>Função ID:</td>";
     sHTML += "<td width='136px' align='left'>";
     sHTML += "  <input type='text' maxlength='64' id='txtFuncaoNome' value='' style='width: 450px;'/>";
+    sHTML += "</td>";
+    sHTML += "</tr>";
+    sHTML += "<tr>";
+    sHTML += "<td width='150px'>Função Nome de Exibição:</td>";
+    sHTML += "<td width='136px' align='left'>";
+    sHTML += "  <input type='text' maxlength='64' id='txtFuncaoNomeExibicao' value='' style='width: 450px;'/>";
     sHTML += "</td>";
     sHTML += "</tr>";
     sHTML += "</table>";
@@ -85,10 +91,11 @@ function CadastrarFuncao(pUKCargo) {
                         "className": "btn-sm btn-success btnAprovar",
                         "callback": function () {
                             var pFuncao = $("#txtFuncaoNome").val();
+                            var pFuncaoNomeExibicao = $("#txtFuncaoNomeExibicao").val();
                             $.ajax({
                                 method: "POST",
                                 url: "/CargoFuncAtiv/CadastrarFuncao",
-                                data: { UKCargo: pUKCargo, FuncaoNome: pFuncao },
+                                data: { UKCargo: pUKCargo, FuncaoNome: pFuncao, FuncaoNomeExibicao: pFuncaoNomeExibicao },
                                 error: function (erro) {
                                     ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
                                 },
@@ -194,13 +201,19 @@ function AlterarCargo(pUKCargo, pCargo) {
     });
 }
 
-function AlterarFuncao(pUKFuncao, pFuncao) {
+function AlterarFuncao(pUKFuncao, pFuncao, pFuncaoExibicao) {
     var sHTML = "<table style='line-height: 2'>";
 
     sHTML += "<tr>";
-    sHTML += "<td width='150px'>Função:</td>";
+    sHTML += "<td width='150px'>Função Nome:</td>";
     sHTML += "<td width='136px' align='left'>";
     sHTML += "  <input type='text' maxlength='64' id='txtFuncaoNome' value='" + pFuncao + "' style='width: 450px;'/>";
+    sHTML += "</td>";
+    sHTML += "</tr>";
+    sHTML += "<tr>";
+    sHTML += "<td width='150px'>Função Nome de Exibição:</td>";
+    sHTML += "<td width='136px' align='left'>";
+    sHTML += "  <input type='text' maxlength='64' id='txtFuncaoNomeExibicao' value='" + pFuncaoExibicao + "' style='width: 450px;'/>";
     sHTML += "</td>";
     sHTML += "</tr>";
     sHTML += "</table>";
@@ -223,10 +236,11 @@ function AlterarFuncao(pUKFuncao, pFuncao) {
                         "className": "btn-sm btn-success btnAprovar",
                         "callback": function () {
                             var pFuncao = $("#txtFuncaoNome").val();
+                            var pFuncaoExibicao = $("#txtFuncaoNomeExibicao").val();
                             $.ajax({
                                 method: "POST",
                                 url: "/CargoFuncAtiv/AlterarFuncao",
-                                data: { UKFuncao: pUKFuncao, FuncaoNome: pFuncao },
+                                data: { UKFuncao: pUKFuncao, FuncaoNome: pFuncao, FuncaoNomeDeExibicao: pFuncaoExibicao },
                                 error: function (erro) {
                                     ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
                                 },

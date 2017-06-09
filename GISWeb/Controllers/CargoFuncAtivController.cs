@@ -37,12 +37,12 @@ namespace GISWeb.Controllers
         {
                         
             List<Cargo> listCargos = (from cg in CargoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
-                                      orderby cg.Carg_Nome
+                                      orderby cg.Nome
                                       select new Cargo
                                       {
                                           ID = cg.ID,
                                           UniqueKey = cg.UniqueKey,
-                                          Carg_Nome = cg.Carg_Nome,
+                                          Nome = cg.Nome,
                                           Funcao = new List<Funcao>()
                                       }).ToList();
 
@@ -57,7 +57,8 @@ namespace GISWeb.Controllers
                                     ID = funcao.ID,
                                     UKCargo = funcao.UKCargo,
                                     UniqueKey = funcao.UniqueKey,
-                                    Nome = funcao.Nome
+                                    Nome = funcao.Nome,
+                                    NomeDeExibicao = funcao.NomeDeExibicao
                                 }
                                 ).ToList();
 
@@ -66,12 +67,12 @@ namespace GISWeb.Controllers
                     iFuncao.Atividade = (from funcAtiv in FuncaoAtividadeBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
                                       join Ativ in AtividadeBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList() on funcAtiv.UKAtividade equals Ativ.UniqueKey
                                       where funcAtiv.UKFuncao.Equals(iFuncao.UniqueKey)
-                                         orderby Ativ.Ativ_Nome
+                                         orderby Ativ.Nome
                                       select new Atividade()
                                       {
                                           ID = Ativ.ID,
                                           UniqueKey = Ativ.UniqueKey,
-                                          Ativ_Nome = Ativ.Ativ_Nome
+                                          Nome = Ativ.Nome
                                       }
                                      ).ToList();
                 }
@@ -89,14 +90,14 @@ namespace GISWeb.Controllers
         {            
             try
             {
-                Cargo tempCargo = CargoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.Carg_Nome.Equals(Cargo));
+                Cargo tempCargo = CargoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.Nome.Equals(Cargo));
                 if (tempCargo != null)
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = "O cargo '" + Cargo + "' já existe, favor informar outro cargo." } });
                 }
 
                 Cargo oCargo = new Cargo();
-                oCargo.Carg_Nome = Cargo;
+                oCargo.Nome = Cargo;
                 oCargo.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                 CargoBusiness.Inserir(oCargo);
 
@@ -118,7 +119,7 @@ namespace GISWeb.Controllers
         }
         
         [HttpPost]
-        public ActionResult CadastrarFuncao(string UKCargo, string FuncaoNome)
+        public ActionResult CadastrarFuncao(string UKCargo, string FuncaoNome, string FuncaoNomeExibicao)
         {
             try
             {
@@ -131,10 +132,11 @@ namespace GISWeb.Controllers
                 Funcao oFuncao = new Funcao ();
                 oFuncao.UKCargo = UKCargo;
                 oFuncao.Nome = FuncaoNome;
+                oFuncao.NomeDeExibicao = FuncaoNomeExibicao;
                 oFuncao.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                 FuncaoBusiness.Inserir(oFuncao);
 
-                TempData["MensagemSucesso"] = "A função '" + FuncaoNome + "' foi cadastrado com sucesso.";
+                TempData["MensagemSucesso"] = "A função '" + FuncaoNomeExibicao + "' foi cadastrado com sucesso.";
 
                 return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
             }
@@ -158,12 +160,12 @@ namespace GISWeb.Controllers
             {
                 List<Atividade> tempAtividade = (from funcAtiv in FuncaoAtividadeBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
                                             join Ativ in AtividadeBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList() on funcAtiv.UKAtividade equals Ativ.UniqueKey
-                                           where funcAtiv.UKFuncao.Equals(UKFuncao) && Ativ.Ativ_Nome.Equals(AtividadeNome)
+                                                 where funcAtiv.UKFuncao.Equals(UKFuncao) && Ativ.Nome.Equals(AtividadeNome)
                                             select new Atividade()
                                             {
                                                 ID = Ativ.ID,
                                                 UniqueKey = Ativ.UniqueKey,
-                                                Ativ_Nome = Ativ.Ativ_Nome
+                                                Nome = Ativ.Nome
                                             }
                                      ).ToList();
 
@@ -174,7 +176,7 @@ namespace GISWeb.Controllers
 
                 Atividade oAtividade = new Atividade()
                 {
-                    Ativ_Nome = AtividadeNome,       
+                    Nome = AtividadeNome,       
                     UniqueKey = Guid.NewGuid().ToString(),
                     UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
                 };
@@ -226,7 +228,7 @@ namespace GISWeb.Controllers
 
                     Cargo nCargo = new Cargo()
                     {
-                        Carg_Nome = CargoNome,
+                        Nome = CargoNome,
                         UniqueKey = oCargo.UniqueKey,
                         UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
                     };
@@ -234,7 +236,7 @@ namespace GISWeb.Controllers
                     CargoBusiness.Alterar(oCargo);
                     CargoBusiness.Inserir(nCargo);
 
-                    TempData["MensagemSucesso"] = "O cargo '" + oCargo.Carg_Nome + "' foi atualizado para '" + CargoNome + "' com sucesso.";
+                    TempData["MensagemSucesso"] = "O cargo '" + oCargo.Nome + "' foi atualizado para '" + CargoNome + "' com sucesso.";
 
                     return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
                 }
@@ -253,7 +255,7 @@ namespace GISWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult AlterarFuncao(string UKFuncao, string FuncaoNome)
+        public ActionResult AlterarFuncao(string UKFuncao, string FuncaoNome, string FuncaoNomeDeExibicao)
         {
             try
             {
@@ -270,6 +272,7 @@ namespace GISWeb.Controllers
                     Funcao nFuncao = new Funcao()
                     {
                         Nome = FuncaoNome,
+                        NomeDeExibicao = FuncaoNomeDeExibicao,
                         UniqueKey = oFuncao.UniqueKey,
                         UKCargo = oFuncao.UKCargo,
                         UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
@@ -278,7 +281,7 @@ namespace GISWeb.Controllers
                     FuncaoBusiness.Alterar(oFuncao);
                     FuncaoBusiness.Inserir(nFuncao);
 
-                    TempData["MensagemSucesso"] = "A Função '" + oFuncao.Nome + "' foi atualizada para '" + FuncaoNome + "' com sucesso.";
+                    TempData["MensagemSucesso"] = "A Função '" + oFuncao.NomeDeExibicao + "' foi atualizada para '" + FuncaoNomeDeExibicao + "' com sucesso.";
 
                     return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
                 }
@@ -313,7 +316,7 @@ namespace GISWeb.Controllers
 
                     Atividade nAtividade = new Atividade()
                     {
-                        Ativ_Nome = AtividadeNome,
+                        Nome = AtividadeNome,
                         UniqueKey = oAtividade.UniqueKey,
                         UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login
                     };
@@ -321,7 +324,7 @@ namespace GISWeb.Controllers
                     AtividadeBusiness.Alterar(oAtividade);
                     AtividadeBusiness.Inserir(nAtividade);
 
-                    TempData["MensagemSucesso"] = "A Atividade '" + oAtividade.Ativ_Nome + "' foi atualizada para '" + AtividadeNome + "' com sucesso.";
+                    TempData["MensagemSucesso"] = "A Atividade '" + oAtividade.Nome + "' foi atualizada para '" + AtividadeNome + "' com sucesso.";
 
                     return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
                 }
@@ -355,7 +358,7 @@ namespace GISWeb.Controllers
                     oCargo.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                     CargoBusiness.Alterar(oCargo);
 
-                    TempData["MensagemAlerta"] = "O cargo '" + oCargo.Carg_Nome + "' foi excluído com sucesso.";
+                    TempData["MensagemAlerta"] = "O cargo '" + oCargo.Nome + "' foi excluído com sucesso.";
 
                     return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
                 }
@@ -434,7 +437,7 @@ namespace GISWeb.Controllers
                         oFuncaoAtividade.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
                         FuncaoAtividadeBusiness.Excluir(oFuncaoAtividade);
 
-                        TempData["MensagemAlerta"] = "A Atividade '" + oAtividade.Ativ_Nome + "' foi excluída com sucesso.";
+                        TempData["MensagemAlerta"] = "A Atividade '" + oAtividade.Nome + "' foi excluída com sucesso.";
 
                         return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
                     }

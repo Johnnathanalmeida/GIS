@@ -9,6 +9,6 @@ namespace GISModel.Entidades
     public class Atividade : EntidadeBase
     {
         [Display(Name = "Atividade")]
-        public string Ativ_Nome { get; set; }
+        public string Nome { get; set; }
     }
 }

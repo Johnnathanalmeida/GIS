@@ -10,7 +10,7 @@ namespace GISModel.Entidades
     {
         
         [Display(Name = "Cargo")]
-        public string Carg_Nome { get; set; }
+        public string Nome { get; set; }
 
         public List<Funcao> Funcao { get; set; }
 

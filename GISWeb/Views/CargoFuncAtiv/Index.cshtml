@@ -30,18 +30,18 @@
                     {
                         <li class="dd-item" >
                             <div class="dd2-content" style="border-left-color: #e8b110;">
-                                @iCargo.Carg_Nome
+                                @iCargo.Nome
                                 <span class="badge badge-grey">@iCargo.Funcao.Count()</span>
                                 <div class="pull-right action-buttons">
                                     <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
                                         <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
                                     </a>
-                                    <a class="blue" href="#" onclick="AlterarCargo('@iCargo.UniqueKey', '@iCargo.Carg_Nome')">
+                                    <a class="blue" href="#" onclick="AlterarCargo('@iCargo.UniqueKey', '@iCargo.Nome')">
                                         <i class="ace-icon fa fa-edit bigger-125"></i>
                                     </a>
                                     @if (iCargo.Funcao.Count == 0)
                                     {
-                                        <a class="blue" href="#" onclick="DeletarCargo('@iCargo.ID', '@iCargo.Carg_Nome')">
+                                        <a class="blue" href="#" onclick="DeletarCargo('@iCargo.ID', '@iCargo.Nome')">
                                             <i class="ace-icon fa fa-trash red bigger-125"></i>
                                         </a>
                                     }
@@ -58,18 +58,18 @@
                                 <ol class="dd-list">
                                     <li class="dd-item">
                                         <div class="dd2-content" style="border-left-color: #3983c2;">
-                                            @iFuncao.Nome
+                                            @iFuncao.NomeDeExibicao
                                             <span class="badge badge-grey">@iFuncao.Atividade.Count()</span>
                                             <div class="pull-right action-buttons">
                                                 <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.UniqueKey')">
                                                     <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
                                                 </a>
-                                                <a class="blue" href="#" onclick="AlterarFuncao('@iFuncao.UniqueKey', '@iFuncao.Nome')">
+                                                <a class="blue" href="#" onclick="AlterarFuncao('@iFuncao.UniqueKey', '@iFuncao.Nome', '@iFuncao.NomeDeExibicao')">
                                                     <i class="ace-icon fa fa-edit bigger-125"></i>
                                                 </a>
                                                 @if (iFuncao.Atividade.Count == 0)
                                                 {
-                                                    <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.Nome')">
+                                                    <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.NomeDeExibicao')">
                                                         <i class="ace-icon fa fa-trash red bigger-125"></i>
                                                     </a>
                                                 }
@@ -86,12 +86,12 @@
                                             <ol class="dd-list">
                                                 <li class="dd-item">
                                                     <div class="dd2-content" style="border-left-color: #d53f40;">
-                                                        @iAtividade.Ativ_Nome
+                                                        @iAtividade.Nome
                                                         <div class="pull-right action-buttons">
-                                                            <a class="blue" href="#" onclick="AlterarAtividade('@iAtividade.UniqueKey', '@iAtividade.Ativ_Nome')">
+                                                            <a class="blue" href="#" onclick="AlterarAtividade('@iAtividade.UniqueKey', '@iAtividade.Nome')">
                                                                 <i class="ace-icon fa fa-edit bigger-125"></i>
                                                             </a>
-                                                            <a class="blue" href="#" onclick="DeletarAtividade('@iAtividade.ID', '@iAtividade.UniqueKey', '@iAtividade.Ativ_Nome')">
+                                                            <a class="blue" href="#" onclick="DeletarAtividade('@iAtividade.ID', '@iAtividade.UniqueKey', '@iAtividade.Nome')">
                                                                 <i class="ace-icon fa fa-trash red bigger-125"></i>
                                                             </a>
                                                         </div>
