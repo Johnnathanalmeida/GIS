@@ -193,6 +193,7 @@
     <Content Include="Scripts\Ace\respond.js" />
     <Content Include="Scripts\Custom\Admissao\Novo.js" />
     <Content Include="Scripts\Custom\CargoFuncAtiv\Listagem.js" />
+    <Content Include="Scripts\Custom\CargoFuncAtiv\FuncaoDepartamento.js" />
     <Content Include="Scripts\Custom\CategoriaDeDocumento\Listagem.js" />
     <Content Include="Scripts\Custom\Conta\NovaSenha.js" />
     <Content Include="Scripts\Custom\Contrato\Listagem.js" />
@@ -369,7 +370,7 @@
     <Content Include="Views\Estabelecimento\_TipoDeDocWidget.cshtml" />
     <Content Include="Views\TipoDeDocumento\_Detalhes.cshtml" />
     <Content Include="Views\TipoDeDocumento\Edicao.cshtml" />
-    <Content Include="Views\TipoDeDocumento\_Departamentos.cshtml" />
+    <Content Include="Views\CargoFuncAtiv\_Departamentos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

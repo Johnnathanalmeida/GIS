@@ -22,10 +22,7 @@ namespace GISWeb.Controllers
 
         [Inject]
         public IBaseBusiness<TipoDeDocumento> TipoDeDocumentoBusiness { get; set; }
-
-        [Inject]
-        public IDepartamentoBusiness DepartamentoBusiness { get; set; }
-
+        
         #endregion
 
         public ActionResult Index()
@@ -75,21 +72,6 @@ namespace GISWeb.Controllers
                 ViewBag.Intervalos = TipoDeDocumentoBusiness.GetTodosEnumsIntervalo();
 
                 return PartialView("Edicao", objTipo);
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = 500;
-                return Content(ex.Message, "text/html");
-            }
-        }
-
-        public ActionResult GerenciarDepartamentos(string UKTipo)
-        {
-            try
-            {
-                ViewBag.Departamento = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa)).ToList();
-                ViewBag.UKEmpresa = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa;
-                return PartialView("_Departamentos");
             }
             catch (Exception ex)
             {
@@ -214,26 +196,5 @@ namespace GISWeb.Controllers
             }
         }
 	
-        [HttpPost]
-        public ActionResult GerenciarDpto(Departamento objDpto)
-        {
-            try
-            {
-                //TipoDeDocumento oTipo = TipoDeDocumentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.ID.Equals(IDTipo));
-                return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CategoriaDeDocumento") } });
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetBaseException() == null)
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
-                }
-                else
-                {
-                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
-                }
-            }
-        }
-
     }
 }

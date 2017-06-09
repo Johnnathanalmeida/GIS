@@ -33,16 +33,16 @@
                                 @iCargo.Nome
                                 <span class="badge badge-grey">@iCargo.Funcao.Count()</span>
                                 <div class="pull-right action-buttons">
-                                    <a class="blue" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
+                                    <a class="green" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
                                         <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
                                     </a>
-                                    <a class="blue" href="#" onclick="AlterarCargo('@iCargo.UniqueKey', '@iCargo.Nome')">
-                                        <i class="ace-icon fa fa-edit bigger-125"></i>
+                                    <a class="green" href="#" onclick="AlterarCargo('@iCargo.UniqueKey', '@iCargo.Nome')">
+                                        <i class="ace-icon fa fa-pencil bigger-125"></i>
                                     </a>
                                     @if (iCargo.Funcao.Count == 0)
                                     {
-                                        <a class="blue" href="#" onclick="DeletarCargo('@iCargo.ID', '@iCargo.Nome')">
-                                            <i class="ace-icon fa fa-trash red bigger-125"></i>
+                                        <a class="red" href="#" onclick="DeletarCargo('@iCargo.ID', '@iCargo.Nome')">
+                                            <i class="ace-icon fa fa-trash bigger-125"></i>
                                         </a>
                                     }
                                     else
@@ -61,16 +61,20 @@
                                             @iFuncao.NomeDeExibicao
                                             <span class="badge badge-grey">@iFuncao.Atividade.Count()</span>
                                             <div class="pull-right action-buttons">
-                                                <a class="blue" href="#" onclick="CadastrarAtividade('@iFuncao.UniqueKey')">
-                                                    <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
+                                                <a class="orange" href="#" onclick="GerenciarDepartamentos('@iFuncao.UniqueKey','@ViewBag.UKEmpresa')" title="Departamentos">
+                                                    <i class="ace-icon fa fa-cubes bigger-125"></i>
                                                 </a>
-                                                <a class="blue" href="#" onclick="AlterarFuncao('@iFuncao.UniqueKey', '@iFuncao.Nome', '@iFuncao.NomeDeExibicao')">
-                                                    <i class="ace-icon fa fa-edit bigger-125"></i>
+                                                <a class="green" href="#" onclick="CadastrarAtividade('@iFuncao.UniqueKey')">
+                                                    <i class="ace-icon fa fa-plus-circle bigger-125"></i>
+                                                </a>
+                                                <a class="green" href="#" onclick="AlterarFuncao('@iFuncao.UniqueKey', '@iFuncao.Nome', '@iFuncao.NomeDeExibicao')">
+                                                    <i class="ace-icon fa fa-pencil bigger-125"></i>
                                                 </a>
                                                 @if (iFuncao.Atividade.Count == 0)
                                                 {
-                                                    <a class="blue" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.NomeDeExibicao')">
-                                                        <i class="ace-icon fa fa-trash red bigger-125"></i>
+
+                                                    <a class="red" href="#" onclick="DeletarFuncao('@iFuncao.ID', '@iFuncao.NomeDeExibicao')">
+                                                        <i class="ace-icon fa fa-trash bigger-125"></i>
                                                     </a>
                                                 }
                                                 else
@@ -123,16 +127,57 @@
     </div>
 </div>
 
+<div id="modalFuncaoDepartamento" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="modalFuncaoDepartamentoX" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="modalFuncaoDepartamentoHeader" class="smaller lighter grey no-margin"><i class="ace-icon fa fa-cubes orange"></i> Relacionar Departamentos...</h3>
+            </div>
 
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="modalFuncaoDepartamentoCorpoLoading">
+                            <h4 class="smaller lighter blue no-margin"> Aguarde, processando... <i style="display: none; float: right; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i></h4>
+                        </div>
+                        <br />
+                        <div id="modalFuncaoDepartamentoCorpo" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="modalFuncaoDepartamentoLoading" style="display: none; float: left; padding-top: 6px">
+                            <i style="display: none; float: left; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
+                        </span>
+
+                        <button id="modalFuncaoDepartamentoFechar" class="btn btn-sm btn-default pull-right" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            Cancelar
+                        </button>
+
+                        <button id="modalFuncaoDepartamentoSalvar" class="btn btn-sm btn-info" style="right: 5px; left: auto">
+                            <i class="ace-icon fa fa-check"></i>
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
     <script src="~/Scripts/Ace/dataTables/jquery.dataTables.js"></script>
     <script src="~/Scripts/Ace/dataTables/jquery.dataTables.bootstrap.js"></script>
-
     <script src="~/Scripts/Ace/dataTables/dataTables.tableTools.js"></script>
     <script src="~/Scripts/Ace/dataTables/dataTables.colVis.js"></script>
-
     <script src="~/Scripts/Custom/CargoFuncAtiv/Listagem.js"></script>
+    <script src="~/Scripts/Ace/jquery.bootstrap-duallistbox.js"></script>
     <script src="~/Scripts/Ace/jQ/jquery.nestable.js"></script>    
+    <script src="~/Scripts/Custom/CargoFuncAtiv/FuncaoDepartamento.js"></script>
 }
 

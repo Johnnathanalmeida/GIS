@@ -1,0 +1,17 @@
+﻿@model GISModel.Entidades.Departamento
+
+@{
+    ViewBag.Title = "Departamentos";
+}
+
+<div>
+    @using (Ajax.BeginForm("GerenciarDpto", "TipoDeDocumento", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginGerenciarDpto", OnSuccess = "OnSuccessGerenciarDpto", }, new { @id = "formDepartamentoTipoDeDocumento", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+    }
+</div>
+
+@section Stylesheets {
+    <link href="~/Content/Ace/css/chosen.css" rel="stylesheet" />
+}

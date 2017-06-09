@@ -34,16 +34,16 @@
                                 @iCategorias.Nome
                                 <span class="badge badge-grey">@iCategorias.Tipos.Count() Tipos</span>
                                 <div class="pull-right action-buttons">
-                                    <a class="blue" href="#" onclick="CadastrarTipo('@iCategorias.UniqueKey')">
-                                        <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
+                                    <a class="green" href="#" onclick="CadastrarTipo('@iCategorias.UniqueKey')">
+                                        <i class="ace-icon fa fa-plus-circle bigger-125"></i>
                                     </a>
-                                    <a class="blue" href="#" onclick="AlterarCategoria('@iCategorias.UniqueKey', '@iCategorias.Nome')">
-                                        <i class="ace-icon fa fa-edit bigger-125"></i>
+                                    <a class="green" href="#" onclick="AlterarCategoria('@iCategorias.UniqueKey', '@iCategorias.Nome')">
+                                        <i class="ace-icon fa fa-pencil bigger-125"></i>
                                     </a>
                                     @if (iCategorias.Tipos.Count == 0)
                                     {
-                                        <a class="blue" href="#" onclick="DeletarCategoria('@iCategorias.ID', '@iCategorias.Nome')">
-                                            <i class="ace-icon fa fa-trash red bigger-125"></i>
+                                        <a class="red" href="#" onclick="DeletarCategoria('@iCategorias.ID', '@iCategorias.Nome')">
+                                            <i class="ace-icon fa fa-trash bigger-125"></i>
                                         </a>
                                     }
                                     else
@@ -62,13 +62,10 @@
                                             @iTipo.Nome
                                             <span class="badge badge-grey">0 Arquivo(s)</span>
                                             <div class="pull-right action-buttons">
-                                                <a class="orange" href="#" onclick="GerenciarDepartamentos('@iTipo.UniqueKey','@ViewBag.UKEmpresa')" title="Departamentos">
-                                                    <i class="ace-icon fa fa-cubes bigger-125"></i>
-                                                </a>
-                                                <a class="blue" href="#" onclick="DetalharTipo('@iTipo.UniqueKey')" title="Informações">
+                                                <a class="green" href="#" onclick="DetalharTipo('@iTipo.UniqueKey')" title="Informações">
                                                     <i class="ace-icon fa fa-info-circle bigger-125"></i>
                                                 </a>
-                                                <a class="blue" href="#" onclick="AtualizarTipo('@iTipo.UniqueKey', '@iTipo.Nome')" title="Editar Tipo">
+                                                <a class="green" href="#" onclick="AtualizarTipo('@iTipo.UniqueKey', '@iTipo.Nome')" title="Editar Tipo">
                                                     <i class="ace-icon fa fa-pencil bigger-125"></i>
                                                 </a>
                                                 <a class="red" href="#" onclick="DeletarTipo('@iTipo.ID', '@iTipo.Nome')">
@@ -157,7 +154,6 @@
 
     <script src="~/Scripts/Ace/jQ/jquery.nestable.js"></script>
     <script src="~/Scripts/Ace/chosen.jquery.js"></script>
-    <script src="~/Scripts/Ace/jquery.bootstrap-duallistbox.js"></script>
     <script src="~/Scripts/Custom/CategoriaDeDocumento/Listagem.js"></script>
 }
 

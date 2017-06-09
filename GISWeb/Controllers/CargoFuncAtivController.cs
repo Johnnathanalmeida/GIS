@@ -31,6 +31,9 @@ namespace GISWeb.Controllers
         [Inject]
         public ICustomAuthorizationProvider CustomAuthorizationProvider { get; set; }
 
+        [Inject]
+        public IDepartamentoBusiness DepartamentoBusiness { get; set; }
+
 
         [MenuAtivo(MenuAtivo = "Administracao/Cargos")]
         public ActionResult Index()
@@ -455,6 +458,45 @@ namespace GISWeb.Controllers
                 }
             }
         }
+
+
+        public ActionResult GerenciarDepartamentos(string UKFuncao)
+        {
+            try
+            {
+                ViewBag.Departamento = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa)).ToList();
+                ViewBag.UKEmpresa = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa;
+                return PartialView("_Departamentos");
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return Content(ex.Message, "text/html");
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult GerenciarDpto(Departamento objDpto)
+        {
+            try
+            {
+                //TipoDeDocumento oTipo = TipoDeDocumentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.ID.Equals(IDTipo));
+                return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetBaseException() == null)
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.Message } });
+                }
+                else
+                {
+                    return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
+                }
+            }
+        }
+
 
     }
 }
