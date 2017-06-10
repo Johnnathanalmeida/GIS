@@ -1,17 +1,58 @@
-﻿@model GISModel.Entidades.Departamento
+﻿<body class='default'>
+    <div id='jqxWidget'>
+        <div style='float: left;'>
+            <div id='jqxTree' style='visibility: hidden; float: left; margin-left: 20px; border: 0px'>
+                <ul>
+                    <li style="border: 0px;">
+                        Solutions
+                        <ul>
+                            <li style="border: 0px;">Education</li>
+                            <li style="border: 0px;">Financial services</li>
+                            <li style="border: 0px;">Government</li>
+                            <li style="border: 0px;">Manufacturing</li>
+                            <li style="border: 0px;">
+                                Solutions
+                                <ul>
+                                    <li style="border: 0px;">Consumer photo and video</li>
+                                    <li style="border: 0px;">Mobile</>
+                                    <li style="border: 0px;">Rich Internet applications</li>
+                                    <li style="border: 0px;">Technical communication</li>
+                                    <li style="border: 0px;">Training and eLearning</li>
+                                    <li style="border: 0px;">Web conferencing</li>
+                                </ul>
+                            </li>
+                            <li style="border: 0px;">All industries and solutions</li>
+                        </ul>
+                    </li>
+                    <li style="border: 0px;">
+                        Products
+                        <ul>
+                            <li style="border: 0px;">PC products</li>
+                            <li style="border: 0px;">Mobile products</li>
+                            <li style="border: 0px;">All products</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
 
-@{
-    ViewBag.Title = "Departamentos";
-}
-
-<div>
-    @using (Ajax.BeginForm("GerenciarDpto", "TipoDeDocumento", null, new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBeginGerenciarDpto", OnSuccess = "OnSuccessGerenciarDpto", }, new { @id = "formDepartamentoTipoDeDocumento", @class = "form-horizontal" }))
-    {
-        @Html.AntiForgeryToken()
-
-    }
-</div>
-
-@section Stylesheets {
-    <link href="~/Content/Ace/css/chosen.css" rel="stylesheet" />
-}
+<link rel="stylesheet" href="~/Content/jQwidgets/jqx.base.css" type="text/css" />
+<script src="~/Scripts/jQwidgets/jqxcore.js"></script>
+<script src="~/Scripts/jQwidgets/jqxbuttons.js"></script>
+<script src="~/Scripts/jQwidgets/jqxscrollbar.js"></script>
+<script src="~/Scripts/jQwidgets/jqxpanel.js"></script>
+<script src="~/Scripts/jQwidgets/jqxtree.js"></script>
+<script src="~/Scripts/jQwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#jqxTree').jqxTree({ height: '400px', width: '550px', hasThreeStates: true, checkboxes: true });
+        $('#jqxTree').css('visibility', 'visible');
+        $('#jqxCheckBox').on('change', function (event) {
+            var checked = event.args.checked;
+            $('#jqxTree').jqxTree({ hasThreeStates: checked });
+        });
+        $("#jqxTree").jqxTree('selectItem', $("#home")[0]);
+    });
+</script>

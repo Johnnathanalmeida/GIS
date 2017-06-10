@@ -1,5 +1,4 @@
-﻿
-function GerenciarDepartamentos(pUKFuncao, pUKEmpresa) {
+﻿function GerenciarDepartamentos(pUKFuncao, pUKEmpresa) {
     $('#modalFuncaoDepartamento').modal('show');
     $('#modalFuncaoDepartamentoX').hide();
     $('#modalFuncaoDepartamentoFechar').removeClass('disabled');
@@ -10,20 +9,20 @@ function GerenciarDepartamentos(pUKFuncao, pUKEmpresa) {
     $('#modalFuncaoDepartamentoCorpoConfirmar').hide();
     $('#modalFuncaoDepartamentoCorpoLoading').hide();
 
-    //$.ajax({
-    //    method: "GET",
-    //    url: "/CargoFuncAtiv/GerenciarDepartamentos",
-    //    data: { UKFuncao: pUKFuncao },
-    //    error: function (erro) {
-    //        alert(erro.responseText);
-    //        $('#modalFuncaoDepartamento').modal('hide');
-    //        ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
-    //    },
-    //    success: function (content) {
-    //        CarregarDepartamentos(pUKEmpresa)
-    //        $('#modalFuncaoDepartamentoCorpo').html(content);
-    //    },
-    //});
+    $.ajax({
+        method: "GET",
+        url: "/CargoFuncAtiv/GerenciarDepartamentos",
+        data: { UKFuncao: pUKFuncao },
+        error: function (erro) {
+            alert(erro.responseText);
+            $('#modalFuncaoDepartamento').modal('hide');
+            ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+        },
+        success: function (content) {
+            CarregarDepartamentos(pUKEmpresa)
+            $('#modalFuncaoDepartamentoCorpo').html(content);
+        },
+    });
 }
 
 function OnSuccessGerenciarDpto(data) {
@@ -43,28 +42,28 @@ function OnBeginGerenciarDpto() {
 }
 
 function CarregarDepartamentos(UKEmpresa) {
-    $.ajax({
-        url: "/Departamento/CarregarDepartamentos",
-        type: 'POST',
-        dataType: "json",
-        data: { UKEmpresa: UKEmpresa },
-        success: function (response) {
-            var myObject = eval('(' + response + ')');
+    //$.ajax({
+    //    url: "/Departamento/CarregarDepartamentos",
+    //    type: 'POST',
+    //    dataType: "json",
+    //    data: { UKEmpresa: UKEmpresa },
+    //    success: function (response) {
+    //        var myObject = eval('(' + response + ')');
 
-            var demo2 = $('.demo2').bootstrapDualListbox({
-                nonSelectedListLabel: 'Non-selected',
-                selectedListLabel: 'Selected',
-                preserveSelectionOnMove: 'moved',
-                moveOnSelect: false,
-                nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
-            });
+    //        var demo2 = $('.demo2').bootstrapDualListbox({
+    //            nonSelectedListLabel: 'Non-selected',
+    //            selectedListLabel: 'Selected',
+    //            preserveSelectionOnMove: 'moved',
+    //            moveOnSelect: false,
+    //            nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
+    //        });
 
-            $("#duallist").empty();
-            for (var i = 0; i < myObject.length; i++) {
-                $("#duallist").append('<option value="' + myObject[i].UniqueKey + '">' + myObject[i].Sigla + '</option>');
-            }
+    //        $("#duallist").empty();
+    //        for (var i = 0; i < myObject.length; i++) {
+    //            $("#duallist").append('<option value="' + myObject[i].UniqueKey + '">' + myObject[i].Sigla + '</option>');
+    //        }
 
-            $("#duallist").bootstrapDualListbox('refresh');
-        }
-    });
+    //        $("#duallist").bootstrapDualListbox('refresh');
+    //    }
+    //});
 }

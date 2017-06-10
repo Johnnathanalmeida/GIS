@@ -149,6 +149,13 @@
     <Content Include="Content\Ace\FontAwesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Ace\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Croppie\croppie.css" />
+    <Content Include="Content\jQwidgets\images\check_black.png" />
+    <Content Include="Content\jQwidgets\images\check_indeterminate_black.png" />
+    <Content Include="Content\jQwidgets\images\icon-down.png" />
+    <Content Include="Content\jQwidgets\images\icon-left.png" />
+    <Content Include="Content\jQwidgets\images\icon-right.png" />
+    <Content Include="Content\jQwidgets\images\icon-up.png" />
+    <Content Include="Content\jQwidgets\jqx.base.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\profile-pic.jpg" />
     <Content Include="Scripts\Ace\ace-extra.js" />
@@ -249,6 +256,13 @@
     <Content Include="Scripts\jQuery\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jQuery\jquery1x.js" />
     <Content Include="Scripts\jQuery\modernizr-2.8.3.js" />
+    <Content Include="Scripts\jQwidgets\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jQwidgets\jqxbuttons.js" />
+    <Content Include="Scripts\jQwidgets\jqxcheckbox.js" />
+    <Content Include="Scripts\jQwidgets\jqxcore.js" />
+    <Content Include="Scripts\jQwidgets\jqxpanel.js" />
+    <Content Include="Scripts\jQwidgets\jqxscrollbar.js" />
+    <Content Include="Scripts\jQwidgets\jqxtree.js" />
     <Content Include="Scripts\Pace\pace.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
