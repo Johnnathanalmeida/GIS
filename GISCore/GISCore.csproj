@@ -96,6 +96,10 @@
     <Compile Include="Business\Concrete\UsuarioPerfilBusiness.cs" />
     <Compile Include="DI\GISNinjectModule.cs" />
     <Compile Include="Infraestrutura\Comparer\UsuarioComparer.cs" />
+    <Compile Include="Migrations\201706121449359_refresh.cs" />
+    <Compile Include="Migrations\201706121449359_refresh.Designer.cs">
+      <DependentUpon>201706121449359_refresh.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstract\IBaseRepository.cs" />
@@ -116,6 +120,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201706121449359_refresh.resx">
+      <DependentUpon>201706121449359_refresh.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

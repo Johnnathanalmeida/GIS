@@ -1,37 +1,32 @@
-﻿<body class='default'>
+﻿@using GISModel.Entidades
+
+<body class='default'>
     <div id='jqxWidget'>
         <div style='float: left;'>
             <div id='jqxTree' style='visibility: hidden; float: left; margin-left: 20px; border: 0px'>
                 <ul>
-                    <li style="border: 0px;">
-                        Solutions
-                        <ul>
-                            <li style="border: 0px;">Education</li>
-                            <li style="border: 0px;">Financial services</li>
-                            <li style="border: 0px;">Government</li>
-                            <li style="border: 0px;">Manufacturing</li>
-                            <li style="border: 0px;">
-                                Solutions
-                                <ul>
-                                    <li style="border: 0px;">Consumer photo and video</li>
-                                    <li style="border: 0px;">Mobile</>
-                                    <li style="border: 0px;">Rich Internet applications</li>
-                                    <li style="border: 0px;">Technical communication</li>
-                                    <li style="border: 0px;">Training and eLearning</li>
-                                    <li style="border: 0px;">Web conferencing</li>
-                                </ul>
-                            </li>
-                            <li style="border: 0px;">All industries and solutions</li>
-                        </ul>
-                    </li>
-                    <li style="border: 0px;">
-                        Products
-                        <ul>
-                            <li style="border: 0px;">PC products</li>
-                            <li style="border: 0px;">Mobile products</li>
-                            <li style="border: 0px;">All products</li>
-                        </ul>
-                    </li>
+                    @foreach (Departamento iDepartamento in ViewBag.Departamento)
+                    {
+                        <li style="border: 0px;" id="@iDepartamento.ID">
+                            @iDepartamento.Codigo - @iDepartamento.Sigla
+                            <ul>
+                                @foreach (Departamento iSubDepartamento in iDepartamento.SubDepartamento)
+                                {
+                                    <li style="border: 0px;" id="@iSubDepartamento.ID">
+                                        @iSubDepartamento.Codigo - @iSubDepartamento.Sigla
+                                        <ul>
+                                            @foreach (Departamento iSubSubDepartamento in iSubDepartamento.SubDepartamento)
+                                            {
+                                                <li style="border: 0px;" id="@iSubSubDepartamento.ID">
+                                                    @iSubSubDepartamento.Codigo - @iSubSubDepartamento.Sigla
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -54,5 +49,23 @@
             $('#jqxTree').jqxTree({ hasThreeStates: checked });
         });
         $("#jqxTree").jqxTree('selectItem', $("#home")[0]);
+
     });
+
+    function submitMe() {
+        debugger;
+        var items = $("#jqxTree").jqxTree('getItems');
+        // save all checked items in checkedItems array.
+        var checkedItems = new Array();
+        $.each(items, function () {
+            if (this.checked) {
+                checkedItems[checkedItems.length] = this.label;
+            }
+        });
+
+        for (var i = 0; i < checkedItems.length; i++) {
+            // Iterate over numeric indexes from 0 to 5, as everyone expects.
+            alert(checkedItems[i]);
+        }
+    }
 </script>

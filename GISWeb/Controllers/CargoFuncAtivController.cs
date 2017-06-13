@@ -464,7 +464,49 @@ namespace GISWeb.Controllers
         {
             try
             {
-                ViewBag.Departamento = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa)).ToList();
+                List<Departamento> listDepartamento = (from dpto in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa) && string.IsNullOrEmpty(p.UKDepartamentoVinculado)).ToList()
+                                                       orderby dpto.Codigo
+                                                       select new Departamento
+                                                      {
+                                                          ID = dpto.ID,
+                                                          UniqueKey = dpto.UniqueKey,
+                                                          Codigo = dpto.Codigo,
+                                                          Sigla = dpto.Sigla,
+                                                          SubDepartamento = new List<Departamento>()
+                                                      }).ToList();
+
+                foreach (Departamento item in listDepartamento)
+                {
+
+                    item.SubDepartamento = (from SubDpto in DepartamentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao) && !string.IsNullOrEmpty(a.UKDepartamentoVinculado)).ToList()
+                                            where SubDpto.UKDepartamentoVinculado.Equals(item.ID)
+                                            orderby SubDpto.Codigo
+                                            select new Departamento()
+                                            {
+                                                ID = SubDpto.ID,
+                                                UniqueKey = SubDpto.UniqueKey,
+                                                Codigo = SubDpto.Codigo,
+                                                Sigla = SubDpto.Sigla,
+                                                SubDepartamento = new List<Departamento>()
+                                            }).ToList();
+
+                    foreach (Departamento SubSubDepartamento in item.SubDepartamento)
+                    {
+                        SubSubDepartamento.SubDepartamento = (from subsubDpto in DepartamentoBusiness.Consulta.Where(b => string.IsNullOrEmpty(b.UsuarioExclusao) && !string.IsNullOrEmpty(b.UKDepartamentoVinculado)).ToList()
+                                                              where subsubDpto.UKDepartamentoVinculado.Equals(SubSubDepartamento.ID)
+                                                              orderby subsubDpto.Codigo
+                                                              select new Departamento()
+                                                              {
+                                                                  ID = subsubDpto.ID,
+                                                                  UniqueKey = subsubDpto.UniqueKey,
+                                                                  Codigo = subsubDpto.Codigo,
+                                                                  Sigla = subsubDpto.Sigla
+                                                              }).ToList();
+                    }
+                }
+
+
+                ViewBag.Departamento = listDepartamento; //DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa) && string.IsNullOrEmpty(p.UKDepartamentoVinculado)).ToList();
                 ViewBag.UKEmpresa = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa;
                 return PartialView("_Departamentos");
             }

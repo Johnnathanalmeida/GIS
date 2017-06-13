@@ -39,7 +39,7 @@ namespace GISWeb.Controllers
             //ViewBag.Departamentos = DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList();
             ViewBag.Departamentos = (from dep in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
                                     join emp in EmpresaBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList() on dep.UKEmpresa equals emp.UniqueKey
-                                    select new Departamento { UniqueKey = dep.UniqueKey, Codigo = dep.Codigo, Sigla = dep.Sigla, Descricao = dep.Descricao, Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia } }).ToList();
+                                    select new Departamento { ID = dep.ID, UniqueKey = dep.UniqueKey, Codigo = dep.Codigo, Sigla = dep.Sigla, Descricao = dep.Descricao, Empresa = new Empresa() { NomeFantasia = emp.NomeFantasia } }).ToList();
             return View();
         }
 

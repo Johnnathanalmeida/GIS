@@ -22,7 +22,7 @@
                         $('#ddlDepartamento').append($('<option></option>').val("").html("Selecione um departamento"));
                         for (var i = 0; i < content.resultado.length; i++) {
                             $('#ddlDepartamento').append(
-                                $('<option></option>').val(content.resultado[i].IDDepartamento).html(content.resultado[i].Sigla)
+                                $('<option></option>').val(content.resultado[i].ID).html(content.resultado[i].Sigla)
                             );
                         }
                     }

@@ -93,7 +93,7 @@
                     <div class="form-group">
                         @Html.LabelFor(d => d.UKDepartamentoVinculado, new { @class = "form-field-select-3 col-xs-12 col-sm-6 no-padding-right" })
                         <div class="col-xs-12 col-sm-12">
-                            @Html.DropDownListFor(d => d.UKDepartamentoVinculado, new SelectList("", "UniqueKey", "Sigla"), "Selecione antes uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @autocomplete = "on", @id = "ddlDepartamento", @disabled = "disabled" })
+                            @Html.DropDownListFor(d => d.UKDepartamentoVinculado, new SelectList("", "ID", "Sigla"), "Selecione antes uma Empresa...", new { @class = "chosen-select form-control tag-input-style", @autocomplete = "on", @id = "ddlDepartamento", @disabled = "disabled" })
                         </div>
                     </div>
                 </div>
