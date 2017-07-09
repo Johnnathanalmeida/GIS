@@ -1,0 +1,73 @@
+﻿@model GISModel.Entidades.Funcao
+@using GISModel.Entidades
+
+<body class='default'>
+    <div id='jqxWidget'>
+        <div style='float: left;'>
+            @Html.HiddenFor(d => d.UniqueKey)
+            <div id='jqxTree' style='visibility: hidden; float: left; margin-left: 20px; border: 0px'>
+                <ul>
+                    @foreach (CategoriaDeDocumento iCategoria in ViewBag.Categoria)
+                    {
+                        <li style="border: 0px;" id="@iCategoria.UniqueKey">
+                            @iCategoria.Nome
+                            <ul>
+                                @foreach (TipoDeDocumento iTipo in iCategoria.Tipos)
+                                {
+                                    <li style="border: 0px;" id="@iTipo.UniqueKey">
+                                        @iTipo.Nome
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+<link rel="stylesheet" href="~/Content/jQwidgets/jqx.base.css" type="text/css" />
+<script src="~/Scripts/jQwidgets/jqxcore.js"></script>
+<script src="~/Scripts/jQwidgets/jqxbuttons.js"></script>
+<script src="~/Scripts/jQwidgets/jqxscrollbar.js"></script>
+<script src="~/Scripts/jQwidgets/jqxpanel.js"></script>
+<script src="~/Scripts/jQwidgets/jqxtree.js"></script>
+<script src="~/Scripts/jQwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        alert();
+        $('#jqxTree').jqxTree({ height: '400px', width: '550px', hasThreeStates: true, checkboxes: true });
+        $('#jqxTree').css('visibility', 'visible');
+        $('#jqxCheckBox').on('change', function (event) {
+            var checked = event.args.checked;
+            $('#jqxTree').jqxTree({ hasThreeStates: checked });
+        });
+        $("#jqxTree").jqxTree('selectItem', $("#home")[0]);
+
+    });
+
+    function submitMe() {
+        var items = $("#jqxTree").jqxTree('getItems');
+        var checkedItems = new Array();
+        $.each(items, function () {
+            if (this.checked) {
+                checkedItems[checkedItems.length] = this.id;
+            }
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "/CargoFuncAtiv/GerenciarTipos",
+            data: { pTiposArray: checkedItems, pUKFuncao: $("#UniqueKey").val() },
+            error: function (erro) {
+                ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+            },
+            success: function (content) {
+                TratarResultadoJSON(content.resultado);
+            }
+        });
+
+
+    }
+</script>

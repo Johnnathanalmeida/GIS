@@ -34,5 +34,9 @@ namespace GISModel.Entidades
         public string UKDepartamentoVinculado { get; set; }
 
         public List<Departamento> SubDepartamento { get; set; }
+
+        public virtual List<FuncaoDepartamento> FuncDpto { get; set; }
+
+        public virtual bool Checked { get; set; }
     }
 }

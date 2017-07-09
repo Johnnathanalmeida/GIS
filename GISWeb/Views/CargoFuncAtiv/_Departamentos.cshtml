@@ -1,24 +1,26 @@
-﻿@using GISModel.Entidades
+﻿@model GISModel.Entidades.Funcao
+@using GISModel.Entidades
 
 <body class='default'>
     <div id='jqxWidget'>
         <div style='float: left;'>
+            @Html.HiddenFor(d => d.UniqueKey)
             <div id='jqxTree' style='visibility: hidden; float: left; margin-left: 20px; border: 0px'>
-                <ul>
+                <ul class="ulDepartamento">
                     @foreach (Departamento iDepartamento in ViewBag.Departamento)
                     {
-                        <li style="border: 0px;" id="@iDepartamento.ID">
-                            @iDepartamento.Codigo - @iDepartamento.Sigla
-                            <ul>
+                        <li style="border: 0px;" id="@iDepartamento.UniqueKey" cd="@iDepartamento.Checked.ToString()">
+                            <span>@iDepartamento.Sigla</span>
+                            <ul class="ulDepartamento">
                                 @foreach (Departamento iSubDepartamento in iDepartamento.SubDepartamento)
                                 {
-                                    <li style="border: 0px;" id="@iSubDepartamento.ID">
-                                        @iSubDepartamento.Codigo - @iSubDepartamento.Sigla
-                                        <ul>
+                                    <li style="border: 0px;" id="@iSubDepartamento.UniqueKey" cd="@iSubDepartamento.Checked.ToString()">
+                                        <span>@iSubDepartamento.Sigla</span>
+                                        <ul class="ulDepartamento">
                                             @foreach (Departamento iSubSubDepartamento in iSubDepartamento.SubDepartamento)
                                             {
-                                                <li style="border: 0px;" id="@iSubSubDepartamento.ID">
-                                                    @iSubSubDepartamento.Codigo - @iSubSubDepartamento.Sigla
+                                                <li style="border: 0px;" id="@iSubSubDepartamento.UniqueKey" cd="@iSubSubDepartamento.Checked.ToString()">
+                                                    <span>@iSubSubDepartamento.Sigla</span>
                                                 </li>
                                             }
                                         </ul>
@@ -40,9 +42,10 @@
 <script src="~/Scripts/jQwidgets/jqxpanel.js"></script>
 <script src="~/Scripts/jQwidgets/jqxtree.js"></script>
 <script src="~/Scripts/jQwidgets/jqxcheckbox.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#jqxTree').jqxTree({ height: '400px', width: '550px', hasThreeStates: true, checkboxes: true });
+        $('#jqxTree').jqxTree({ height: '400px', width: '550px', hasThreeStates: false, checkboxes: true });
         $('#jqxTree').css('visibility', 'visible');
         $('#jqxCheckBox').on('change', function (event) {
             var checked = event.args.checked;
@@ -50,22 +53,76 @@
         });
         $("#jqxTree").jqxTree('selectItem', $("#home")[0]);
 
+        LoadTree();
+
     });
 
     function submitMe() {
-        debugger;
         var items = $("#jqxTree").jqxTree('getItems');
-        // save all checked items in checkedItems array.
         var checkedItems = new Array();
         $.each(items, function () {
             if (this.checked) {
-                checkedItems[checkedItems.length] = this.label;
+                checkedItems[checkedItems.length] = this.id;
             }
         });
 
-        for (var i = 0; i < checkedItems.length; i++) {
-            // Iterate over numeric indexes from 0 to 5, as everyone expects.
-            alert(checkedItems[i]);
+        $('#modalFuncaoDepartamento').modal('show');
+        $('#modalFuncaoDepartamentoX').hide();
+        $('#modalFuncaoDepartamentoFechar').addClass('disabled');
+        $('#modalFuncaoDepartamentoFechar').attr('disabled', 'disabled');
+        $('#modalFuncaoDepartamentoProsseguir').addClass('disabled');
+        $('#modalFuncaoDepartamentoProsseguir').attr('disabled', 'disabled');
+        $('#modalFuncaoDepartamentoCorpo').hide();
+        $('#modalFuncaoDepartamentoCorpoConfirmar').hide();
+        $('#modalFuncaoDepartamentoCorpoLoading').show();
+
+        $.ajax({
+            method: "POST",
+            url: "/CargoFuncAtiv/SalvarFuncaoDepartamento",
+            data: { pDeptoArray: checkedItems, pUKFuncao: $("#UniqueKey").val() },
+            error: function (erro) {
+                ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
+            },
+            success: function (content) {
+                TratarResultadoJSON(content.resultado);
+                $('#modalFuncaoDepartamento').modal('hide');
+                $('#modalFuncaoDepartamentoX').hide();
+                $('#modalFuncaoDepartamentoFechar').removeClass('disabled');
+                $('#modalFuncaoDepartamentoFechar').removeAttr('disabled', 'disabled');
+                $('#modalFuncaoDepartamentoSalvar').removeClass('disabled');
+                $('#modalFuncaoDepartamentoSalvar').removeAttr('disabled', 'disabled');
+                $('#modalFuncaoDepartamentoCorpo').html('');
+                $('#modalFuncaoDepartamentoCorpoConfirmar').hide();
+                $('#modalFuncaoDepartamentoCorpoLoading').hide();
+            }
+        });
+
+
+    }
+
+    function LoadTree()
+    {
+        var items = $("#jqxTree").jqxTree('getItems');
+        $.each(items, function () {
+            checkedItems(this.id)            
+        });
+    }
+
+    function checkedItems(key)
+    {
+        if (key != "" || key != null) {
+            $('.ulDepartamento').each(function () {
+                var list = $(this).find('li');
+                $(list).each(function () {
+                    var sDptoLI = this.attributes["id"].value;
+                    if (key == sDptoLI) {
+                        var bolCheck = (this.attributes["cd"].value == "True");
+                        var ninthItem = $("#jqxTree").jqxTree('getItem', this);
+                        $("#jqxTree").jqxTree('checkItem', ninthItem, bolCheck);
+                        return false;
+                    }
+                });
+            });
         }
     }
 </script>

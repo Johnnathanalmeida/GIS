@@ -1,46 +1,44 @@
-﻿function GerenciarDepartamentos(pUKFuncao, pUKEmpresa) {
-    alert();
-    $('#modalFuncaoDepartamento').modal('show');
-    $('#modalFuncaoDepartamentoX').hide();
-    $('#modalFuncaoDepartamentoFechar').removeClass('disabled');
-    $('#modalFuncaoDepartamentoFechar').removeAttr('disabled', 'disabled');
-    $('#modalFuncaoDepartamentoSalvar').removeClass('disabled');
-    $('#modalFuncaoDepartamentoSalvar').removeAttr('disabled', 'disabled');
-    $('#modalFuncaoDepartamentoCorpo').html('');
-    $('#modalFuncaoDepartamentoCorpoConfirmar').hide();
-    $('#modalFuncaoDepartamentoCorpoLoading').show();
+﻿function GerenciarTipos(pUKFuncao) {
+    $('#modalFuncaoTipo').modal('show');
+    $('#modalFuncaoTipoX').hide();
+    $('#modalFuncaoTipoFechar').removeClass('disabled');
+    $('#modalFuncaoTipoFechar').removeAttr('disabled', 'disabled');
+    $('#modalFuncaoTipoSalvar').removeClass('disabled');
+    $('#modalFuncaoTipoSalvar').removeAttr('disabled', 'disabled');
+    $('#modalFuncaoTipoCorpo').html('');
+    $('#modalFuncaoTipoCorpoConfirmar').hide();
+    $('#modalFuncaoTipoCorpoLoading').hide();
 
     $.ajax({
         method: "GET",
-        url: "/CargoFuncAtiv/GerenciarDepartamentos",
+        url: "/CargoFuncAtiv/GerenciarTipos",
         data: { UKFuncao: pUKFuncao },
         error: function (erro) {
             alert(erro.responseText);
-            $('#modalFuncaoDepartamento').modal('hide');
+            $('#modalFuncaoTipo').modal('hide');
             ExibirMensagemGritter('Oops! Erro inesperado', erro.responseText, 'gritter-error')
         },
         success: function (content) {
-            CarregarDepartamentos(pUKEmpresa)
-            $('#modalFuncaoDepartamentoCorpoLoading').hide();
-            $('#modalFuncaoDepartamentoCorpo').show();
-            $('#modalFuncaoDepartamentoCorpo').html(content);
+            debugger;
+            $('#modalFuncaoTipoCorpo').html(content);
         },
     });
 }
 
 function OnSuccessGerenciarDpto(data) {
+    $('#modalFuncaoTipo').hide();
     TratarResultadoJSON(data.resultado);
 }
 
 function OnBeginGerenciarDpto() {
-    $('#modalFuncaoDepartamento').modal('show');
-    $('#modalFuncaoDepartamentoX').hide();
-    $('#modalFuncaoDepartamentoFechar').addClass('disabled');
-    $('#modalFuncaoDepartamentoFechar').attr('disabled', 'disabled');
-    $('#modalFuncaoDepartamentoSalvar').hide();
-    $('#modalFuncaoDepartamentoCorpo').hide();
-    $('#modalFuncaoDepartamentoCorpoConfirmar').hide();
-    $('#modalFuncaoDepartamentoCorpoLoading').show();
+    $('#modalFuncaoTipo').modal('show');
+    $('#modalFuncaoTipoX').hide();
+    $('#modalFuncaoTipoFechar').addClass('disabled');
+    $('#modalFuncaoTipoFechar').attr('disabled', 'disabled');
+    $('#modalFuncaoTipoSalvar').hide();
+    $('#modalFuncaoTipoCorpo').hide();
+    $('#modalFuncaoTipoCorpoConfirmar').hide();
+    $('#modalFuncaoTipoCorpoLoading').show();
 }
 
 function CarregarDepartamentos(UKEmpresa) {

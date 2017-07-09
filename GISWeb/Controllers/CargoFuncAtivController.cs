@@ -17,7 +17,16 @@ namespace GISWeb.Controllers
     public class CargoFuncAtivController : BaseController
     {
         [Inject]
+        public IBaseBusiness<FuncaoDepartamento> BaseBusiness { get; set; }
+
+        [Inject]
         public ICargoBusiness CargoBusiness { get; set; }
+
+        [Inject]
+        public IBaseBusiness<CategoriaDeDocumento> CategoriaDeDocumentoBusiness { get; set; }
+
+        [Inject]
+        public IBaseBusiness<TipoDeDocumento> TipoDeDocumentoBusiness { get; set; }
 
         [Inject]
         public IFuncaoBusiness FuncaoBusiness { get; set; }
@@ -34,6 +43,8 @@ namespace GISWeb.Controllers
         [Inject]
         public IDepartamentoBusiness DepartamentoBusiness { get; set; }
 
+        [Inject]
+        public IFuncaoDepartamentoBusiness FuncaoDepartamentoBusiness { get; set; }
 
         [MenuAtivo(MenuAtivo = "Administracao/Cargos")]
         public ActionResult Index()
@@ -465,6 +476,8 @@ namespace GISWeb.Controllers
             try
             {
                 List<Departamento> listDepartamento = (from dpto in DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa) && string.IsNullOrEmpty(p.UKDepartamentoVinculado)).ToList()
+                                                       join fd in FuncaoDepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKFuncao.Equals(UKFuncao)).ToList() on dpto.UniqueKey equals fd.UKDepartamento into funcao
+                                                       from item in funcao.DefaultIfEmpty()
                                                        orderby dpto.Codigo
                                                        select new Departamento
                                                       {
@@ -472,13 +485,16 @@ namespace GISWeb.Controllers
                                                           UniqueKey = dpto.UniqueKey,
                                                           Codigo = dpto.Codigo,
                                                           Sigla = dpto.Sigla,
-                                                          SubDepartamento = new List<Departamento>()
-                                                      }).ToList();
+                                                          SubDepartamento = new List<Departamento>(),
+                                                          Checked = item == null ? false : true
+                                                       }).ToList();               
 
                 foreach (Departamento item in listDepartamento)
                 {
 
                     item.SubDepartamento = (from SubDpto in DepartamentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao) && !string.IsNullOrEmpty(a.UKDepartamentoVinculado)).ToList()
+                                            join fd in FuncaoDepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKFuncao.Equals(UKFuncao)).ToList() on SubDpto.UniqueKey equals fd.UKDepartamento into funcao
+                                            from itemFunc in funcao.DefaultIfEmpty()
                                             where SubDpto.UKDepartamentoVinculado.Equals(item.ID)
                                             orderby SubDpto.Codigo
                                             select new Departamento()
@@ -487,12 +503,15 @@ namespace GISWeb.Controllers
                                                 UniqueKey = SubDpto.UniqueKey,
                                                 Codigo = SubDpto.Codigo,
                                                 Sigla = SubDpto.Sigla,
-                                                SubDepartamento = new List<Departamento>()
+                                                SubDepartamento = new List<Departamento>(),
+                                                Checked = itemFunc == null ? false : true
                                             }).ToList();
 
                     foreach (Departamento SubSubDepartamento in item.SubDepartamento)
                     {
                         SubSubDepartamento.SubDepartamento = (from subsubDpto in DepartamentoBusiness.Consulta.Where(b => string.IsNullOrEmpty(b.UsuarioExclusao) && !string.IsNullOrEmpty(b.UKDepartamentoVinculado)).ToList()
+                                                              join fd in FuncaoDepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKFuncao.Equals(UKFuncao)).ToList() on subsubDpto.UniqueKey equals fd.UKDepartamento into funcao
+                                                              from itemFD in funcao.DefaultIfEmpty()
                                                               where subsubDpto.UKDepartamentoVinculado.Equals(SubSubDepartamento.ID)
                                                               orderby subsubDpto.Codigo
                                                               select new Departamento()
@@ -500,15 +519,19 @@ namespace GISWeb.Controllers
                                                                   ID = subsubDpto.ID,
                                                                   UniqueKey = subsubDpto.UniqueKey,
                                                                   Codigo = subsubDpto.Codigo,
-                                                                  Sigla = subsubDpto.Sigla
+                                                                  Sigla = subsubDpto.Sigla,
+                                                                  Checked = itemFD == null ? false : true
                                                               }).ToList();
                     }
                 }
 
 
-                ViewBag.Departamento = listDepartamento; //DepartamentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKEmpresa.Equals(CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa) && string.IsNullOrEmpty(p.UKDepartamentoVinculado)).ToList();
+                ViewBag.Departamento = listDepartamento;
                 ViewBag.UKEmpresa = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.UKEmpresa;
-                return PartialView("_Departamentos");
+                Funcao oFuncao = new Funcao();
+                oFuncao.UniqueKey = UKFuncao;
+
+                return PartialView("_Departamentos", oFuncao);
             }
             catch (Exception ex)
             {
@@ -519,12 +542,35 @@ namespace GISWeb.Controllers
 
 
         [HttpPost]
-        public ActionResult GerenciarDpto(Departamento objDpto)
+        public ActionResult SalvarFuncaoDepartamento(string[] pDeptoArray, string pUKFuncao)
         {
             try
             {
-                //TipoDeDocumento oTipo = TipoDeDocumentoBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.ID.Equals(IDTipo));
-                return Json(new { resultado = new RetornoJSON() { URL = Url.Action("Index", "CargoFuncAtiv") } });
+                List<FuncaoDepartamento> delFuncDpto = (from fd in BaseBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UKFuncao.Equals(pUKFuncao)).ToList()
+                                                        select new FuncaoDepartamento
+                                                        {
+                                                            UniqueKey = fd.UniqueKey,
+                                                        }).ToList();
+                
+                foreach (FuncaoDepartamento item in delFuncDpto)
+                {
+                    FuncaoDepartamento dFuncaoDepartamento = BaseBusiness.Consulta.FirstOrDefault(p => string.IsNullOrEmpty(p.UsuarioExclusao) && p.UniqueKey.Equals(item.UniqueKey));
+                    dFuncaoDepartamento.DataExclusao = DateTime.Now;
+                    dFuncaoDepartamento.UsuarioExclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    BaseBusiness.Alterar(dFuncaoDepartamento);
+                }
+                    
+                for (int i = 0; i < pDeptoArray.Length; i++)
+                {
+                    FuncaoDepartamento oFuncaoDpto = new FuncaoDepartamento();
+                    oFuncaoDpto.UsuarioInclusao = CustomAuthorizationProvider.UsuarioAutenticado.Usuario.Login;
+                    oFuncaoDpto.UKFuncao = pUKFuncao;
+                    oFuncaoDpto.UKDepartamento = pDeptoArray[i];
+
+                    BaseBusiness.Inserir(oFuncaoDpto);
+                }                
+
+                return Json(new { resultado = new RetornoJSON() });
             }
             catch (Exception ex)
             {
@@ -536,6 +582,46 @@ namespace GISWeb.Controllers
                 {
                     return Json(new { resultado = new RetornoJSON() { Erro = ex.GetBaseException().Message } });
                 }
+            }
+        }
+
+        public ActionResult GerenciarTipos(string UKFuncao)
+        {
+            try
+            {
+                List<CategoriaDeDocumento> listCategoria = (from Categoria in CategoriaDeDocumentoBusiness.Consulta.Where(p => string.IsNullOrEmpty(p.UsuarioExclusao)).ToList()
+                                                            orderby Categoria.Nome
+                                                       select new CategoriaDeDocumento
+                                                       {
+                                                           UniqueKey = Categoria.UniqueKey,
+                                                           Nome = Categoria.Nome,
+                                                           Tipos = new List<TipoDeDocumento>()
+                                                       }).ToList();
+
+                foreach (CategoriaDeDocumento item in listCategoria)
+                {
+
+                    item.Tipos = (from Tipo in TipoDeDocumentoBusiness.Consulta.Where(a => string.IsNullOrEmpty(a.UsuarioExclusao)).ToList()
+                                            where Tipo.UKCategoriaDeDocumento.Equals(item.UniqueKey)
+                                            orderby Tipo.Nome
+                                            select new TipoDeDocumento()
+                                            {
+                                                UniqueKey = Tipo.UniqueKey,
+                                                Nome = Tipo.Nome
+                                            }).ToList();
+                }
+
+
+                ViewBag.Categoria = listCategoria;
+                Funcao oFuncao = new Funcao();
+                oFuncao.UniqueKey = UKFuncao;
+
+                return PartialView("_TipoDocumento", oFuncao);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return Content(ex.Message, "text/html");
             }
         }
 

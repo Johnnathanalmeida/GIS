@@ -33,6 +33,9 @@
                                 @iCargo.Nome
                                 <span class="badge badge-grey">@iCargo.Funcao.Count()</span>
                                 <div class="pull-right action-buttons">
+                                    <a class="green" href="#" onclick="GerenciarTipos('@iCargo.UniqueKey')">
+                                        <i class="ace-icon fa fa-bookmark-o bigger-125"></i>
+                                    </a>
                                     <a class="green" href="#" onclick="CadastrarFuncao('@iCargo.UniqueKey')">
                                         <i class="ace-icon fa fa-plus-circle green bigger-125"></i>
                                     </a>
@@ -61,6 +64,9 @@
                                             @iFuncao.NomeDeExibicao
                                             <span class="badge badge-grey">@iFuncao.Atividade.Count()</span>
                                             <div class="pull-right action-buttons">
+                                                <a class="green" href="#" onclick="GerenciarTipos('@iFuncao.UniqueKey')">
+                                                    <i class="ace-icon fa fa-bookmark-o bigger-125"></i>
+                                                </a>
                                                 <a class="orange" href="#" onclick="GerenciarDepartamentos('@iFuncao.UniqueKey','@ViewBag.UKEmpresa')" title="Departamentos">
                                                     <i class="ace-icon fa fa-cubes bigger-125"></i>
                                                 </a>
@@ -92,6 +98,9 @@
                                                     <div class="dd2-content" style="border-left-color: #d53f40;">
                                                         @iAtividade.Nome
                                                         <div class="pull-right action-buttons">
+                                                            <a class="green" href="#" onclick="GerenciarTipos('@iAtividade.UniqueKey')">
+                                                                <i class="ace-icon fa fa-bookmark-o bigger-125"></i>
+                                                            </a>
                                                             <a class="blue" href="#" onclick="AlterarAtividade('@iAtividade.UniqueKey', '@iAtividade.Nome')">
                                                                 <i class="ace-icon fa fa-edit bigger-125"></i>
                                                             </a>
@@ -151,7 +160,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <span id="modalFuncaoDepartamentoLoading" style="display: none; float: left; padding-top: 6px">
-                            <i style="display: none; float: left; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
+                            <span class="smaller lighter blue no-margin"> Aguarde, salvando informações... <i style="float: left; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i></span>                            
                         </span>
 
                         <button id="modalFuncaoDepartamentoFechar" class="btn btn-sm btn-default pull-right" data-dismiss="modal">
@@ -159,7 +168,50 @@
                             Cancelar
                         </button>
 
-                        <button id="modalFuncaoDepartamentoSalvar" onclick="submitMe()" class="btn btn-sm btn-info" style="right: 5px; left: auto">
+                        <button id="modalFuncaoDepartamentoSalvar" onclick="submitMe($('#uniquekey').val())" class="btn btn-sm btn-info" style="right: 5px; left: auto">
+                            <i class="ace-icon fa fa-check"></i>
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalFuncaoTipo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="modalFuncaoTipoX" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="modalFuncaoTipoHeader" class="smaller lighter grey no-margin"><i class="ace-icon fa fa-cubes orange"></i> Relacionar Tipos...</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="modalFuncaoTipoCorpoLoading">
+                            <h4 class="smaller lighter blue no-margin"> Aguarde, processando... <i style="display: none; float: right; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i></h4>
+                        </div>
+                        <br />
+                        <div id="modalFuncaoTipoCorpo" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span id="modalFuncaoTipoLoading" style="display: none; float: left; padding-top: 6px">
+                            <i style="display: none; float: left; margin-top: 5px;" class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
+                        </span>
+
+                        <button id="modalFuncaoTipoFechar" class="btn btn-sm btn-default pull-right" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            Cancelar
+                        </button>
+
+                        <button id="modalFuncaoTipoSalvar" onclick="submitMe($('#uniquekey').val())" class="btn btn-sm btn-info" style="right: 5px; left: auto">
                             <i class="ace-icon fa fa-check"></i>
                             Salvar
                         </button>
@@ -179,5 +231,6 @@
     <script src="~/Scripts/Ace/jquery.bootstrap-duallistbox.js"></script>
     <script src="~/Scripts/Ace/jQ/jquery.nestable.js"></script>    
     <script src="~/Scripts/Custom/CargoFuncAtiv/FuncaoDepartamento.js"></script>
+    <script src="~/Scripts/Custom/CargoFuncAtiv/FuncaoTipo.js"></script>
 }
 
